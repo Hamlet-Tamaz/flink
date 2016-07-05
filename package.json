@@ -1,0 +1,23 @@
+{
+  "name": "capstone_flink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.py",
+  "dependencies": {
+    "angular-material": "^1.1.0-rc.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hamlet-Tamaz/flink.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hamlet-Tamaz/flink/issues"
+  },
+  "homepage": "https://github.com/Hamlet-Tamaz/flink#readme"
+}
