@@ -1,18 +1,12 @@
 (function() {
 	
 angular
-	.module('flink', ['ngRoute', 'ngMaterial', 'ngMessages'])
+	.module('flink', ['ngMaterial'])
 	.config(config)
 
 
-function config($routeProvider, $locationProvider, $interpolateProvider) {
+function config($interpolateProvider) {
 	$interpolateProvider.startSymbol('[[').endSymbol(']]')
-
-	// $routeProvider
-	// 	.when('/flink', {
-	// 		templateUrl: '../templates/home.html',
-	// 		controller: 'homeCtrl',
-	// 	})
 }
 
 

@@ -1,11 +1,183 @@
 {%  extends 'base.html'  %}
 
 {%  block content  %}
-<h1>Home</h1>
 
-<div ng-controller='homeCtr as home'>
-	[[home.name]]
+<div ng-controller='homeCtr as home' layout='column'>
+	<!-- <md-sidenav 
+		md-component-id='left' 
+		md-is-locked-open="$mdMedia('gt-xs')"
+		md-whiteframe='10'
+		style='display:none'>
+		
+		<md-toolbar flex='20'> 
+			<h3 class='md-toolbar-tools'>Friends</h3>
+		</md-toolbar>
+		<md-content>
+			<md-list>
+				<md-list-item ng-repeat='friend in base.friends'>
 
+					<p>[[friend.name]] - [[friend.age]]</p>
+
+				</md-list-item>	
+			</md-list>
+			
+		</md-content>
+	</md-sidenav> -->
+
+
+	<div layout-align='center center' layout='row'>
+
+		<img id='intro_smiley' src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/2000px-Smiley.svg.png">
+
+		<md-content md-whiteframe='5' id='intro_box'>
+			<md-toolbar>
+				<h3 >Hello [[base.name]]</h3>
+			</md-toolbar>
+
+<md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-disable-backdrop
+        md-whiteframe="4">
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+      </md-toolbar>
+      <md-content layout-padding ng-controller="leftCtrl">
+        <md-button ng-click="close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p>
+      </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding>
+      <div layout="column" layout-fill layout-align="top center">
+        <p>
+        The left sidenav will 'lock open' on a medium (>=960px wide) device.
+        </p>
+        <p>
+        The right sidenav will focus on a specific child element.
+        </p>
+        <div>
+          <md-button ng-click="toggleLeft()"
+            class="md-primary" hide-gt-md>
+            Toggle left
+          </md-button>
+        </div>
+        <div>
+          <md-button ng-click="toggleRight()"
+            ng-hide="isOpenRight()"
+            class="md-primary">
+            Toggle right
+          </md-button>
+        </div>
+      </div>
+      <div flex></div>
+    </md-content>
+    
+
+
+
+		<md-tabs layout='column'>
+			<md-tab label='2 Current Invites'> 							
+				<md-content class="md-padding">
+						<!-- <h1 class="md-display-2">Tab One</h1> -->
+						<p>You currently have 2 invites</p>
+				</md-content>
+			</md-tab>
+
+			<md-tab label='Plan New Week'> 							
+				<md-content class="md-padding">
+						<!-- <h1 class="md-display-2">Tab One</h1> -->
+						<p>You currently have 2 invites</p>
+				</md-content>
+			</md-tab>
+
+			<md-tab label='Check in'> 							
+				<md-content class="md-padding">
+						<!-- <h1 class="md-display-2">Tab One</h1> -->
+						<p>You currently have 2 invites</p>
+				</md-content>
+			</md-tab>
+
+			<md-tab label='2 Current Invites'> 							
+				<md-content class="md-padding">
+						<!-- <h1 class="md-display-2">Tab One</h1> -->
+						<p>You currently have 2 invites</p>
+				</md-content>
+			</md-tab>
+
+
+		</md-tabs>
+
+				<li>You haven't set up any appointments in two weeks. <a href="">Set some now!</a></li>
+				<li>Check to see if any friends are down to hang out!</li>
+			</ul>
+			
+		</md-content>	
+	</div>
+
+<br>
+<br>
+<br>
+<br>
+	
+<!-- <md-tabs layout='column'>
+
+	<md-tab> Send Direct Flink</md-tab>
+
+
+ 	<md-tab label="one">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Tab One</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+        </md-content>
+      </md-tab>
+
+<md-tab label md-on-select md-on-deselect>
+  <h3>My Tab content</h3>
+</md-tab>
+<md-tab>
+  <md-tab-label>
+    <h3>My Tab content</h3>
+  </md-tab-label>
+  <md-tab-body>
+    <p>
+      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+      totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+      dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+      sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+    </p>
+  </md-tab-body>
+</md-tab>
+
+</md-tabs> -->
 </div>
 
+
+
 {%  endblock  %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

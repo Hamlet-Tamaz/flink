@@ -3,71 +3,55 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-      
+
 
 	<link rel="stylesheet" href="/static/css/style.css">
-
-	
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
-
-
-	<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
 
 </head>
-
 <body ng-controller="baseCtr as base" ng-cloak>
 
-	<h1>BASE</h1>
 
-<md-toolbar>
- Flink
-</md-toolbar>
+<div layout="column">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span>Flink</span>
+			<span flex></span>
+      
+      <md-button>
+      	Friends
+      </md-button>
 
-<!-- <md-content class="md-padding"> -->
-<h1>[[base.currentNavItem]]</h1>
-    <md-nav-bar md-selected-nav-item="base.currentNavItem" nav-bar-aria-label="navigation links">
-      <md-nav-item md-nav-click="goto('page1')" name="page1">Page One</md-nav-item>
-      <md-nav-item md-nav-click="goto('page2')" name="page2">Page Two</md-nav-item>
-      <md-nav-item md-nav-click="goto('page3')" name="page3">Page Three</md-nav-item> 
-    </md-nav-bar>
+			<md-button>
+      	Calendars
+      </md-button>
 
-    <span>[[base.currentNavItem]]</span> <br>
-    <span>[[base.name]]</span>
-<!-- </md-content> -->
+			<md-button>
+      	Messages
+      </md-button>
+			<span flex></span>
 
-<div>
-	 <md-sidenav md-component-id='left' md-is-locked-open="$mdMedia('gt-sm')">
-	 	<md-toolbar> Friends</md-toolbar>
-	 </md-sidenav>
-
-	 <md-content>
-	 	<h3>BLABLA</h3>
-	 	<p>
-	 		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo voluptas adipisci repellendus maxime ut qui commodi voluptates! Officiis facere debitis quas, vero numquam, consequatur voluptas quis delectus minima eaque doloribus.
-	 	</p>
-	 </md-content>
-		
-	
-
-
-	<br>
-	<br>
-
-
+      <md-button>
+        My Account
+      </md-button>
+    </div>
+  </md-toolbar>
 </div>
 
-{%  block content  %}
+	{%  block content  %}
 
-{%  endblock  %}
+	{%  endblock  %}
 
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"></script>
 
 <script src='/static/js/app.js'></script>
 <script src='/static/js/components.js'></script>

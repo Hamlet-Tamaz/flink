@@ -3,25 +3,101 @@
 		.module('flink')
 		.controller('homeCtr', home)
 		.controller('baseCtr', base)
+		.controller('sideBar', side)
+		.controller('appCtrl', appCtrl)
+		.controller('leftCtrl', leftNav)
 
-		function home() {
-			var vm = this;
 
-			vm.name = 'hamlet'
 
-			vm.currentNavItem = 'page1'
-		}
 
-		function base() {
-			var vm = this;
+	function appCtrl ($scope, $timeout, $mdSidenav, $log) {
+    $scope.toggleLeft = buildDelayedToggler('left');
+    $scope.toggleRight = buildToggler('right');
+    $scope.isOpenRight = function(){
+      return $mdSidenav('right').isOpen();
+    };
+    /**
+     * Supplies a function that will continue to operate until the
+     * time is up.
+     */
+    function debounce(func, wait, context) {
+      var timer;
+      return function debounced() {
+        var context = $scope,
+            args = Array.prototype.slice.call(arguments);
+        $timeout.cancel(timer);
+        timer = $timeout(function() {
+          timer = undefined;
+          func.apply(context, args);
+        }, wait || 10);
+      };
+    }
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildDelayedToggler(navID) {
+      return debounce(function() {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }, 200);
+    }
+    function buildToggler(navID) {
+      return function() {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }
+    }
+  }
 
-			vm.name ='Hamlet'
+  function leftNav($scope, $timeout, $mdSidenav, $log) {
+    $scope.close = function () {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav('left').close()
+        .then(function () {
+          $log.debug("close LEFT is done");
+        });
+    };
+  }
 
-			vm.currentNavItem = 'page1'
 
-			vm.openLeftMenu = function() {
-				$mdSidenav('left').toggle();
-			};
+	function base($rootScope) {
+		var vm = this;
 
-		}
+		vm.name ='Hamlet'
+
+		vm.currentNavItem = 'home'
+
+		vm.openLeftMenu = function() {
+			$mdSidenav('left').toggle();
+		};
+
+		$rootScope.$on('$routeChangeSuccess', function(event, current) {
+ 			vm.currentLink = getCurrentLinkFromRoute(current);
+			});
+
+
+		vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
+
+	}
+
+	function home() {
+		var vm = this;
+	}
+
+	function side() {
+		var vm = this;
+
+		
+	}
+
+
 })()
