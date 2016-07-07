@@ -20,11 +20,11 @@
       <span>Flink</span>
 			<span flex></span>
       
-      <md-button>
+      <md-button ng-href='/friends'>
       	Friends
       </md-button>
 
-			<md-button>
+			<md-button ng-href='/calendars'> 
       	Calendars
       </md-button>
 
@@ -33,12 +33,16 @@
       </md-button>
 			<span flex></span>
 
-      <md-button>
+      <md-button ng-href='/login'>
         My Account
       </md-button>
     </div>
   </md-toolbar>
 </div>
+
+{% for message in get_flashed_messages() %}
+        <p>{{message}}</p>
+{% endfor %}
 
 	{%  block content  %}
 
@@ -53,10 +57,11 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
 <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"></script>
 
-<script src='/static/js/app.js'></script>
-<script src='/static/js/components.js'></script>
-<script src='/static/js/controllers.js'></script>
-<script src='/static/js/services.js'></script>
+
+<script src='/users/static/js/app.js'></script>
+<script src='/users/static/js/services.js'></script>
+<script src='/users/static/js/controllers.js'></script>
+<script src='/users/static/js/components.js'></script>
 
 </body>
 </html>

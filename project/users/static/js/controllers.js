@@ -1,11 +1,24 @@
 (function() {
 	angular
-		.module('flink')
+		.module('flink', ['ngMaterial'])
 		.controller('homeCtr', home)
 		.controller('baseCtr', base)
 		.controller('sideBar', side)
 		.controller('appCtrl', appCtrl)
 		.controller('leftCtrl', leftNav)
+
+		.config(function($mdThemingProvider) {
+		  $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+		  $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+		  $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+		  $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+		})
+		
+		.config(function($mdThemingProvider) {
+  			$mdThemingProvider.theme('default')
+    			.primaryPalette('green')
+    			.accentPalette('pink');
+		})
 
 
 
@@ -91,6 +104,10 @@
 
 	function home() {
 		var vm = this;
+
+
+	vm.imagePath = 'img/washedout.png';
+
 	}
 
 	function side() {

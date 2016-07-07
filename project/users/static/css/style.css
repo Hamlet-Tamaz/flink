@@ -1,6 +1,8 @@
-#intro_smiley {
+.intro_smiley {
 
 width:80px;
+position: relative;
+left: -5px;
 
 }
 
@@ -18,3 +20,6 @@ width:80px;
   	background: white; }
 .tabsdemoDynamicHeight md-content h1:first-child {
 	margin-top: 0; }
+
+.carddemoBasicUsage .card-media {
+  background-color: #999999; }
