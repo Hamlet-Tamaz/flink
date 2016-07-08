@@ -17,7 +17,14 @@
 <div layout="column">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <md-button ng-href='/'>Flink</md-button>
+
+      {%  if current_user.name  %}
+        <md-button ng-href='/users/{{current_user.id}}/dash'>Flink</md-button>
+       
+      {%  else  %}
+        <md-button ng-href='/'>Flink</md-button>
+      {% endif   %}
+
 			<span flex></span>
       
       <md-button ng-href='/friends'>
@@ -125,10 +132,10 @@
 <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"></script>
 
 
-<script src='../static/js/app.js'></script>
-<script src='../static/js/services.js'></script>
-<script src='../static/js/controllers.js'></script>
-<script src='../static/js/components.js'></script>
+<script src='/js/app.js'></script>
+<script src='/js/services.js'></script>
+<script src='/js/controllers.js'></script>
+<script src='/js/components.js'></script>
 
 </body>
 </html>

@@ -1,11 +1,7 @@
 (function() {
 	angular
 		.module('flink', ['ngMaterial'])
-		.controller('baseCtr', base)
-    .controller('homeCtr', home)
-    .controller('loginCtr', login)
-
-		.controller('sideBar', side)
+    .controller('dashCtr', dash)
 		.controller('appCtrl', appCtrl)
 		.controller('leftCtrl', leftNav)
 
@@ -21,16 +17,15 @@
     			.primaryPalette('green')
           .accentPalette('pink');
     })
-    .config(function($interpolateProvider){
-      $interpolateProvider.startSymbol('[[').endSymbol(']]');
-    });
+    // .config(function($interpolateProvider){
+    //   $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    // });
 
-	function base($rootScope) {
+	function dash() {
 		var vm = this;
 
 		vm.name ='Hamlet'
 
-		vm.currentNavItem = 'home'
 
 		vm.openLeftMenu = function() {
 			$mdSidenav('left').toggle();
@@ -41,34 +36,17 @@
       $mdOpenMenu(ev);
     };
 
-		// $rootScope.$on('$routeChangeSuccess', function(event, current) {
- 	// 		vm.currentLink = getCurrentLinkFromRoute(current);
-		// 	});
-    
-    console.log(this)
-
 		vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
 
 	}
 
-	function home() {
-		var vm = this;
 
 
-	vm.imagePath = 'img/washedout.png';
-
-	}
-
-  function login() {
-    var vm = this
 
 
-  }
+//  NOT MY STUFF
 
-	function side() {
-		var vm = this;		
-	}
-
+//  FOR SIDEBAR ON HOME PAGE
 
   function appCtrl ($scope, $timeout, $mdSidenav, $log) {
     $scope.toggleLeft = buildDelayedToggler('left');
@@ -127,10 +105,6 @@
         });
     };
   }
-
-
-  //    FOR THE  
-
 
 
 

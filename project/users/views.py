@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from functools import wraps
 
 
-users_blueprint = Blueprint('users', __name__, template_folder='templates', static_folder='/static')
+users_blueprint = Blueprint('users', __name__, template_folder='templates', static_folder='static')
 
 def prevent_login_signup():
     def wrapper(f):
@@ -20,12 +20,20 @@ def prevent_login_signup():
         return wrapped
     return wrapper
 
-
-
-@users_blueprint.route('/')
-@login_required
+@users_blueprint.route('/',)
 def home():
     return render_template('home.html')
+
+
+
+@users_blueprint.route('/users/<id>/dash')
+# users/<id>
+# @login_required
+
+#       HOW TO SEND IN THE ID FROM WHERE THIS LINK COMES?
+#  FOR EXAMPLE FROM THE LOGIN PAGE
+def dash(id):
+    return render_template('dash.html', user = User.query.get_or_404(id))
 
 
 
@@ -47,7 +55,7 @@ def signup():
                 db.session.commit()
                 login_user(user)
                 flash('Logged in!')
-                return redirect(url_for('users.home'))
+                return redirect(url_for('users.dash', id = user.id))
             except IntegrityError:
                 error = 'Username already exists'
                 return render_template('signup.html', form=form, error=error)
@@ -57,6 +65,7 @@ def signup():
         return render_template('signup.html', form=form, error=error)
 
 @users_blueprint.route('/login', methods=["GET", "POST"])
+@users_blueprint.route('/')
 @prevent_login_signup()
 def login():
     error = None
@@ -68,7 +77,7 @@ def login():
             if user is not None and bcrypt.check_password_hash(user.password, form.password.data ):
                 login_user(user)
                 flash('Logged in!')
-                return redirect(url_for('users.home'))
+                return redirect(url_for('users.dash', id = user.id))
             else:
                 error = "Invalid Credentials, please try again."
                 return render_template('login.html',form=form,error=error)
