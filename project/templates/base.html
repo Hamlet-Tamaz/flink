@@ -35,9 +35,67 @@
 
 
 {%  if current_user.is_authenticated  %}
-      <md-button ng-href='/myaccount'>
-        My Account
-      </md-button>
+      <!-- <label for="">My Account</label>
+      <md-select ng-href='/myaccount'>
+        <md-option>
+          Edit
+        </md-option>
+        <md-option ng-href='/logout'>
+          Logout
+        </md-option>
+      </md-select> -->
+
+
+    <!-- <md-button>
+      <md-menu>
+        <md-button  ng-click="ctrl.openMenu($mdOpenMenu, $event)"> -->
+          <!-- <md-icon md-menu-origin md-svg-icon="call:phone"></md-icon> -->
+          <!-- My Account
+        </md-button>
+        <md-menu-content width="4">
+
+          <md-menu-item>
+            <md-button ng-click="ctrl.redial($event)">
+              <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+              Redial
+            </md-button>
+          </md-menu-item>
+        
+          <md-menu-item>
+            <md-button disabled="disabled" ng-click="ctrl.checkVoicemail()">
+              <md-icon md-svg-icon="call:voicemail"></md-icon>
+              Check voicemail
+            </md-button>
+          </md-menu-item>
+          
+          <md-menu-divider></md-menu-divider>
+          
+         
+
+        </md-menu-content>
+      </md-menu>
+    </md-button> -->
+
+
+        <md-menu>
+          <md-button ng-click='base.openMenu($mdOpenMenu, $event)'>
+            My Account
+          </md-button>
+
+          <md-menu-content>
+            <md-menu-item>
+              <md-button>
+                Edit 
+              </md-button> 
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-href='/logout'>
+                Logout
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
 {%  else  %}
       <md-button ng-href='/login'>
         Login/Signup

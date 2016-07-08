@@ -14,14 +14,14 @@
 	  {{ form.csrf_token }}
 	  <p>
 	    <md-input-container>
-			<label for="">Username</label>
-			<input type="text">
+			<label for="">name</label>
+			<input type="text" name='name'>
 		</md-input-container>
 		
 
 	    <span class="text-danger">
-	      {% if form.username.errors %}
-	        {% for error in form.username.errors %}
+	      {% if form.name.errors %}
+	        {% for error in form.name.errors %}
 	          {{ error }}
 	        {% endfor %}
 	      {% endif %}
@@ -31,7 +31,7 @@
 	  <p>
 		<md-input-container>
 			<label for="">Password</label>
-			<input type="password">
+			<input type="password" name='password'>
 		</md-input-container>
 
 	    <span class="text-danger">

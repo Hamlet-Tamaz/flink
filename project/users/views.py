@@ -15,7 +15,7 @@ def prevent_login_signup():
         def wrapped(*args, **kwargs):
             if current_user.is_authenticated:
                 flash("You are already logged in")
-                return redirect(url_for('users.home', user_id=current_user.id))
+                return redirect(url_for('users.home'))
             return f(*args, **kwargs)
         return wrapped
     return wrapper
@@ -47,7 +47,7 @@ def signup():
                 db.session.commit()
                 login_user(user)
                 flash('Logged in!')
-                return redirect(url_for('users.home', user_id=user.id))
+                return redirect(url_for('users.home'))
             except IntegrityError:
                 error = 'Username already exists'
                 return render_template('signup.html', form=form, error=error)
@@ -62,12 +62,13 @@ def login():
     error = None
     form = LoginForm(request.form)
     if request.method == 'POST':
+        from IPython import embed; embed()  
         if form.validate_on_submit():
             user = User.query.filter_by(name=request.form['name']).first()
             if user is not None and bcrypt.check_password_hash(user.password, form.password.data ):
                 login_user(user)
                 flash('Logged in!')
-                return redirect(url_for('posts.index', user_id=user.id))
+                return redirect(url_for('users.home'))
             else:
                 error = "Invalid Credentials, please try again."
                 return render_template('login.html',form=form,error=error)
@@ -81,3 +82,9 @@ def logout():
     logout_user()
     flash('Logged out!')
     return redirect(url_for('users.login'))
+
+
+@users_blueprint.route('/users/<id>/friends')
+@login_required
+def friends():
+    render_template('friends.html')

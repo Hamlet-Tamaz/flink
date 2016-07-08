@@ -36,6 +36,11 @@
 			$mdSidenav('left').toggle();
 		};
 
+    vm.openMenu = function($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
+
 		// $rootScope.$on('$routeChangeSuccess', function(event, current) {
  	// 		vm.currentLink = getCurrentLinkFromRoute(current);
 		// 	});
@@ -122,6 +127,9 @@
         });
     };
   }
+
+
+  //    FOR THE  
 
 
 
