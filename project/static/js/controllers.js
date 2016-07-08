@@ -1,8 +1,10 @@
 (function() {
 	angular
 		.module('flink', ['ngMaterial'])
-		.controller('homeCtr', home)
 		.controller('baseCtr', base)
+    .controller('homeCtr', home)
+    .controller('loginCtr', login)
+
 		.controller('sideBar', side)
 		.controller('appCtrl', appCtrl)
 		.controller('leftCtrl', leftNav)
@@ -17,18 +19,58 @@
 		.config(function($mdThemingProvider) {
   			$mdThemingProvider.theme('default')
     			.primaryPalette('green')
-    			.accentPalette('pink');
-		})
+          .accentPalette('pink');
+    })
+    .config(function($interpolateProvider){
+      $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    });
+
+	function base($rootScope) {
+		var vm = this;
+
+		vm.name ='Hamlet'
+
+		vm.currentNavItem = 'home'
+
+		vm.openLeftMenu = function() {
+			$mdSidenav('left').toggle();
+		};
+
+		// $rootScope.$on('$routeChangeSuccess', function(event, current) {
+ 	// 		vm.currentLink = getCurrentLinkFromRoute(current);
+		// 	});
+    
+    console.log(this)
+
+		vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
+
+	}
+
+	function home() {
+		var vm = this;
 
 
+	vm.imagePath = 'img/washedout.png';
+
+	}
+
+  function login() {
+    var vm = this
 
 
-	function appCtrl ($scope, $timeout, $mdSidenav, $log) {
+  }
+
+	function side() {
+		var vm = this;		
+	}
+
+
+  function appCtrl ($scope, $timeout, $mdSidenav, $log) {
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
-    $scope.isOpenRight = function(){
-      return $mdSidenav('right').isOpen();
-    };
+    // $scope.isOpenRight = function(){
+    //   return $mdSidenav('right').isOpen();
+    // };
     /**
      * Supplies a function that will continue to operate until the
      * time is up.
@@ -82,39 +124,6 @@
   }
 
 
-	function base($rootScope) {
-		var vm = this;
-
-		vm.name ='Hamlet'
-
-		vm.currentNavItem = 'home'
-
-		vm.openLeftMenu = function() {
-			$mdSidenav('left').toggle();
-		};
-
-		$rootScope.$on('$routeChangeSuccess', function(event, current) {
- 			vm.currentLink = getCurrentLinkFromRoute(current);
-			});
-
-
-		vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
-
-	}
-
-	function home() {
-		var vm = this;
-
-
-	vm.imagePath = 'img/washedout.png';
-
-	}
-
-	function side() {
-		var vm = this;
-
-		
-	}
 
 
 })()

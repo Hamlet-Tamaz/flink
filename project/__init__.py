@@ -7,7 +7,7 @@ from flask_modus import Modus
 
 
 
-app = Flask(__name__, static_folder='/static' )
+app = Flask(__name__)
 # 
 modus = Modus(app)
 bcrypt = Bcrypt(app)

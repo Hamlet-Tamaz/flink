@@ -3,11 +3,11 @@ from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired
 
 class SignupForm(Form):
-    username = StringField('username', validators=[DataRequired()])
+    name = StringField('name', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
 
 class LoginForm(Form):
-    username = StringField('username', validators=[DataRequired()])
+    name = StringField('name', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
 
 

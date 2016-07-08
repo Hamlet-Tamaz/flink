@@ -8,13 +8,13 @@
 	    
 		<md-content class="md-padding" layout-xs="column" layout="row">
 		    <div flex-xs flex-gt-xs="100" layout="column">
-		      <md-card md-theme="[[ showDarkTheme ? 'dark-grey' : 'default' ]]" md-theme-watch>
+		      <md-card  md-theme-watch>
 		      	<div layout='row'>
 			        <md-card-title>
 		      		<img class='intro_smiley' ng-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/2000px-Smiley.svg.png" class='md-card-image'>
 			          <md-card-title-text>
 			          	<md-toolbar layout-align='center center'>
-							<h3 >Hello [[base.name]]</h3>
+							<h3 >Hello {{current_user.name}}</h3>
 						</md-toolbar>
 			            <span class="md-headline" style="text-align: center">You are one Flink away from your friends!</span>
 			          </md-card-title-text>

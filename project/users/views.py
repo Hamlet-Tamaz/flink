@@ -1,5 +1,5 @@
 from flask import flash, redirect, url_for, render_template, request, Blueprint
-from project.users.forms import LoginForm, SignupForm
+from project.users.forms import SignupForm, LoginForm
 from project.users.models import User
 from project import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
@@ -15,14 +15,20 @@ def prevent_login_signup():
         def wrapped(*args, **kwargs):
             if current_user.is_authenticated:
                 flash("You are already logged in")
-                return redirect(url_for('posts.all', user_id=current_user.id))
+                return redirect(url_for('users.home', user_id=current_user.id))
             return f(*args, **kwargs)
         return wrapped
     return wrapper
 
+
+
 @users_blueprint.route('/')
-def root():
+@login_required
+def home():
     return render_template('home.html')
+
+
+
 
 @users_blueprint.route('/signup', methods=["GET", "POST"])
 @prevent_login_signup()
@@ -30,17 +36,18 @@ def signup():
     error = None
     form = SignupForm(request.form)
     if request.method == 'POST':
+        from IPython import embed; embed()
         if form.validate_on_submit():
             user = User(
-                username=form.username.data,
-                password=form.password.data
+                name=request.form['name'],
+                password=request.form['password']
                 )
             try:
                 db.session.add(user)
                 db.session.commit()
                 login_user(user)
                 flash('Logged in!')
-                return redirect(url_for('posts.index', user_id=user.id))
+                return redirect(url_for('users.home', user_id=user.id))
             except IntegrityError:
                 error = 'Username already exists'
                 return render_template('signup.html', form=form, error=error)
@@ -56,7 +63,7 @@ def login():
     form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            user = User.query.filter_by(username=form.username.data).first()
+            user = User.query.filter_by(name=request.form['name']).first()
             if user is not None and bcrypt.check_password_hash(user.password, form.password.data ):
                 login_user(user)
                 flash('Logged in!')

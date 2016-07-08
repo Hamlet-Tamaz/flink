@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id='signupDiv'> 
+
+<br>
+
+  <h1>Signup</h1>
+
+  <a href="{{url_for('users.login')}}">Have an account already? Log in here</a>
+
+  <br>
+  <form method="post" action="/signup">
+    {{ form.csrf_token }}
+    <p>
+      <md-input-container>
+        <label>Name</label>
+        <input type="text" name='name'>
+      </md-input-container>
+
+      <span class="text-danger">
+        {% if form.name.errors %}
+          {% for error in form.name.errors %}
+            {{ error }}
+          {% endfor %}
+        {% endif %}
+      </span>
+    </p>
+    <p>
+      <md-input-container>
+        <label>Password</label>
+        <input type="password" name='password'>
+      </md-input-container>
+
+      <span class="text-danger">
+        {% if form.password.errors %}
+          {% for error in form.password.errors %}
+            {{ error }}
+          {% endfor %}
+        {% endif %}
+      </span>
+    </p>
+    <md-button class='md-primary' type="submit">Signup</md-button>
+  </form>
+
+</div>
+
+{% endblock %}
