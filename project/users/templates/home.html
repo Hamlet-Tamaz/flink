@@ -1,12 +1,29 @@
-{%  extends 'base.html'  %}
+{%  extends 'user_base.html'  %}
 
 {%  block content  %}
 
+<div ng-controller='homeCtr as home'>
+	
 <h1>HOME</h1>
-
-
 curr: {{current_user}}
+	
+</div>
+
+<form action="/oauthG/auth/google", method="POST">
+	<input type="submit" value="Log in with google">
+</form>
 
 
 
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+<script src="{{url_for('users.static', filename='js/app.js')}}"></script>
+<script src="{{url_for('users.static', filename='js/services.js')}}"></script>
+<script src="{{url_for('users.static', filename='js/controllers.js')}}"></script>
+<script src="{{url_for('users.static', filename='js/components.js')}}"></script>
+ -->
+
+<!-- <script src='project/users/static/js/app.js'></script> -->
+<!-- <script src='/js/services.js'></script> -->
+<!-- <script src='/js/controllers.js'></script> -->
+<!-- <script src='/js/components.js'></script> -->
 {%  endblock  %}

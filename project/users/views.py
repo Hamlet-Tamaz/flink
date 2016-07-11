@@ -7,8 +7,9 @@ from sqlalchemy.exc import IntegrityError
 from functools import wraps
 
 
-users_blueprint = Blueprint('users', __name__, template_folder='templates', static_folder='static')
 
+users_blueprint = Blueprint('users', __name__, template_folder='templates', static_folder='static', static_url_path='/static/js')
+# StackOverflow post for static_url_path http://stackoverflow.com/questions/22152840/flask-blueprint-static-directory-does-not-work
 def prevent_login_signup():
     def wrapper(f):
         @wraps(f)
@@ -21,6 +22,7 @@ def prevent_login_signup():
     return wrapper
 
 @users_blueprint.route('/',)
+@users_blueprint.route('/home',)
 def home():
     return render_template('home.html')
 
@@ -70,6 +72,7 @@ def signup():
 def login():
     error = None
     form = LoginForm(request.form)
+    # from IPython import embed; embed()
     if request.method == 'POST':
         from IPython import embed; embed()  
         if form.validate_on_submit():
@@ -83,6 +86,7 @@ def login():
                 return render_template('login.html',form=form,error=error)
         else:
             return render_template('login.html',form=form,error=error)
+    # from IPython import embed; embed()
     return render_template('login.html',form=form,error=error)
 
 @users_blueprint.route('/logout')
@@ -91,6 +95,9 @@ def logout():
     logout_user()
     flash('Logged out!')
     return redirect(url_for('users.login'))
+
+
+
 
 
 @users_blueprint.route('/users/<id>/friends')

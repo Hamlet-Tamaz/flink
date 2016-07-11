@@ -2,16 +2,19 @@
 <html lang="en" ng-app='flink'>
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
 
+  <meta name="google-signin-client_id" content="770134292731-gsjfclovkvfh891kq4nmkgld4pops4au.apps.googleusercontent.com">
 
-	<link rel="stylesheet" href="/static/css/style.css">
+	<title>Flink</title>
+  
+{%  block css  %}
+{%  endblock  %}
 
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
 
 </head>
-<body ng-controller="baseCtr as base" ng-cloak>
+<body ng-controller='dashCtr as dash'>
 
 
 <div layout="column">
@@ -85,7 +88,7 @@
 
 
         <md-menu>
-          <md-button ng-click='base.openMenu($mdOpenMenu, $event)'>
+          <md-button ng-click='dash.openMenu($mdOpenMenu, $event)'>
             My Account
           </md-button>
 
@@ -95,11 +98,19 @@
                 Edit 
               </md-button> 
             </md-menu-item>
+            
+            <md-menu-item>
+              <md-button ng-click='dash.signOut()'>
+                Logout Google
+              </md-button>
+            </md-menu-item>
+
             <md-menu-item>
               <md-button ng-href='/logout'>
                 Logout
               </md-button>
             </md-menu-item>
+
           </md-menu-content>
         </md-menu>
 
@@ -118,24 +129,29 @@
         <p>{{message}}</p>
 {% endfor %}
 
-	{%  block content  %}
-
-	{%  endblock  %}
-
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+
+  {%  block js  %}
+
+  {%  endblock  %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
 <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"></script>
 
+<!-- Google Signin Api -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<script src='/js/app.js'></script>
-<script src='/js/services.js'></script>
-<script src='/js/controllers.js'></script>
-<script src='/js/components.js'></script>
+
+<!-- HELP : HOW DO I GET THESE SCRIPTS TO WORK -->
+
+<!-- <script src='/project/static/js/app.js'></script>
+<script src=''></script>
+<script src='../static/js/controllers.js'></script>
+<script src='../static/js/services.js'></script> -->
 
 </body>
 </html>

@@ -1,0 +1,45 @@
+.intro_smiley {
+
+width:80px;
+position: relative;
+left: -5px;
+
+}
+
+
+#intro_box {
+	top: 50px;
+}
+
+
+#loginDiv, #signupDiv {
+	text-align: center
+}
+
+
+
+
+
+
+
+
+.tabsdemoDynamicHeight md-content {
+  	background-color: transparent !important; }
+.tabsdemoDynamicHeight md-content md-tabs {
+	background: #f6f6f6;
+	border: 1px solid #e1e1e1; }
+.tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper {
+  	background: white; }
+.tabsdemoDynamicHeight md-content h1:first-child {
+	margin-top: 0; }
+
+.carddemoBasicUsage .card-media {
+  background-color: #999999; }
+
+
+
+/*.menudemoBasicUsage .md-menu-demo {
+  padding: 24px; }
+.menudemoBasicUsage .menu-demo-container {
+  min-height: 200px; }
+*/

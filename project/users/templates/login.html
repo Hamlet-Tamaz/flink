@@ -1,12 +1,13 @@
-{%  extends 'base.html'  %}
+{%  extends 'user_base.html'  %}
 
 {% block content %}
 
-<div id='loginDiv' ng-controller='loginCtr as login'> 
+<div id='loginDiv' ng-congtroller='loginCtr as login' > 
 <br>
 	<h1>Login</h1>
-
-	<a href="{{url_for('users.signup')}}">Don't have an account Yet? Create one here</a>
+	profile:[[login.name]]
+<br>
+	<a href="/signup">Don't have an account Yet? Create one here</a>
 
 
 	<br>
@@ -44,8 +45,19 @@
 	  </p>
     <md-button class='md-primary' type="submit">Login</md-button>
 	</form>
+	
+  <!-- <div class="g-signin2" data-onsuccess="login.onSignIn_google">Google</div>
+  <a href="#" ng-click="login.signOut_google();">Sign out</a> -->
 
 
+<!-- 	<a href="https://flink.auth0.com/authorize?response_type=code
+  &scope=openid%20profile
+  &client_id=3Avm3lZVNrAll3yu0NPVhwO2oYobIkXt
+  &redirect_uri=http://localhost:3000/callback
+  &connection=facebook"> Facebook Login</a> -->
+
+<!-- <br> -->
+	<a href="{{ url_for('oauthG.index')}}">Google</a>
 </div>
 
 {% endblock %}

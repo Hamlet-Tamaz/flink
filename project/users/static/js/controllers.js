@@ -1,9 +1,12 @@
 (function() {
 	angular
 		.module('flink', ['ngMaterial'])
+    .controller('homeCtr', home)
     .controller('dashCtr', dash)
 		.controller('appCtrl', appCtrl)
-		.controller('leftCtrl', leftNav)
+    .controller('leftCtrl', leftNav)
+		.controller('loginCtr', login)
+
 
 		.config(function($mdThemingProvider) {
 		  $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
@@ -21,25 +24,64 @@
     //   $interpolateProvider.startSymbol('[[').endSymbol(']]');
     // });
 
-	function dash() {
-		var vm = this;
+  function dash() {
+    var vm = this;
 
-		vm.name ='Hamlet'
+    vm.name ='Hamlet'
 
 
-		vm.openLeftMenu = function() {
-			$mdSidenav('left').toggle();
-		};
+    vm.openLeftMenu = function() {
+      $mdSidenav('left').toggle();
+    };
 
     vm.openMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;
       $mdOpenMenu(ev);
     };
 
-		vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
+    vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
+    
+    function signOut() {
+      debugger
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
 
-	}
+    }
+  }
 
+  function home() {
+    var vm = this;
+  }
+
+  function login() {
+    var vm = this;
+    vm.name = 'hamlet'
+
+    vm.onSignIn_google = function(googleUser) {
+      vm.profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      debugger
+    }
+
+    vm.signOut_google = function() {
+      debugger
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      })
+    }
+
+
+    gapi.load('auth2', function() {
+      gapi.auth2.init()
+    })
+
+  }
 
 
 
