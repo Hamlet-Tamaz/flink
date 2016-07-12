@@ -9,9 +9,7 @@ curr: {{current_user}}
 	
 </div>
 
-<form action="/oauthG/auth/google", method="POST">
-	<input type="submit" value="Log in with google">
-</form>
+<a href="{{url_for('oauthG.login')}}">Google Login</a>
 
 
 

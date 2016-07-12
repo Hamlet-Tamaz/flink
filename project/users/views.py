@@ -24,6 +24,7 @@ def prevent_login_signup():
 @users_blueprint.route('/',)
 @users_blueprint.route('/home',)
 def home():
+    # from IPython import embed; embed()
     return render_template('home.html')
 
 
@@ -46,7 +47,7 @@ def signup():
     error = None
     form = SignupForm(request.form)
     if request.method == 'POST':
-        from IPython import embed; embed()
+        # from IPython import embed; embed()
         if form.validate_on_submit():
             user = User(
                 name=request.form['name'],
@@ -67,14 +68,13 @@ def signup():
         return render_template('signup.html', form=form, error=error)
 
 @users_blueprint.route('/login', methods=["GET", "POST"])
-@users_blueprint.route('/')
-@prevent_login_signup()
+# @prevent_login_signup()
 def login():
     error = None
     form = LoginForm(request.form)
     # from IPython import embed; embed()
     if request.method == 'POST':
-        from IPython import embed; embed()  
+        # from IPython import embed; embed()  
         if form.validate_on_submit():
             user = User.query.filter_by(name=request.form['name']).first()
             if user is not None and bcrypt.check_password_hash(user.password, form.password.data ):
