@@ -26,15 +26,17 @@ google = oauth.remote_app(
     consumer_key=app.config.get('GOOGLE_ID'),
     consumer_secret=app.config.get('GOOGLE_SECRET'),
     request_token_params={
-        'scope': '  profile email'
-        # calendar profile email  contacts.readonly plus.login
+        'scope': 'profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/contacts.readonly https://www.googleapis.com/auth/calendar   '
+        # profile email calendar contacts.readonly plus.login
     },
-    base_url='https://www.googleapis.com/auth',
+    base_url='https://www.googleapis.com/oauth2/v1/',
     request_token_url=None,
     access_token_method='POST',
     access_token_url='https://accounts.google.com/o/oauth2/token',
     authorize_url='https://accounts.google.com/o/oauth2/auth',
+
     # https://www.googleapis.com/auth
+    # https://accounts.google.com/o/oauth2/auth
 )
 
 login_manager = LoginManager()

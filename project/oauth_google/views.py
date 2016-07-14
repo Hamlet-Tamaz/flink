@@ -13,21 +13,19 @@ def index():
     if 'google_token' in session:
         me = google.get('userinfo')
         # return jsonify({"data": me.data})
-        # from IPython import embed; embed()
+
         id = me.data['id']
         return redirect(url_for('users.dash', id = id))
 
-    # from IPython import embed; embed()
     return redirect(url_for('oauthG.login'))
 
 @oauthG_blueprint.route('/login')
 def login():
-    # from IPython import embed; embed()
     return google.authorize(callback=url_for('oauthG.authorized', _external=True))
 
 @oauthG_blueprint.route('/login/authorized')
 def authorized():
-    
+
 
     resp = google.authorized_response()
     if resp is None:
@@ -52,7 +50,7 @@ def authorized():
             picture = me.data['picture'],
             verified_email = me.data['verified_email']
             )
-        
+
         db.session.add(user)
         db.session.commit()
         # login_user(user)
@@ -61,18 +59,18 @@ def authorized():
         id = user.id
         # how to know what the id is?
         # id = me.data['id']
-        # from IPython import embed; embed()  
 
         return redirect(url_for('users.setup', user = user, id = id))
     except IntegrityError:
-        # error = 'Username already exists'   
+        # error = 'Username already exists'
         # form = SignupForm(request.form)
         db.session.rollback()
-        user = GoogleUser.query.filter_by(google_id=me.data['id']).first()   
-        # from IPython import embed; embed()  
+
+        user = GoogleUser.query.filter_by(google_id=me.data['id']).first()
+
         return redirect(url_for('users.dash', user = user, id = user.id))
         # return redirect(url_for('users.signup', form=form, error = error))
-    
+
 
 @google.tokengetter
 def get_google_oauth_token():
@@ -81,7 +79,6 @@ def get_google_oauth_token():
 
 @oauthG_blueprint.route('/logout')
 def logout():
-    # from IPython import embed; embed()
     session.pop('google_token', None)
     # logout_user()
     return redirect(url_for('users.home'))

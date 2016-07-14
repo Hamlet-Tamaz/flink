@@ -1,7 +1,6 @@
 from project import db, bcrypt, ma
 from flask_login import UserMixin
 
-from IPython import embed; embed()
 class User(db.Model, UserMixin):
 	__tablename__ = 'users'
 
@@ -37,10 +36,10 @@ class GoogleUser(db.Model):
 			ans[key] = self[key]
 
 		return ans
-	
+
 
 	def __init__(self, name, given_name, family_name, email, gender, google_id, picture, verified_email):
-		
+
 		self.name = name
 		self.given_name = given_name
 		self.family_name = family_name

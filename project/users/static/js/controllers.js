@@ -17,9 +17,9 @@
           .primaryPalette('green')
           .accentPalette('pink');
     })
-    .config( ['$mdIconProvider', function( $mdIconProvider ){
+    .config(function( $mdIconProvider ){
       $mdIconProvider.iconSet("avatar", 'icons/avatar-icons.svg', 128);
-    }])
+    })
     .config(function($interpolateProvider){
       $interpolateProvider.startSymbol('[[').endSymbol(']]');
     })
@@ -29,7 +29,7 @@
     .controller('homeCtr', home)
     .controller('dashCtr', dash)
 		.controller('appCtr', appCtr)
-    .controller('leftCtrl', leftNav)
+    .controller('leftCtrl', leftCtr)
     .controller('loginCtr', login)
     .controller('calendarCtr', calendar)
 		.controller('friendsCtr', friends)
@@ -150,67 +150,64 @@ debugger
       
       $http({
         method: "GET",
-        url: `https://www.googleapis.com/plus/v1/people/${vm.user.google_id}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE`,
-        // url: `https://www.google.com/m8/feeds/contacts/default/full`,
-        // responseType: 'json'
-// API KEY
-      }).then(function success(res){
-        debugger
-      })
+        url: `http://localhost:3000/api/users/${id}/friends`,
+        responseType: 'json'
+      }).then(function success(res) {
+        vm.friends = res.data.items
+        
+        vm.tiles = buildGridModel({
+                icon : "avatar:svg-",
+                title: "Svg-",
+                background: ""
+              });
+        debugger 
 
-    }), function error(res) {
-      vm.error = res
-      debugger
-    }
+        function buildGridModel(tileTmpl){
+          var it, results = [ ];
+          for (var j=0; j<11; j++) {
+            it = angular.extend({},tileTmpl);
+            it.icon  = it.icon + (j+1);
+            it.title = it.title + (j+1);
+            it.span  = { row : 1, col : 1 };
+            switch(j+1) {
+              case 1:
+                it.background = "red";
+                it.span.row = it.span.col = 2;
+                break;
+              case 2: it.background = "green";         break;
+              case 3: it.background = "darkBlue";      break;
+              case 4:
+                it.background = "blue";
+                it.span.col = 2;
+                break;
+              case 5:
+                it.background = "yellow";
+                it.span.row = it.span.col = 2;
+                break;
+              case 6: it.background = "pink";          break;
+              case 7: it.background = "darkBlue";      break;
+              case 8: it.background = "purple";        break;
+              case 9: it.background = "deepBlue";      break;
+              case 10: it.background = "lightPurple";  break;
+              case 11: it.background = "yellow";       break;
+            }
+            results.push(it);
+          }
 
-
-
-
-
-
-
-    vm.tiles = buildGridModel({
-            icon : "avatar:svg-",
-            title: "Svg-",
-            background: ""
-          });
-
-    function buildGridModel(tileTmpl){
-      var it, results = [ ];
-      for (var j=0; j<11; j++) {
-        it = angular.extend({},tileTmpl);
-        it.icon  = it.icon + (j+1);
-        it.title = it.title + (j+1);
-        it.span  = { row : 1, col : 1 };
-        switch(j+1) {
-          case 1:
-            it.background = "red";
-            it.span.row = it.span.col = 2;
-            break;
-          case 2: it.background = "green";         break;
-          case 3: it.background = "darkBlue";      break;
-          case 4:
-            it.background = "blue";
-            it.span.col = 2;
-            break;
-          case 5:
-            it.background = "yellow";
-            it.span.row = it.span.col = 2;
-            break;
-          case 6: it.background = "pink";          break;
-          case 7: it.background = "darkBlue";      break;
-          case 8: it.background = "purple";        break;
-          case 9: it.background = "deepBlue";      break;
-          case 10: it.background = "lightPurple";  break;
-          case 11: it.background = "yellow";       break;
+          return results;
         }
-        results.push(it);
+
+      }), function error(res) {
+        debugger
       }
 
-      return results;
+    }), function error(res) {
+      debugger
     }
-
   }
+
+
+
 
   function messages ($mdSidenav) {
     var vm = this;
@@ -233,7 +230,7 @@ debugger
 //  NOT MY STUFF
 
 //  FOR SIDEBAR ON HOME PAGE
-  appCtr.$inject = ['$mdSidenav', '$timeout', '$log']
+  // appCtr.$inject = ['$mdSidenav', '$timeout', '$log']
   function appCtr ($mdSidenav, $timeout, $log) {
 
     var vm = this;
@@ -285,7 +282,7 @@ debugger
     }
   }
 
-  function leftNav(vm, $timeout, $mdSidenav, $log) {
+  function leftCtr($timeout, $mdSidenav, $log) {
     var vm = this;
 
     vm.close = function () {
