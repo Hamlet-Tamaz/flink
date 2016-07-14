@@ -102,7 +102,7 @@ def login():
 def setup(id):
     user = GoogleUser.query.get(id)
     print('user:')
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
 
     return render_template('info_setup.html', user = user)
 
