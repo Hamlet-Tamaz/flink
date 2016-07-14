@@ -3,29 +3,42 @@
 {%  block content  %}
 	<h1>Friends</h1>
 
+<!-- {{[[ friends ]]}} -->
 
-	<div ng-controller="friendsCtr as friends" flex ng-cloak>
+	<div ng-controller="friendsCtr as fr" flex ng-cloak>
 
-<!-- 		<div>
-		<h2>WHA?</h2>
-		<h1 ng-repeat="tile in friends.tiles">
-			[[tile.icon]]
-		</h1>
-		</div> -->
 
-		
 		<md-grid-list
 	        md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
 	        md-row-height-gt-md="1:1" md-row-height="4:3"
 	        md-gutter="8px" md-gutter-gt-sm="4px" >
-	    	<md-grid-tile ng-repeat="tile in friends.tiles"
+	    	<md-grid-tile ng-repeat="tile in fr.tiles"
 		                  md-rowspan="tile.span.row"
 		                  md-colspan="tile.span.col"
 		                  md-colspan-sm="1"
 		                  md-colspan-xs="1"
-		                  class="[[tile.background]]" >
-	      		<md-icon md-svg-icon="tile.icon"></md-icon>
-	      		<md-grid-tile-footer><h3>[[tile.title]]</h3></md-grid-tile-footer>
+		                  class="[[fr.tile.background]]" >
+					<img ng-src="[[tile.img]]" class='friends_images'>
+					
+	      			<!-- <md-icon md-svg-icon="tile.icon"></md-icon> -->
+	      		<md-grid-tile-footer>
+	      		
+	      		<h3>[[tile.title]]</h3>
+				<md-menu>
+					<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+						<md-icon md-menu-origin md-svg-icon="call:business"></md-icon>
+					</md-button>
+					<md-menu-content width="6">
+						<md-menu-item ng-repeat="item in [1, 2, 3]">
+							<md-button ng-click="fr.announceClick($index)">
+								<md-icon md-menu-align-target md-svg-icon="call:no-sim"></md-icon>
+								Option [[item]]
+							</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+
+	      		</md-grid-tile-footer>
 	    	</md-grid-tile>
 	  	</md-grid-list>
 	</div>

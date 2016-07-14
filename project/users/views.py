@@ -1,4 +1,4 @@
-from flask import flash, redirect, url_for, render_template, request, Blueprint, jsonify
+from flask import flash, redirect, url_for, render_template, request, Blueprint, jsonify, session
 from project.users.forms import SignupForm, LoginForm
 from project.users.models import User, GoogleUser
 from project import db, bcrypt
@@ -6,6 +6,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
 from functools import wraps
 
+import requests
 
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates', static_folder='static', static_url_path='/static/js')
@@ -116,7 +117,16 @@ def setup(id):
 def friends(id):
     user = GoogleUser.query.get(id)
 
-    return render_template('friends.html', user = user)
+    token = session['google_token'][0]
+    headers = {
+        'Authorization' : 'Bearer {}'.format(token)
+    }
+
+    friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
+
+    # from IPython import embed; embed()
+
+    return render_template('friends.html', user = user, friends = friends)
 
 
 @users_blueprint.route('/users/<id>/calendar')

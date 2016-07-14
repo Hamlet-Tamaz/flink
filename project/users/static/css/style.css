@@ -6,6 +6,11 @@ left: -5px;
 
 }
 
+.friends_images {
+  width: 150px;
+  position: relative;
+  top: -30px
+}
 
 #intro_box {
 	top: 50px;
@@ -31,6 +36,9 @@ left: -5px;
 #messagesDiv {
   text-align: center
 }
+
+
+
 
 
 
@@ -112,3 +120,10 @@ md-grid-tile-footer figcaption h3 {
   font-weight: 700;
   width: 100%;
   text-align: center; }
+
+
+/*  FOR DROPDOWN MENUS ON FRIENDS PAGE   */
+.menudemoMenuPositionModes .md-menu-demo {
+  padding: 24px; }
+.menudemoMenuPositionModes .menu-demo-container {
+  min-height: 200px; }

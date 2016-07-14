@@ -135,7 +135,7 @@ debugger
 
 
   friends.$inject = ['$http']
-  function friends($http) {
+  function friends($http, $mdDialog) {
     var vm = this;
     
     id = +location.pathname.split('/')[2]
@@ -154,20 +154,21 @@ debugger
         responseType: 'json'
       }).then(function success(res) {
         vm.friends = res.data.items
-        
+        debugger
         vm.tiles = buildGridModel({
-                icon : "avatar:svg-",
-                title: "Svg-",
+                img : "",
+                title: "",
                 background: ""
               });
         debugger 
 
         function buildGridModel(tileTmpl){
           var it, results = [ ];
-          for (var j=0; j<11; j++) {
+          for (var j=0; j<res.data.totalItems; j++) {
+            // debugger
             it = angular.extend({},tileTmpl);
-            it.icon  = it.icon + (j+1);
-            it.title = it.title + (j+1);
+            it.img  = vm.friends[j].image.url;
+            it.title = vm.friends[j].displayName;
             it.span  = { row : 1, col : 1 };
             switch(j+1) {
               case 1:
@@ -204,6 +205,25 @@ debugger
     }), function error(res) {
       debugger
     }
+
+
+    var originatorEv;
+    vm.menuHref = "http://www.google.com/design/spec/components/menus.html#menus-specs";
+    vm.openMenu = function($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
+    vm.announceClick = function(index) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .title('You clicked!')
+          .textContent('You clicked the menu item at index ' + index)
+          .ok('Nice')
+          .targetEvent(originatorEv)
+      );
+      originatorEv = null;
+    };
+
   }
 
 
