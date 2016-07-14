@@ -1,6 +1,6 @@
-from flask import flash, redirect, url_for, render_template, request, Blueprint
+from flask import flash, redirect, url_for, render_template, request, Blueprint, jsonify
 from project.users.forms import SignupForm, LoginForm
-from project.users.models import User
+from project.users.models import User, GoogleUser
 from project import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
@@ -36,7 +36,15 @@ def home():
 #       HOW TO SEND IN THE ID FROM WHERE THIS LINK COMES?
 #  FOR EXAMPLE FROM THE LOGIN PAGE
 def dash(id):
-    return render_template('dash.html', user = User.query.get_or_404(id))
+    user = GoogleUser.query.get_or_404(id)
+    name = 'hamlet'
+    # if request.headers['Accept'] == 'application/json, text/plain, */*':
+    #     from IPython import embed; embed()
+    #     print (user)
+    #     # print ('json: ', jsonify({"user": user}))
+    #     return jsonify( user.serialize())
+
+    return render_template('dash.html', user = user)
 
 
 
@@ -89,8 +97,43 @@ def login():
     # from IPython import embed; embed()
     return render_template('login.html',form=form,error=error)
 
+
+@users_blueprint.route('/users/<id>/info_setup')
+def setup(id):
+    user = GoogleUser.query.get(id)
+    print('user:')
+    from IPython import embed; embed()
+
+    return render_template('info_setup.html', user = user)
+
+
+
+
+
+
+@users_blueprint.route('/users/<id>/friends')
+# @login_required
+def friends(id):
+    user = GoogleUser.query.get(id)
+
+    return render_template('friends.html', user = user)
+
+
+@users_blueprint.route('/users/<id>/calendar')
+# @login_required
+def calendar(id):
+    user = GoogleUser.query.get(id)
+    return render_template('calendar.html', user=user)
+
+@users_blueprint.route('/users/<id>/messages')
+def messages(id):
+    user = GoogleUser.query.get(id)
+    return render_template('messages.html', user=user)
+
+
+
 @users_blueprint.route('/logout')
-@login_required
+# @login_required
 def logout():
     logout_user()
     flash('Logged out!')
@@ -98,9 +141,3 @@ def logout():
 
 
 
-
-
-@users_blueprint.route('/users/<id>/friends')
-@login_required
-def friends():
-    render_template('friends.html')

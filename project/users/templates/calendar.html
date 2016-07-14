@@ -1,0 +1,33 @@
+{%  extends "user_base.html"  %}
+
+{%  block user_css  %}
+	<link rel="stylesheet" href="{{url_for('users.static', filename='css/fullcalendar.css')}}">
+	<script src="{{url_for('users.static', filename='js/jquery.min.js')}}"></script>
+	<script src="{{url_for('users.static', filename='js/moment.min.js')}}"></script>
+	<script src="{{url_for('users.static', filename='js/fullcalendar.js')}}"></script>
+	<script src="{{url_for('users.static', filename='js/gcal.js')}}"></script>
+
+{%  endblock  %}
+
+
+
+
+{%  block content  %}
+	<div id='calendar_div' ng-controller='calendarCtr as cal'>
+	
+
+	<div class='container'>
+
+		<div id='calendar'></div>
+
+	</div>
+		
+
+	</div>
+{%  endblock  %}
+
+
+{%  block user_js  %}
+
+
+{%  endblock  %}

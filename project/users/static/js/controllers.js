@@ -1,28 +1,66 @@
+// Move out All API KEYS!!!
+
 (function() {
 	angular
 		.module('flink', ['ngMaterial'])
-    .controller('homeCtr', home)
-    .controller('dashCtr', dash)
-		.controller('appCtrl', appCtrl)
-    .controller('leftCtrl', leftNav)
-		.controller('loginCtr', login)
 
 
-		.config(function($mdThemingProvider) {
-		  $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
-		  $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-		  $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-		  $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
-		})
-		
-		.config(function($mdThemingProvider) {
-  			$mdThemingProvider.theme('default')
-    			.primaryPalette('green')
+    .config(function($mdThemingProvider) {
+      $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+      $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+      $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+      $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+    })
+    
+    .config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+          .primaryPalette('green')
           .accentPalette('pink');
     })
-    // .config(function($interpolateProvider){
-    //   $interpolateProvider.startSymbol('[[').endSymbol(']]');
-    // });
+    .config( ['$mdIconProvider', function( $mdIconProvider ){
+      $mdIconProvider.iconSet("avatar", 'icons/avatar-icons.svg', 128);
+    }])
+    .config(function($interpolateProvider){
+      $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    })
+
+
+
+    .controller('homeCtr', home)
+    .controller('dashCtr', dash)
+		.controller('appCtr', appCtr)
+    .controller('leftCtrl', leftNav)
+    .controller('loginCtr', login)
+    .controller('calendarCtr', calendar)
+		.controller('friendsCtr', friends)
+    .controller('messagesCtr', messages)
+
+    function home() {
+      var vm = this;
+    }
+
+
+    function login() {
+    var vm = this;
+    vm.name = 'hamlet'
+
+    vm.onSignIn_google = function(googleUser) {
+      vm.profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+    }
+
+    vm.signOut_google = function() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      })
+    }
+  }
+
+
 
   function dash() {
     var vm = this;
@@ -51,37 +89,143 @@
     }
   }
 
-  function home() {
+  calendar.$inject = ['$http']
+  function calendar($http) {
     var vm = this;
-  }
+    
 
-  function login() {
-    var vm = this;
-    vm.name = 'hamlet'
+    id = +location.pathname.split('/')[2]
 
-    vm.onSignIn_google = function(googleUser) {
-      vm.profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail());
+debugger
+
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}`,
+      responseType: "json"
+    }).then(function success(res) {
+      vm.user = res.data
+      vm.email = vm.user['email']
+      debugger
+      $('#calendar').fullCalendar({
+
+        googleCalendarApiKey: 'AIzaSyC3tsIjfaN2pbc6N82F7QKhccsqCCuZfrs',
+        events: {
+            googleCalendarId: vm.email
+        }
+
+      });
+    }), function error(res) {
+      vm.error = res
       debugger
     }
 
-    vm.signOut_google = function() {
+
+    // $(document).ready(function() {
+    // debugger
+    //   $('#calendar').fullCalendar({
+
+    //     googleCalendarApiKey: 'AIzaSyC3tsIjfaN2pbc6N82F7QKhccsqCCuZfrs',
+    //     events: {
+    //         googleCalendarId: vm.user['email']
+    //     }
+
+    //   });
+    // });
+  }
+
+
+  friends.$inject = ['$http']
+  function friends($http) {
+    var vm = this;
+    
+    id = +location.pathname.split('/')[2]
+
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}`,
+      responseType: "json"
+    }).then(function success(res) {
+      vm.user = res.data
       debugger
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
+      
+      $http({
+        method: "GET",
+        url: `https://www.googleapis.com/plus/v1/people/${vm.user.google_id}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE`,
+        // url: `https://www.google.com/m8/feeds/contacts/default/full`,
+        // responseType: 'json'
+// API KEY
+      }).then(function success(res){
+        debugger
       })
+
+    }), function error(res) {
+      vm.error = res
+      debugger
     }
 
 
-    gapi.load('auth2', function() {
-      gapi.auth2.init()
-    })
+
+
+
+
+
+    vm.tiles = buildGridModel({
+            icon : "avatar:svg-",
+            title: "Svg-",
+            background: ""
+          });
+
+    function buildGridModel(tileTmpl){
+      var it, results = [ ];
+      for (var j=0; j<11; j++) {
+        it = angular.extend({},tileTmpl);
+        it.icon  = it.icon + (j+1);
+        it.title = it.title + (j+1);
+        it.span  = { row : 1, col : 1 };
+        switch(j+1) {
+          case 1:
+            it.background = "red";
+            it.span.row = it.span.col = 2;
+            break;
+          case 2: it.background = "green";         break;
+          case 3: it.background = "darkBlue";      break;
+          case 4:
+            it.background = "blue";
+            it.span.col = 2;
+            break;
+          case 5:
+            it.background = "yellow";
+            it.span.row = it.span.col = 2;
+            break;
+          case 6: it.background = "pink";          break;
+          case 7: it.background = "darkBlue";      break;
+          case 8: it.background = "purple";        break;
+          case 9: it.background = "deepBlue";      break;
+          case 10: it.background = "lightPurple";  break;
+          case 11: it.background = "yellow";       break;
+        }
+        results.push(it);
+      }
+
+      return results;
+    }
 
   }
+
+  function messages ($mdSidenav) {
+    var vm = this;
+
+    vm.inbox = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
+
+    vm.openLeftMenu = function() {
+      $mdSidenav('left').toggle();
+    }
+  }
+  
+    // gapi.load('auth2', function() {
+    //   gapi.auth2.init()
+    // })
+
 
 
 
@@ -89,11 +233,14 @@
 //  NOT MY STUFF
 
 //  FOR SIDEBAR ON HOME PAGE
+  appCtr.$inject = ['$mdSidenav', '$timeout', '$log']
+  function appCtr ($mdSidenav, $timeout, $log) {
 
-  function appCtrl ($scope, $timeout, $mdSidenav, $log) {
-    $scope.toggleLeft = buildDelayedToggler('left');
-    $scope.toggleRight = buildToggler('right');
-    // $scope.isOpenRight = function(){
+    var vm = this;
+
+    vm.toggleLeft = buildDelayedToggler('left');
+    vm.toggleRight = buildToggler('right');
+    // vm.isOpenRight = function(){
     //   return $mdSidenav('right').isOpen();
     // };
     /**
@@ -103,7 +250,7 @@
     function debounce(func, wait, context) {
       var timer;
       return function debounced() {
-        var context = $scope,
+        var context = vm,
             args = Array.prototype.slice.call(arguments);
         $timeout.cancel(timer);
         timer = $timeout(function() {
@@ -138,8 +285,10 @@
     }
   }
 
-  function leftNav($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function () {
+  function leftNav(vm, $timeout, $mdSidenav, $log) {
+    var vm = this;
+
+    vm.close = function () {
       // Component lookup should always be available since we are not using `ng-if`
       $mdSidenav('left').close()
         .then(function () {

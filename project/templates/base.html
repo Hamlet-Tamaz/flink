@@ -7,11 +7,11 @@
 
 	<title>Flink</title>
   
+
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
 {%  block css  %}
 {%  endblock  %}
-
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-
 
 </head>
 <body ng-controller='dashCtr as dash'>
@@ -21,30 +21,30 @@
   <md-toolbar>
     <div class="md-toolbar-tools">
 
-      {%  if current_user.name  %}
-        <md-button ng-href='/users/{{current_user.id}}/dash'>Flink</md-button>
+      {%  if user  %}
+        <md-button ng-href='/users/{{user.id}}/dash'>Flink</md-button>
        
+        <md-button ng-href='/users/{{user.id}}/friends'>
+        	Friends
+        </md-button>
+
+  			<md-button ng-href='/users/{{user.id}}/calendar'> 
+        	Calendars
+        </md-button>
+
+  			<md-button ng-href='/users/{{user.id}}/messages'>
+        	Messages
+        </md-button>
       {%  else  %}
         <md-button ng-href='/'>Flink</md-button>
       {% endif   %}
 
-			<span flex></span>
+      <span flex></span>
       
-      <md-button ng-href='/friends'>
-      	Friends
-      </md-button>
-
-			<md-button ng-href='/calendars'> 
-      	Calendars
-      </md-button>
-
-			<md-button>
-      	Messages
-      </md-button>
 			<span flex></span>
 
 
-{%  if current_user.is_authenticated  %}
+{%  if user  %}
       <!-- <label for="">My Account</label>
       <md-select ng-href='/myaccount'>
         <md-option>
@@ -100,7 +100,7 @@
             </md-menu-item>
             
             <md-menu-item>
-              <md-button ng-click='dash.signOut()'>
+              <md-button href='/google/logout'>
                 Logout Google
               </md-button>
             </md-menu-item>
@@ -123,6 +123,8 @@
     </div>
   </md-toolbar>
 
+<h2>{{user}}</h2>
+
 </div>
 
 {% for message in get_flashed_messages() %}
@@ -133,9 +135,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
 
-  {%  block js  %}
-
-  {%  endblock  %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
@@ -145,13 +144,10 @@
 <!-- Google Signin Api -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+  {%  block js  %}
 
-<!-- HELP : HOW DO I GET THESE SCRIPTS TO WORK -->
+  {%  endblock  %}
 
-<!-- <script src='/project/static/js/app.js'></script>
-<script src=''></script>
-<script src='../static/js/controllers.js'></script>
-<script src='../static/js/services.js'></script> -->
 
 </body>
 </html>

@@ -2,9 +2,9 @@
 	
 angular
 	.module('flink', ['ngMaterial'])
-    .config(function($interpolateProvider){
-      $interpolateProvider.startSymbol('[[').endSymbol(']]');
-    });
+    // .config(function($interpolateProvider){
+    //   $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    // });
 
 
 

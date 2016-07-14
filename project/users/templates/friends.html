@@ -1,0 +1,62 @@
+{%  extends 'user_base.html'  %}
+
+{%  block content  %}
+	<h1>Friends</h1>
+
+
+	<div ng-controller="friendsCtr as friends" flex ng-cloak>
+
+<!-- 		<div>
+		<h2>WHA?</h2>
+		<h1 ng-repeat="tile in friends.tiles">
+			[[tile.icon]]
+		</h1>
+		</div> -->
+
+		
+		<md-grid-list
+	        md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+	        md-row-height-gt-md="1:1" md-row-height="4:3"
+	        md-gutter="8px" md-gutter-gt-sm="4px" >
+	    	<md-grid-tile ng-repeat="tile in friends.tiles"
+		                  md-rowspan="tile.span.row"
+		                  md-colspan="tile.span.col"
+		                  md-colspan-sm="1"
+		                  md-colspan-xs="1"
+		                  class="[[tile.background]]" >
+	      		<md-icon md-svg-icon="tile.icon"></md-icon>
+	      		<md-grid-tile-footer><h3>[[tile.title]]</h3></md-grid-tile-footer>
+	    	</md-grid-tile>
+	  	</md-grid-list>
+	</div>
+
+
+
+
+<!-- what are the appropriate []/{} to use -->
+
+
+
+
+	<!-- <md-sidenav 
+		md-component-id='left' 
+		md-is-locked-open="$mdMedia('gt-xs')"
+		md-whiteframe='10'
+		style='display:none'>
+		
+		<md-toolbar flex='20'> 
+			<h3 class='md-toolbar-tools'>Friends</h3>
+		</md-toolbar>
+		<md-content>
+			<md-list>
+				<md-list-item ng-repeat='friend in base.friends'>
+
+					<p>[[friend.name]] - [[friend.age]]</p>
+
+				</md-list-item>	
+			</md-list>
+			
+		</md-content>
+	</md-sidenav> -->
+
+{%  endblock  %}

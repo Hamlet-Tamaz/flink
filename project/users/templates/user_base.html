@@ -2,11 +2,18 @@
 
 {%  block css  %}
 	<link rel="stylesheet" href="{{url_for('users.static', filename='css/style.css')}}">
+	{%  block user_css  %}
+	{%  endblock  %}
+
 {%  endblock  %}
+
+
 
 {%  block content  %}
 
 {%  endblock  %}
+
+
 
 
 {%  block js  %}
@@ -16,4 +23,7 @@
 	<script src="{{url_for('users.static', filename='js/components.js')}}"></script>
 
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+	{%  block user_js  %}
+	{%  endblock  %}
 {%  endblock  %}

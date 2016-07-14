@@ -2,7 +2,7 @@
 
 {%  block content  %}
 
-<div ng-controller='homeCtr as home' layout='column' layou-align='center center'>
+<div layout='column' layou-align='center center'>
 	<br>
 	<md-content layout='column'>
 	    
@@ -14,7 +14,7 @@
 		      		<img class='intro_smiley' ng-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/2000px-Smiley.svg.png" class='md-card-image'>
 			          <md-card-title-text>
 			          	<md-toolbar layout-align='center center'>
-							<h3 >Hello {{current_user.name}}</h3>
+							<h3 >Hello {{user.given_name}}</h3>
 						</md-toolbar>
 			            <span class="md-headline" style="text-align: center">You are one Flink away from your friends!</span>
 			          </md-card-title-text>
@@ -33,26 +33,7 @@
 
 
 
-	<!-- <md-sidenav 
-		md-component-id='left' 
-		md-is-locked-open="$mdMedia('gt-xs')"
-		md-whiteframe='10'
-		style='display:none'>
-		
-		<md-toolbar flex='20'> 
-			<h3 class='md-toolbar-tools'>Friends</h3>
-		</md-toolbar>
-		<md-content>
-			<md-list>
-				<md-list-item ng-repeat='friend in base.friends'>
-
-					<p>[[friend.name]] - [[friend.age]]</p>
-
-				</md-list-item>	
-			</md-list>
-			
-		</md-content>
-	</md-sidenav> -->
+	
 
 	<div layout-align='center center' layout='row'>
 
@@ -60,10 +41,10 @@
 
 		<md-content md-whiteframe='5' id='intro_box'>
 			<md-toolbar>
-				<h3 >Hello [[base.name]]</h3>
+				<h3 >Hello [[dash.name]]</h3>
 			</md-toolbar>
 
-			<div ng-controller='appCtrl'>
+			<div ng-controller='appCtr'>
 			<md-sidenav
 			        class="md-sidenav-left"
 			        md-component-id="left"
@@ -119,7 +100,7 @@
 			        The right sidenav will focus on a specific child element.
 			        </p>
 			        <div>
-			          <md-button ng-click="toggleLeft()"
+			          <md-button ng-click="appCtr.toggleLeft()"
 			            class="md-primary" hide-gt-md>
 			            Toggle left
 			          </md-button>

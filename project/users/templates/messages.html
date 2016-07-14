@@ -1,0 +1,61 @@
+{%  extends 'user_base.html'  %}
+
+{%  block content  %}
+<div ng-controller='messagesCtr as mes' id='messagesDiv'>
+	<h1>Messages</h1>
+
+  
+
+ <md-content>
+    <md-tabs md-stretch-tabs='always' md-dynamic-height md-border-bottom> 
+
+			<md-tab label="I">
+				<div layout='row' layout-align='center'>
+					
+					<md-sidenav md-component-id="left" class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-md')">
+						Left Nav!
+						<md-list>
+							<md-list-item class="md-2-line" ng-repeat="msg in mes.inbox">
+								<div class="md-list-item-text">
+									<h3>[[msg.title]]</h3>
+									<p>[[msg.content]]</p>
+								</div>
+							</md-list-item>
+						</md-list>
+						[[data]]
+					</md-sidenav>
+					
+					<md-content>
+						Center Content
+						<md-button ng-click="mes.openLeftMenu()">
+							Open Left Menu
+						</md-button>
+					</md-content>
+
+					<md-sidenav md-component-id="right" md-is-locked-open="$mdMedia('min-width: 333px')" class="md-sidenav-right">
+						<form>
+							<md-input-container>
+								<label for="testInput">Test input</label>
+								<input id="testInput" type="text" ng-model="data" md-autofocus>
+							</md-input-container>
+						</form>
+					</md-sidenav>
+				</div>
+
+			</md-tab>
+
+		<md-tab label="O">
+			<md-content class="md-padding">
+				<h1 class="md-display-2">OutBox</h1>
+				<p>Lorem ipsum </p>
+			</md-content>
+		</md-tab>
+	</md-tabs>
+</md-content>
+
+
+
+
+</div>
+
+{%  endblock  %}
