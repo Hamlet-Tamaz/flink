@@ -136,3 +136,7 @@ md-grid-tile-footer figcaption h3 {
   padding: 24px; }
 .menudemoMenuPositionModes .menu-demo-container {
   min-height: 200px; }
+
+  /*  FOR SETUP INPUT STUFF*/
+  .inputdemoBasicUsage .md-datepicker-button {
+  width: 36px; }

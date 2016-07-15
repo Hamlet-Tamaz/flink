@@ -56,3 +56,18 @@ def user_friends(id):
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
 
 		return friends
+
+
+@api_blueprint.route('/users/<id>/friends/<to_id>')
+def user_friend(id, to_id):
+	if request.headers['Accept'] == 'application/json, text/plain, */*':
+
+		user = GoogleUser.query.get(id)
+		token = session['google_token'][0]
+		headers = {
+			'Authorization' : 'Bearer {}'.format(token)
+		}
+
+		friend = requests.get('https://www.googleapis.com/plus/v1/people/{}'.format(to_id), headers=headers).content
+
+		return friend

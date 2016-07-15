@@ -99,13 +99,20 @@ def login():
     return render_template('login.html',form=form,error=error)
 
 
-@users_blueprint.route('/users/<id>/info_setup')
+@users_blueprint.route('/users/<id>/setup')
 def setup(id):
     user = GoogleUser.query.get(id)
     print('user:')
     # from IPython import embed; embed()
 
-    return render_template('info_setup.html', user = user)
+    return render_template('setup.html', user = user)
+
+
+@users_blueprint.route('/users/<id>/edit')
+def edit(id):
+    user = GoogleUser.query.get(id)
+
+    return render_template('edit.html', user = user)
 
 
 
@@ -122,7 +129,10 @@ def friends(id):
         'Authorization' : 'Bearer {}'.format(token)
     }
 
-    friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
+    from IPython import embed; embed()
+
+    friends = requests.get('https://www.googleapis.com/plus/v1/people/{}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(user.google_id), headers=headers).content
+    
 
     # from IPython import embed; embed()
 
@@ -138,7 +148,34 @@ def calendar(id):
 @users_blueprint.route('/users/<id>/messages')
 def messages(id):
     user = GoogleUser.query.get(id)
-    return render_template('messages.html', user=user)
+
+    return render_template('messages.html', user = user)
+
+@users_blueprint.route('/users/<id>/messages/new')
+def new_message(id):
+    user = GoogleUser.query.get(id)
+
+    return render_template('new_message', user = user)
+
+
+@users_blueprint.route('/users/<id>/messages/new/<to_id>')
+def new_message_W(id, to_id):
+
+    user = GoogleUser.query.get(id)
+
+    token = session['google_token'][0]
+    headers = {
+        'Authorization' : 'Bearer {}'.format(token)
+    }
+
+
+    friend = GoogleUser.query.filter_by(google_id=to_id).first() 
+
+    if not friend:
+        friend = requests.get('https://www.googleapis.com/plus/v1/people/{}?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(to_id), headers=headers).json()
+    
+    from IPython import embed; embed()
+    return render_template('new_message_W.html', user=user, friend=friend)
 
 
 

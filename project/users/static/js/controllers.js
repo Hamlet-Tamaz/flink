@@ -29,7 +29,8 @@
     })
 
 
-
+    .controller('setupCtr', setup)
+    .controller('editCtr', edit)
     .controller('homeCtr', home)
     .controller('dashCtr', dash)
 		.controller('appCtr', appCtr)
@@ -38,6 +39,77 @@
     .controller('calendarCtr', calendar)
 		.controller('friendsCtr', friends)
     .controller('messagesCtr', messages)
+
+    
+    setup.$inject = ['$http']
+    function setup($http) {
+      var vm = this;
+      
+      id = +location.pathname.split('/')[2]
+      
+      $http({
+        method: "GET",
+        url: `http://localhost:3000/api/users/${id}`,
+        responseType: "json"
+      }).then(function success(res) {
+        vm.user = res.data
+
+        debugger
+      
+      }), function error(res) {
+      vm.error = res
+      debugger
+      }
+
+      // vm.user = {
+      //   title: 'Developer',
+      //   email: 'ipsum@lorem.com',
+      //   firstName: '',
+      //   lastName: '',
+      //   company: 'Google',
+      //   address: '1600 Amphitheatre Pkwy',
+      //   city: 'Mountain View',
+      //   state: 'CA',
+      //   biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
+      //   postalCode: '94043'
+      // };
+
+      vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
+      'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
+      'WY').split(' ').map(function(state) {
+          return {abbrev: state};
+        });
+    }
+
+    edit.$inject = ['$http']
+    function edit($http) {
+      var vm = this;
+      
+      id = +location.pathname.split('/')[2]
+
+      $http({
+        method: "GET",
+        url: `http://localhost:3000/api/users/${id}`,
+        responseType: "json"
+      }).then(function success(res) {
+        vm.user = res.data
+
+        debugger
+      
+      }), function error(res) {
+      vm.error = res
+      debugger
+      }
+      
+      vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
+      'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
+      'WY').split(' ').map(function(state) {
+          return {abbrev: state};
+        });
+    }
+
+
+    
 
     function home() {
       var vm = this;
@@ -159,25 +231,19 @@ debugger
       }).then(function success(res) {
         vm.friends = res.data.items
 debugger
-        vm.tiles = buildGridModel({
-                img : "",
-                title: "",
-                background: "",
-                id: "", 
-              });
+        vm.tiles = buildGridModel({});
 
 
         function buildGridModel(tileTmpl){
           var it, results = [ ];
           for (var j=0; j<res.data.totalItems; j++) {
-            // debugger
+
             it = angular.extend({},tileTmpl);
+
             it.img  = vm.friends[j].image.url;
             it.title = vm.friends[j].displayName;
             it.span  = { row : 1, col : 1 };
-            // it.id = vm.friends[j].id 
             it.google_id = vm.friends[j].id
-            debugger
 
             switch(j+1) {
               case 1:
@@ -237,11 +303,27 @@ debugger
 
 
 
-
-  function messages ($mdSidenav) {
+  messages.$inject = ['$http', '$mdSidenav']
+  function messages ($http, $mdSidenav) {
     var vm = this;
+    
+    id = +location.pathname.split('/')[2]
+    to_id = +location.pathname.split('/')[4]
+
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}/friends/${to_id}`,
+      responseType: 'json'
+    }).then(function success(res) {
+      debugger
+    }), function error(res) {
+
+    }
+
 
     vm.inbox = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
+
+    
 
     vm.openLeftMenu = function() {
       $mdSidenav('left').toggle();

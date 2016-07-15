@@ -28,6 +28,7 @@ class GoogleUser(db.Model):
 	picture = db.Column(db.Text)
 	verified_email = db.Column(db.Boolean)
 
+
 	@property
 	def serialize(self):
 		ans = {}
@@ -56,6 +57,53 @@ class GoogleUser(db.Model):
 	# def __repr__(self):
 	# return 'name: {name}, id: {id}, google_id: {google_id}'.format(name=self.name, id=self.id, google_id=self.google_id)
 
+class Friend(db.Model):
+	__tablename__ = 'friends'
+
+	user_id = db.Column(db.Integer, db.ForeignKey('google_users.id'), primary_key=True)
+	friend_id = db.Column(db.Integer, db.ForeignKey('google_users.id'), primary_key=True)
+	request_status = db.Column(db.Boolean)
+
+	user = db.relationship('GoogleUser', foreign_keys='Friend.user_id')
+	friend = db.relationship('GoogleUser', foreign_keys='Friend.friend_id')
+
+
+	def __init__(self, user_id, friend_id, request_status):
+		
+		self.user_id = user_id
+		self.friend_id = friend_id
+		self.request_status = request_status
+
+	def __repr__(self):
+		return 'user: {user}, friend: {friend}; status: {status}'.format(user=self.user_id, friend=self.friend_id, status=self.request_status)
+
+
+
+
+class Message(db.Model):
+	__tablename__ = 'messages'
+
+	id = db.Column(db.Integer, primary_key=True)
+	sender_id = db.Column(db.Integer)
+	receiver_id = db.Column(db.Integer)
+	subject = db.Column(db.Text)
+	sticker = db.Column(db.Text)
+	content = db.Column(db.Text) 
+
+
+	def __init__(self, sender_id, receiver_id, subject, sticker, content):
+		
+		self.sender_id = db.Column(db.Integer)
+		self.receiver_id = db.Column(db.Integer)
+		self.subject = db.Column(db.Text)
+		self.sticker = db.Column(db.Text)
+		self.content = db.Column(db.Text)
+
+	def __repr__(self):
+		return 'sender: {sender}, receiver: {receiver}, subject: {subject}, content: {content}'.format(sender=self.sender_id, receiver=self.receiver_id, subject=self.subject, sticker=self.sticker, content=self.content )
+
+
+
 class G_UserSchema(ma.ModelSchema):
 	class Meta:
 		model = GoogleUser
@@ -64,4 +112,5 @@ class G_UserSchema(ma.ModelSchema):
 	# 	'self': ma.URLFor('user_detail', id='<id>'),
 	# 	'collection': ma.URLFor('users')
 	# 	})
+
 

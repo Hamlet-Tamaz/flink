@@ -1,0 +1,43 @@
+{%  extends 'user_base.html'  %}
+
+{%  block content  %}
+<h1>New Message With 'To' Person</h1>
+
+<h1>User: {{user}}</h1>
+<h1>Friend: {{friend.displayName}}</h1>
+
+
+<div layout='column' layou-align='center center'>
+	<br>
+	<md-content layout='column'>
+	    
+		<md-content class="md-padding" layout-xs="column" layout="row">
+		    <div flex-xs flex-gt-xs="100" layout="column">
+		      <md-card  md-theme-watch>
+		      	<div layout='row'>
+			        <md-card-title>
+		      		<img class='intro_smiley' ng-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/2000px-Smiley.svg.png" class='md-card-image'>
+			          <md-card-title-text>
+			          	<md-toolbar layout-align='center start' layout-padding>
+							<h3 >To: {{friend.displayName}}</h3>
+							<h3 >Subject: </h3>
+						</md-toolbar>
+			            <span class="md-headline" style="text-align: center">You are one Flink away from your friends!</span>
+			          </md-card-title-text>
+			        </md-card-title>
+		        </div>
+		        <md-card-actions layout="column" layout-align="end center">
+		          <p>You have 2 appointments this week <md-button class='md-accent'>Go to Calendar</md-button></p>
+		          <p>You currently have 2 invites<md-button class='md-accent'>Respond</md-button></p>
+		          <p>You haven't set up any appointments in 2 weekd<md-button class='md-accent'>Invite Friends</md-button></p>
+		          <p>Check to see if any friends are down to hang out<md-button class='md-accent'>Flinkr</md-button></p>
+		        </md-card-actions>
+		      </md-card>
+			</div>
+		</md-content>
+	</md-content>
+
+
+</div>
+
+{%  endblock  %}

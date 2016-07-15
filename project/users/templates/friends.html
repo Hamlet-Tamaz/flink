@@ -3,8 +3,6 @@
 {%  block content  %}
 	<h1>Friends</h1>
 
-<!-- {{[[ friends ]]}} -->
-
 	<div ng-controller="friendsCtr as fr" flex ng-cloak>
 
 		<md-grid-list
@@ -23,20 +21,28 @@
 	      			<!-- <md-icon md-svg-icon="tile.icon"></md-icon> -->
 	      		<md-grid-tile-footer layout='row' layout-align='center space-between'>
 
-	      			<h2>[[tile.google_id]]</h2>
+	      			<h2>[[tile.title]]</h2>
 
 	      		</md-grid-tile-footer>
 				
-				<md-menu class='friends_dropdown'>
+				<md-menu class='friends_dropdown' md-position-mode='target-right target'>
 					<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
 						<i class="material-icons md-18">arrow_drop_down_circle</i>
+						
+						<!-- <md-icon md-menu-origin class='md-48'> -->
+						<!-- </md-icon> -->
 						<!-- <md-icon md-menu-origin md-svg-icon="call:business"></md-icon> -->
 					</md-button>
 					<md-menu-content width="6">
 						<md-menu-item>
-							<md-button ng-href='/users/[[]]'>
+							<md-button ng-href='/users/{{user.id}}/messages/new/[[tile.google_id]]'>
+								<div layout='row' flex>
+									<p flex> Send Message</p>
+									<i class="material-icons" style="margin: auto 3px auto 0;">message</i>
+									<!-- <md-icon md-menu-align-target >
+									</md-icon> -->
+								</div>
 								<!-- <md-icon md-menu-align-target md-svg-icon="call:no-sim"></md-icon> -->
-								Option [[item]]
 							</md-button>
 						</md-menu-item>
 					</md-menu-content>
