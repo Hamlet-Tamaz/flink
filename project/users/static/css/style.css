@@ -12,6 +12,15 @@ left: -5px;
   top: -30px
 }
 
+.friends_dropdown {
+  position: relative;
+
+}
+
+.material-icons {
+  font-size: 30px
+}
+
 #intro_box {
 	top: 50px;
 }

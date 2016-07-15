@@ -18,7 +18,11 @@
           .accentPalette('pink');
     })
     .config(function( $mdIconProvider ){
-      $mdIconProvider.iconSet("avatar", 'icons/avatar-icons.svg', 128);
+      $mdIconProvider
+      .iconSet("avatar", 'icons/avatar-icons.svg', 128)
+      .iconSet("call", 'img/icons/sets/communication-icons.svg', 24)
+      .iconSet("social", 'img/icons/sets/social-icons.svg', 24)
+
     })
     .config(function($interpolateProvider){
       $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -135,7 +139,7 @@ debugger
 
 
   friends.$inject = ['$http']
-  function friends($http, $mdDialog) {
+  function friends($http) {
     var vm = this;
     
     id = +location.pathname.split('/')[2]
@@ -146,7 +150,7 @@ debugger
       responseType: "json"
     }).then(function success(res) {
       vm.user = res.data
-      debugger
+
       
       $http({
         method: "GET",
@@ -154,13 +158,14 @@ debugger
         responseType: 'json'
       }).then(function success(res) {
         vm.friends = res.data.items
-        debugger
+debugger
         vm.tiles = buildGridModel({
                 img : "",
                 title: "",
-                background: ""
+                background: "",
+                id: "", 
               });
-        debugger 
+
 
         function buildGridModel(tileTmpl){
           var it, results = [ ];
@@ -170,6 +175,10 @@ debugger
             it.img  = vm.friends[j].image.url;
             it.title = vm.friends[j].displayName;
             it.span  = { row : 1, col : 1 };
+            // it.id = vm.friends[j].id 
+            it.google_id = vm.friends[j].id
+            debugger
+
             switch(j+1) {
               case 1:
                 it.background = "red";
@@ -213,16 +222,16 @@ debugger
       originatorEv = ev;
       $mdOpenMenu(ev);
     };
-    vm.announceClick = function(index) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .title('You clicked!')
-          .textContent('You clicked the menu item at index ' + index)
-          .ok('Nice')
-          .targetEvent(originatorEv)
-      );
-      originatorEv = null;
-    };
+    // vm.announceClick = function(index) {
+    //   $mdDialog.show(
+    //     $mdDialog.alert()
+    //       .title('You clicked!')
+    //       .textContent('You clicked the menu item at index ' + index)
+    //       .ok('Nice')
+    //       .targetEvent(originatorEv)
+    //   );
+    //   originatorEv = null;
+    // };
 
   }
 
