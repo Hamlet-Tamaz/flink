@@ -3,8 +3,12 @@
 {%  block content  %}
 <div ng-controller='messagesCtr as mes' id='messagesDiv'>
 	<h1>Messages</h1>
-
-	<i ng-href='{{url_for(users.new_message), id=user.id}}' class="material-icons">send</i>
+	inbox: {{inbox}}
+	inbox.id: {{inbox.sender_id}}
+	<md-button ng-href='/users/{{user.id}}/messages/new' layout='row' layout-align='center center'>
+		<i class="material-icons">send</i>
+		<label>New Message</label>
+	</md-button>
 
  <md-content>
     <md-tabs md-stretch-tabs='always' md-dynamic-height md-border-bottom> 

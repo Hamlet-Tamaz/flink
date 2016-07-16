@@ -46,6 +46,10 @@ left: -5px;
   text-align: center
 }
 
+#editDiv {
+  z-index: 1
+}
+
 
 
 

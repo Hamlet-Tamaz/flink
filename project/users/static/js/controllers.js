@@ -46,7 +46,7 @@
       var vm = this;
       
       id = +location.pathname.split('/')[2]
-      
+
       $http({
         method: "GET",
         url: `http://localhost:3000/api/users/${id}`,
@@ -93,7 +93,7 @@
         responseType: "json"
       }).then(function success(res) {
         vm.user = res.data
-
+        console.log('user: ', vm.user)
         debugger
       
       }), function error(res) {

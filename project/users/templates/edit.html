@@ -2,65 +2,74 @@
 
 {%  block content  %}
 
-<div ng-controller="editCtr as edit" layout="column" ng-cloak class="md-inline-form">
+<div ng-controller="editCtr as edit" layout="column" ng-cloak class="md-inline-form" layout-align='center center'>
   
   <h1>Edit</h1>
+  <input type="text">
   <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
-    <div>
-      <md-input-container>
-        <label>Title</label>
-        <input ng-model="user.title">
-      </md-input-container>
-      <md-input-container>
-        <label>Email</label>
-        <input ng-model="user.email" type="email">
-      </md-input-container>
-    </div>
   </md-content>
   <md-content layout-padding>
     <div>
-      <form name="userForm">
-        <div layout-gt-xs="row">
-          <md-input-container class="md-block" flex-gt-xs>
-            <label>Company (Disabled)</label>
-            <input ng-model="user.company" disabled>
-          </md-input-container>
-          <md-datepicker ng-model="user.submissionDate" md-placeholder="Enter date">
-          </md-datepicker>
-        </div>
+      <form name="editForm" action='/users/{{user.id}}/update' method="PUT">
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
-            <label>First name</label>
-            <input ng-model="user.firstName">
+            <label>First Name</label>
+            <input type='text' ng-model="edit.user.given_name">
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
-            <label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
-            <input ng-model="theMax">
+            <label>Family Name</label>
+            <input ng-model="edit.user.family_name">
           </md-input-container>
         </div>
+	    
+	    <div>
+	      <md-input-container>
+	        <label>Title</label>
+	        <input ng-model="edit.user.title">
+	      </md-input-container>
+	      <md-input-container>
+	        <label>Email</label>
+	        <input ng-model="edit.user.email" type="email">
+	      </md-input-container>
+	      <md-input-container>
+	        <label>Gender</label>
+	        <input ng-model="edit.user.gender">
+	      </md-input-container>
+	    </div>
+        
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Company</label>
+            <input ng-model="edit.user.company">
+          </md-input-container>
+
+          <md-datepicker ng-model="edit.user.dob" md-placeholder="Date of Birth">
+          </md-datepicker>
+        </div>
+        
         <md-input-container class="md-block">
           <label>Address</label>
-          <input ng-model="user.address">
+          <input ng-model="edit.user.address">
         </md-input-container>
         <md-input-container md-no-float class="md-block">
-          <input ng-model="user.address2" placeholder="Address 2">
+          <input ng-model="edit.user.address2" placeholder="Address 2">
         </md-input-container>
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>City</label>
-            <input ng-model="user.city">
+            <input ng-model="edit.user.city">
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>State</label>
-            <md-select ng-model="user.state">
-              <md-option ng-repeat="state in states" value="[[state.abbrev]]">
+            <md-select ng-model="edit.user.state">
+              <md-option ng-repeat="state in edit.states" value="[[state.abbrev]]">
                 [[state.abbrev]]
               </md-option>
             </md-select>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Postal Code</label>
-            <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
+            <input name="postalCode" ng-model="edit.user.postalCode" placeholder="12345"
                    required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
             <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
               <div ng-message="required" class="my-message">You must supply a postal code.</div>
@@ -75,13 +84,16 @@
         </div>
         <md-input-container class="md-block">
           <label>Biography</label>
-          <textarea ng-model="user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+          <textarea ng-model="edit.user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>
+
+		<md-input-container>
+        	<input type="submit" value='submit' class='primary'>
+		</md-input-container>	
       </form>
     </div>
   </md-content>
 </div>
-Title
 
 
 {%  endblock  %}

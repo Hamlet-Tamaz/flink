@@ -1,6 +1,6 @@
 from flask import flash, redirect, url_for, render_template, request, Blueprint, jsonify, session
 from project.users.forms import SignupForm, LoginForm
-from project.users.models import User, GoogleUser
+from project.users.models import User, GoogleUser, Friendship, Message
 from project import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
@@ -102,8 +102,7 @@ def login():
 @users_blueprint.route('/users/<id>/setup')
 def setup(id):
     user = GoogleUser.query.get(id)
-    print('user:')
-    # from IPython import embed; embed()
+    from IPython import embed; embed()
 
     return render_template('setup.html', user = user)
 
@@ -112,8 +111,17 @@ def setup(id):
 def edit(id):
     user = GoogleUser.query.get(id)
 
+    from IPython import embed; embed()
     return render_template('edit.html', user = user)
 
+
+@users_blueprint.route('/users/<id>/update', methods=['POST'])
+def update(id):
+    user = GoogleUser.query.get(id)
+
+    from IPython import embed; embed()
+    
+    user.given_name = request.form
 
 
 
@@ -148,14 +156,17 @@ def calendar(id):
 @users_blueprint.route('/users/<id>/messages')
 def messages(id):
     user = GoogleUser.query.get(id)
+    inbox = Message.query.filter_by(receiver_id = user.id)
+    outbox = Message.query.filter_by(sender_id = user.id)
 
-    return render_template('messages.html', user = user)
+    from IPython import embed; embed()
+
+    return render_template('messages.html', user = user, inbox=inbox, outbox = outbox)
 
 @users_blueprint.route('/users/<id>/messages/new')
 def new_message(id):
     user = GoogleUser.query.get(id)
-
-    return render_template('new_message', user = user)
+    return render_template('new_message.html', user = user)
 
 
 @users_blueprint.route('/users/<id>/messages/new/<to_id>')
