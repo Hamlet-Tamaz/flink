@@ -308,6 +308,37 @@ debugger
     var vm = this;
     
     id = +location.pathname.split('/')[2]
+    
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}/messages/conversations`,
+      responseType: 'json'
+    }).then(function success(res) {
+      vm.conversations = res.data
+      debugger
+      
+    }), function error(res) {
+      debugger
+    }
+    
+    debugger
+    vm.inbox = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
+
+    
+
+    vm.openLeftMenu = function() {
+      $mdSidenav('left').toggle();
+    }
+  }
+  
+
+
+
+
+  function new_message($http) {
+    var vm = this;
+
+    id = +location.pathname.split('/')[2]
     to_id = +location.pathname.split('/')[4]
 
     $http({
@@ -321,15 +352,15 @@ debugger
     }
 
 
-    vm.inbox = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
 
-    
-
-    vm.openLeftMenu = function() {
-      $mdSidenav('left').toggle();
-    }
   }
-  
+
+
+
+
+
+
+
     // gapi.load('auth2', function() {
     //   gapi.auth2.init()
     // })

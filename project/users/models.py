@@ -42,7 +42,7 @@ class GoogleUser(db.Model):
 
 
 	friends = db.relationship('Friendship', backref='user', lazy='dynamic', foreign_keys='Friendship.user_id')
-	messages = db.relationship('Message', backref='user', lazy='dynamic', foreign_keys='Message.sender_id')
+	messages = db.relationship('Message', backref='user', lazy='dynamic', foreign_keys='Message.user_id')
 
 
 
@@ -105,31 +105,46 @@ class Friendship(db.Model):
 		return 'user: {user}, friend: {friend}; status: {status}'.format(user=self.user_id, friend=self.friend_id, status=self.request_status)
 
 
+class Conversation(db.Model):
+	__tablename__= 'conversations'
+
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
+	receiver_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
+
+
+	def __init__(self, user_id, receiver_id):
+		self.user_id = user_id
+		self.receiver_id = receiver_id
+
+	# def __repr__(self):
+	# 	return 'user_id: {}, receiver_id: {}'.format(self.user_id, self.receiver_id)
+
 
 
 class Message(db.Model):
 	__tablename__ = 'messages'
 
 	id = db.Column(db.Integer, primary_key=True)
-	sender_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
+	user_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 	receiver_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 	subject = db.Column(db.Text)
 	sticker = db.Column(db.Text)
 	content = db.Column(db.Text) 
 
-	sender = db.relationship('GoogleUser', foreign_keys='Message.sender_id')
+	sender = db.relationship('GoogleUser', foreign_keys='Message.user_id')
 	receiver = db.relationship('GoogleUser', foreign_keys='Message.receiver_id')
 
-	def __init__(self, sender_id, receiver_id, subject, sticker, content):
+	def __init__(self, user_id, receiver_id, subject, sticker, content):
 		
-		self.sender_id = sender_id
+		self.user_id = user_id
 		self.receiver_id = receiver_id
 		self.subject = subject
 		self.sticker = sticker
 		self.content = content
 
-	def __repr__(self):
-		return 'sender: {sender}, receiver: {receiver}, subject: {subject}, content: {content}'.format(sender=self.sender_id, receiver=self.receiver_id, subject=self.subject, sticker=self.sticker, content=self.content )
+	# def __repr__(self):
+	# 	return 'sender: {sender}, receiver: {receiver}, subject: {subject}, content: {content}'.format(sender=self.user_id, receiver=self.receiver_id, subject=self.subject, sticker=self.sticker, content=self.content )
 
 
 
@@ -137,6 +152,11 @@ class Message(db.Model):
 class G_UserSchema(ma.ModelSchema):
 	class Meta:
 		model = GoogleUser
+
+
+class ConversationSchema(ma.ModelSchema):
+	class Meta:
+		model = Conversation 
 	# 	fields = ('id', 'name', 'given_name', 'family_name', 'email', 'gender', 'picture', 'verified_email')
 	# _links = ma.Hyperlinks({
 	# 	'self': ma.URLFor('user_detail', id='<id>'),

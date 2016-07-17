@@ -16,7 +16,14 @@
 			<md-tab label="I">
 				<div layout='row' layout-align='center'>
 					
-					<md-sidenav md-component-id="left" class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-md')">
+					<div ng-repeat='msg in mes.inbox'>
+						<h3>message</h3>
+					</div>
+
+
+
+
+					<!-- <md-sidenav md-component-id="left" class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-md')">
 						Left Nav!
 						<md-list>
 							<md-list-item class="md-2-line" ng-repeat="msg in mes.inbox">
@@ -43,7 +50,8 @@
 								<input id="testInput" type="text" ng-model="data" md-autofocus>
 							</md-input-container>
 						</form>
-					</md-sidenav>
+					</md-sidenav> -->
+
 				</div>
 
 			</md-tab>

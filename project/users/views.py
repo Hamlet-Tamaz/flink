@@ -156,10 +156,10 @@ def calendar(id):
 @users_blueprint.route('/users/<id>/messages')
 def messages(id):
     user = GoogleUser.query.get(id)
-    inbox = Message.query.filter_by(receiver_id = user.id)
-    outbox = Message.query.filter_by(sender_id = user.id)
+    inbox = Message.query.filter_by(receiver_id = user.id).all()
+    outbox = Message.query.filter_by(user_id = user.id).all()
 
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
 
     return render_template('messages.html', user = user, inbox=inbox, outbox = outbox)
 
