@@ -38,7 +38,7 @@ def authorized():
     # console.log( jsonify({"data": me.data}))
 
     id = 0
-
+    
     try:
         user = GoogleUser(
             name = me.data['name'],

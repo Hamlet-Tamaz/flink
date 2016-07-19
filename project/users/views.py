@@ -102,7 +102,7 @@ def login():
 @users_blueprint.route('/users/<id>/setup')
 def setup(id):
     user = GoogleUser.query.get(id)
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
 
     return render_template('setup.html', user = user)
 
@@ -111,7 +111,7 @@ def setup(id):
 def edit(id):
     user = GoogleUser.query.get(id)
 
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
     return render_template('edit.html', user = user)
 
 
@@ -119,7 +119,7 @@ def edit(id):
 def update(id):
     user = GoogleUser.query.get(id)
 
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
     
     user.given_name = request.form
 
@@ -137,7 +137,7 @@ def friends(id):
         'Authorization' : 'Bearer {}'.format(token)
     }
 
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
 
     friends = requests.get('https://www.googleapis.com/plus/v1/people/{}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(user.google_id), headers=headers).content
     
@@ -185,7 +185,7 @@ def new_message_W(id, to_id):
     if not friend:
         friend = requests.get('https://www.googleapis.com/plus/v1/people/{}?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(to_id), headers=headers).json()
     
-    from IPython import embed; embed()
+    # from IPython import embed; embed()
     return render_template('new_message_W.html', user=user, friend=friend)
 
 

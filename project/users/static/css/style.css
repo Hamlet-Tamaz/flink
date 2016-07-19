@@ -1,3 +1,4 @@
+
 .intro_smiley {
 
 width:80px;
@@ -19,6 +20,10 @@ left: -5px;
 
 .material-icons {
   font-size: 30px
+}
+
+#body {
+  background-color: #FFFF8D
 }
 
 #intro_box {
@@ -49,6 +54,21 @@ left: -5px;
 #editDiv {
   z-index: 1
 }
+#weekdaysCheckBox {
+  position: relative;
+  top: 10px
+}
+
+#weekdaysFieldset {
+  border-collapse: solid 2 #E0E0E0
+  color: #E0E0E0;
+}
+
+#new_msg_img {
+  height: 200px
+}
+
+
 
 
 

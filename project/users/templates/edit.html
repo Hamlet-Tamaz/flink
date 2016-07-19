@@ -10,7 +10,7 @@
   </md-content>
   <md-content layout-padding>
     <div>
-      <form name="editForm" action='/users/{{user.id}}/update' method="PUT">
+      <form name="editForm" action='/users/{{user.id}}/update?method=PUT' method="POST">
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>First Name</label>

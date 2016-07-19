@@ -39,6 +39,7 @@
     .controller('calendarCtr', calendar)
 		.controller('friendsCtr', friends)
     .controller('messagesCtr', messages)
+    .controller('new_msgCtr', new_msg)
 
     
     setup.$inject = ['$http']
@@ -309,20 +310,74 @@ debugger
     
     id = +location.pathname.split('/')[2]
     
+    debugger
+    
+
+
+
+
+
     $http({
       method: "GET",
       url: `http://localhost:3000/api/users/${id}/messages/conversations`,
       responseType: 'json'
     }).then(function success(res) {
-      vm.conversations = res.data
+      vm.inbox = res.data
       debugger
       
     }), function error(res) {
       debugger
     }
     
-    debugger
-    vm.inbox = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}`,
+      responseType: 'json'
+    }).then(function success(res) {
+      vm.user = res.data
+      debugger
+      
+    }), function error(res) {
+      debugger
+    }
+
+
+    
+    vm.getMessages = function (receiver_id) {
+      vm.receiver_id = receiver_id
+      debugger
+      
+      // GETTING RECEIVER
+      $http({
+        method: "GET", 
+        url: `http://localhost:3000/api/users/${receiver_id}`,
+        responseType: 'json'
+      }).then(function success(res) {
+        vm.receiver = res.data
+        debugger
+        // GETTING MESSAGES
+        $http({
+          method: "GET", 
+          url: `http://localhost:3000/api/users/${id}/messages/thread/${receiver_id}`,
+          responseType: 'json'
+        }).then(function success(res) {
+          vm.messages = res.data
+          debugger
+
+
+        }), function error(res) {
+          debugger
+        }
+        
+      }), function error(res) {
+        debugger
+      }
+    }
+
+   
+
+
+    // vm.test = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
 
     
 
@@ -335,11 +390,40 @@ debugger
 
 
 
-  function new_message($http) {
+  function new_msg_W($http) {
     var vm = this;
 
     id = +location.pathname.split('/')[2]
     to_id = +location.pathname.split('/')[4]
+    
+    vm.weekdays = ['', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+    vm.selected = [0];
+    vm.toggle = function (item, list) {
+      var idx = list.indexOf(item);
+      if (idx > -1) {
+        list.splice(idx, 1);
+      }
+      else {
+        list.push(item);
+      }
+    };
+    vm.exists = function (item, list) {
+      return list.indexOf(item) > -1;
+    };
+    vm.isIndeterminate = function() {
+      return (vm.selected.length !== 0 &&
+          vm.selected.length !== vm.items.length);
+    };
+    vm.isChecked = function() {
+      return vm.selected.length === vm.items.length;
+    };
+    vm.toggleAll = function() {
+      if (vm.selected.length === vm.items.length) {
+        vm.selected = [];
+      } else if (vm.selected.length === 0 || vm.selected.length > 0) {
+        vm.selected = vm.items.slice(0);
+      }
+    };
 
     $http({
       method: "GET",
@@ -354,6 +438,54 @@ debugger
 
 
   }
+
+
+  function new_msg($http) {
+    var vm = this;
+
+    id = +location.pathname.split('/')[2]
+    to_id = +location.pathname.split('/')[4]
+      
+    vm.occ = ''
+
+    vm.stickers = [
+       {name: 'Coffee', img_url: '/static/js/resources/pics/stickers/Coffee.png'},
+       {name: 'Lunch', img_url: '/static/js/resources/pics/stickers/Lunch.png'},
+       {name: 'Drinks', img_url: '/static/js/resources/pics/stickers/Drinks.png'},
+       {name: 'Work', img_url: '/static/js/resources/pics/stickers/Work.png'}
+     ]
+
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}`,
+      responseType: 'json'
+    }).then(function success(res) {
+      vm.user = res.data
+      // vm.img = '/static/js/resources/pics/stickers/Coffee.png'
+      
+      vm.test = 'hamlet test'
+      debugger
+    }), function error(res) {
+
+    }
+    
+
+     vm.sendMsg = function (occ, receiver, message, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
+      debugger
+    }
+
+
+    // function sendMessage (user_id, receiver_id, occassion, , sticker, content, ) {
+      
+
+
+
+
+    // }
+
+
+  }
+
 
 
 

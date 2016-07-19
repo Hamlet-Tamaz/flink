@@ -1,5 +1,8 @@
 from project import db, bcrypt, ma
 from flask_login import UserMixin
+from marshmallow import Schema, fields, pprint
+
+import datetime
 
 class User(db.Model, UserMixin):
 	__tablename__ = 'users'
@@ -40,6 +43,11 @@ class GoogleUser(db.Model):
 	
 	bio = db.Column(db.Text)
 
+	# from IPython import embed; embed()
+
+	date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+	date_modified = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
 
 	friends = db.relationship('Friendship', backref='user', lazy='dynamic', foreign_keys='Friendship.user_id')
 	messages = db.relationship('Message', backref='user', lazy='dynamic', foreign_keys='Message.user_id')
@@ -74,6 +82,9 @@ class GoogleUser(db.Model):
 		self.postal_code = postal_code
 		self.bio = bio
 
+		# self.date_created = date_created
+		# self.date_modified = date_modified
+
 
 
 	# def __repr__(self):
@@ -94,12 +105,14 @@ class Friendship(db.Model):
 	userID = db.relationship('GoogleUser', foreign_keys='Friendship.user_id')
 	friendID = db.relationship('GoogleUser', foreign_keys='Friendship.friend_id')
 
+	date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
-	def __init__(self, user_id, friend_id, request_status):
+	def __init__(self, user_id, friend_id, request_status, date_created):
 		
 		self.user_id = user_id
 		self.friend_id = friend_id
 		self.request_status = request_status
+		# self.date_created = date_created
 
 	def __repr__(self):
 		return 'user: {user}, friend: {friend}; status: {status}'.format(user=self.user_id, friend=self.friend_id, status=self.request_status)
@@ -112,10 +125,16 @@ class Conversation(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 	receiver_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 
+	# TO ADD!!!
+	date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+	date_modified = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
-	def __init__(self, user_id, receiver_id):
+
+	def __init__(self, user_id, receiver_id, date_created, date_modified):
 		self.user_id = user_id
 		self.receiver_id = receiver_id
+		# self.date_created = date_created
+		# self.date_modified = date_modified
 
 	# def __repr__(self):
 	# 	return 'user_id: {}, receiver_id: {}'.format(self.user_id, self.receiver_id)
@@ -123,25 +142,39 @@ class Conversation(db.Model):
 
 
 class Message(db.Model):
+	# CHANGE SUBJECT TO OCCASION
 	__tablename__ = 'messages'
 
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 	receiver_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
-	subject = db.Column(db.Text)
+	occasion = db.Column(db.Text)
 	sticker = db.Column(db.Text)
 	content = db.Column(db.Text) 
+	
+	date = db.Column(db.Text)
+	dRangeFrom = db.Column(db.Integer)
+	dRangeUntil = db.Column(db.Integer)
+	weekdays = db.Column(db.Text)
+	tRangeFrom = db.Column(db.Integer)
+	tRangeUntil = db.Column(db.Integer)
+
+	date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
 
 	sender = db.relationship('GoogleUser', foreign_keys='Message.user_id')
 	receiver = db.relationship('GoogleUser', foreign_keys='Message.receiver_id')
 
-	def __init__(self, user_id, receiver_id, subject, sticker, content):
+
+
+	def __init__(self, user_id, receiver_id, subject, sticker, content, date_created):
 		
 		self.user_id = user_id
 		self.receiver_id = receiver_id
 		self.subject = subject
 		self.sticker = sticker
 		self.content = content
+		# self.date_created = date_created
 
 	# def __repr__(self):
 	# 	return 'sender: {sender}, receiver: {receiver}, subject: {subject}, content: {content}'.format(sender=self.user_id, receiver=self.receiver_id, subject=self.subject, sticker=self.sticker, content=self.content )
@@ -154,9 +187,33 @@ class G_UserSchema(ma.ModelSchema):
 		model = GoogleUser
 
 
+
 class ConversationSchema(ma.ModelSchema):
 	class Meta:
 		model = Conversation 
+		fields = ('id', 'user_id', 'receiver_id')
+
+
+
+class MessagesSchema(ma.ModelSchema):
+	
+	sender = fields.Nested('self')
+	receiver = fields.Nested('self')
+
+	class Meta:
+		model = Message 
+		fields = ('id', 'user_id', 'receiver_id', 'subject', 'sticker', 'content')
+
+
+
+
+
+
+# class MessagedUsers(ma.Schema):
+# 	class Meta:
+# 		fields = ()
+
+
 	# 	fields = ('id', 'name', 'given_name', 'family_name', 'email', 'gender', 'picture', 'verified_email')
 	# _links = ma.Hyperlinks({
 	# 	'self': ma.URLFor('user_detail', id='<id>'),
