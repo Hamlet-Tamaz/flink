@@ -1,43 +1,190 @@
 {%  extends 'user_base.html'  %}
 
 {%  block content  %}
-<h1>New Message With 'To' Person</h1>
+<div ng-controller='new_msgCtr as nm'>
 
-<h1>User: {{user}}</h1>
-<h1>Friend: {{friend.displayName}}</h1>
+	<div layout-align='center center' layout='column'>
+		<h1 flex>New Message</h1>
 
+		<div layout-align='center center' layout='row'>
 
-<div layout='column' layou-align='center center'>
-	<br>
-	<md-content layout='column'>
-	    
-		<md-content class="md-padding" layout-xs="column" layout="row">
-		    <div flex-xs flex-gt-xs="100" layout="column">
-		      <md-card  md-theme-watch>
-		      	<div layout='row'>
-			        <md-card-title>
-		      		<img class='intro_smiley' ng-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/2000px-Smiley.svg.png" class='md-card-image'>
-			          <md-card-title-text>
-			          	<md-toolbar layout-align='center start' layout-padding>
-							<h3 >To: {{friend.displayName}}</h3>
-							<h3 >Subject: </h3>
-						</md-toolbar>
-			            <span class="md-headline" style="text-align: center">You are one Flink away from your friends!</span>
-			          </md-card-title-text>
-			        </md-card-title>
-		        </div>
-		        <md-card-actions layout="column" layout-align="end center">
-		          <p>You have 2 appointments this week <md-button class='md-accent'>Go to Calendar</md-button></p>
-		          <p>You currently have 2 invites<md-button class='md-accent'>Respond</md-button></p>
-		          <p>You haven't set up any appointments in 2 weekd<md-button class='md-accent'>Invite Friends</md-button></p>
-		          <p>Check to see if any friends are down to hang out<md-button class='md-accent'>Flinkr</md-button></p>
-		        </md-card-actions>
-		      </md-card>
-			</div>
-		</md-content>
-	</md-content>
+			<img class='intro_smiley' src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/2000px-Smiley.svg.png">
+
+			<md-content md-whiteframe='5' id='new_msg_box'>
+				<md-toolbar layout='row' layout-align='space-between center' layout-padding>
+					<h3>From: [[dash.name]]</h3>
+					<h3>To: [[nm.receiver]]</h3>
+				</md-toolbar>
 
 
+
+			    <md-content flex layout-padding>
+			      <div layout="column" layout-fill layout-align="top center">
+				   <div layout='row' layout-align='space-between center'>
+					
+
+						<md-input-container>
+					        <label>
+								To:
+					        </label>
+							<input type="text" ng-model='nm.receiver' required>
+						</md-input-container>
+						
+						
+
+
+						<div layout='row' layout-align='center center'>
+							<label for="Occasion">Occasion</label>
+							<select name="Occasion" id="occ" ng-model='nm.occ' required>
+								<option values='[[stk.name]]'  ng-repeat='stk in nm.stickers'>
+								[[stk.name]]
+								</option>
+							</select>
+								
+							<img id='new_msg_img' ng-show='nm.occ.length > 0' ng-src="/static/js/resources/pics/stickers/[[nm.occ]].png">
+							
+						</div>	
+					</div>	
+
+
+					<div>
+						<md-input-container>	
+							<label>
+								Message:
+					        </label>
+							<textarea ng-model='nm.message'> </textarea> 
+						</md-input-container>
+			        </div> 
+
+					<div>
+						<md-input-container>	
+							<label>
+								Date:
+					        </label>
+							<input type="date" ng-model='nm.date'>
+						</md-input-container>
+			        </div> 
+		        					<h4>OR</h4>
+					<div style="text-align: center">
+			        	<h3>Specity date desired:</h3>
+						
+						<md-input-container>       
+							<label>
+								From:
+					        </label>
+								<input type="date" ng-model='nm.dateRangeFrom'>
+
+						</md-input-container>
+						
+						<md-input-container>       
+							<label>
+								Until:
+					        </label>
+								<input type="date" ng-model='nm.dateRangeUntil'>
+						</md-input-container>
+
+
+			        </div> 
+
+			        <div>						
+						<fieldset id='weekdaysFieldset'>
+							<legend>Specity Weed Days</legend>
+								<div id='weekdaysCheckBox' layout='column' layout-wrap >
+									<div flex-xs flex="50">
+										<md-checkbox ng-model="nm.weekdaysMon" aria-label="Checkbox 1">
+											Mon
+										</md-checkbox>
+
+										<md-checkbox ng-model="nm.weekdaysTues" aria-label="Checkbox 1">
+											Tues
+										</md-checkbox>
+
+										<md-checkbox ng-model="nm.weekdaysWed" aria-label="Checkbox 1">
+											Wed
+										</md-checkbox>
+
+										<md-checkbox ng-model="nm.weekdaysThurs" aria-label="Checkbox 1">
+											Thurs
+										</md-checkbox>
+
+										<md-checkbox ng-model="nm.weekdaysFri" aria-label="Checkbox 1">
+											Fri
+										</md-checkbox>
+
+										<md-checkbox ng-model="nm.weekdaysSat" aria-label="Checkbox 1">
+											Sat
+										</md-checkbox>
+
+										<md-checkbox ng-model="nm.weekdaysSun" aria-label="Checkbox 1">
+											Sun
+										</md-checkbox>
+
+
+									</div>
+								</div>
+						</fieldset>
+
+				    </div>
+
+
+
+			        <div>
+			        	<h3>Specity time desired:</h3>
+						<md-input-container>       
+							<label>
+								From:
+					        </label>
+								<input type="time" ng-model='nm.timeDesiredFrom'>
+
+						</md-input-container>
+						
+						<md-input-container>       
+							<label>
+								Until:
+					        </label>
+								<input type="time" ng-model='nm.timeDesiredUntil'>
+						</md-input-container>
+
+
+			        </div> 
+
+
+			        <div>
+			          <md-button ng-click="nm.sendMsg(nm.occ, nm.receiver, nm.message, nm.date, nm.dateRangeFrom, nm.dateRangeUntil, nm.weekdaysMon, nm.weekdaysTues, nm.weekdaysWed, nm.weekdaysThurs, nm.weekdaysFri, nm.weekdaysSat, nm.weekdaysSun, nm.timeDesiredFrom, nm.timeDesiredUntil)"
+			            class="md-primary">
+			            Send Message
+			          </md-button>
+			        </div>
+			        <div>
+			          <md-button ng-click="toggleRight()"
+			            ng-hide="isOpenRight()"
+			            class="md-primary">
+			            Cancel
+			          </md-button>
+			        </div>
+			      </div>
+
+
+			    </md-content>
+
+			</md-content>
+		</div>
+	</div>
+	
+	
 </div>
 
+
+<!-- 
+<form>
+	<md-input-container>
+		<label for="testInput">Test input</label>
+		<input id="testInput" type="text" ng-model="data" md-autofocus>
+	</md-input-container>
+</form>
+ -->
+
+
 {%  endblock  %}
+
+

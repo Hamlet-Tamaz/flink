@@ -22,6 +22,19 @@ left: -5px;
   font-size: 30px
 }
 
+.inboxMsgDiv {
+  border: black solid 2px;
+  width: 100%
+}
+
+.inboxMsgDiv img {
+  width: 100px;
+}
+
+
+
+
+
 #body {
   background-color: #FFFF8D
 }
@@ -48,28 +61,30 @@ left: -5px;
 }
 
 #messagesDiv {
-  text-align: center
+  text-align: center;
 }
 
 #editDiv {
-  z-index: 1
+  z-index: 1;
 }
 #weekdaysCheckBox {
   position: relative;
-  top: 10px
+  top: 10px;
 }
 
 #weekdaysFieldset {
-  border-collapse: solid 2 #E0E0E0
-  color: #E0E0E0;
+  border-collapse: solid 2 #E0E0E0;
+  /*color: #E0E0E0;*/
 }
 
 #new_msg_img {
-  height: 200px
+  height: 200px;
 }
 
 
-
+#inboxMsgMdContent {
+  width: 100%;
+}
 
 
 

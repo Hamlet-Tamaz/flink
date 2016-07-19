@@ -107,6 +107,45 @@
       'WY').split(' ').map(function(state) {
           return {abbrev: state};
         });
+
+
+
+      vm.submitChanges = function(given_name, family_name, title, email, gender, company, dob, address, address2, city, state, postalCode, biography) {
+
+        vm.user.given_name = given_name
+        vm.user.family_name = family_name
+        vm.user.title = title
+        vm.user.email = email
+        vm.user.gender = gender
+        vm.user.company = company
+        vm.user.dob = dob
+        vm.user.address = address
+        vm.user.address2 = address2
+        vm.user.city = city
+        vm.user.state = state
+        vm.user.postalCode = postalCode
+        vm.user.biograph = biography
+
+        debugger
+        $http({
+          method: 'POST', 
+          url: `http://localhost:3000/api/users/${id}/edit`,
+          data: vm.user,
+          responseType: 'json'
+        }).then(function success(res) {
+          // id = res.data
+          location.pathname = `/users/${id}/dash`
+
+        }), function err(res) {
+
+        }
+
+       debugger
+
+      }
+
+
+
     }
 
 
@@ -310,12 +349,6 @@ debugger
     
     id = +location.pathname.split('/')[2]
     
-    debugger
-    
-
-
-
-
 
     $http({
       method: "GET",
@@ -323,7 +356,6 @@ debugger
       responseType: 'json'
     }).then(function success(res) {
       vm.inbox = res.data
-      debugger
       
     }), function error(res) {
       debugger
@@ -335,7 +367,6 @@ debugger
       responseType: 'json'
     }).then(function success(res) {
       vm.user = res.data
-      debugger
       
     }), function error(res) {
       debugger
@@ -345,7 +376,6 @@ debugger
     
     vm.getMessages = function (receiver_id) {
       vm.receiver_id = receiver_id
-      debugger
       
       // GETTING RECEIVER
       $http({
@@ -354,7 +384,6 @@ debugger
         responseType: 'json'
       }).then(function success(res) {
         vm.receiver = res.data
-        debugger
         // GETTING MESSAGES
         $http({
           method: "GET", 
@@ -363,7 +392,10 @@ debugger
         }).then(function success(res) {
           vm.messages = res.data
           debugger
-
+          
+          console.log('user: ', vm.user)
+          console.log('receiver: ', vm.receiver)
+          console.log('messages: ', vm.messages)
 
         }), function error(res) {
           debugger
@@ -472,6 +504,11 @@ debugger
 
      vm.sendMsg = function (occ, receiver, message, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
       debugger
+      $http({
+        method: "POST",
+        url: `http://localhost:3000/api/users/${id}`,
+        responseType: 'json'
+      })
     }
 
 

@@ -1,6 +1,6 @@
 from project import db, bcrypt, ma
 from flask_login import UserMixin
-from marshmallow import Schema, fields, pprint
+from marshmallow import Schema, fields, pprint, post_load
 
 import datetime
 
@@ -50,18 +50,19 @@ class GoogleUser(db.Model):
 
 
 	friends = db.relationship('Friendship', backref='user', lazy='dynamic', foreign_keys='Friendship.user_id')
-	messages = db.relationship('Message', backref='user', lazy='dynamic', foreign_keys='Message.user_id')
+	# messages = db.relationship('Message', backref='sender', lazy='dynamic', foreign_keys='Message.user_id')
+	# messages = db.relationship('Message', backref='receiver', lazy='dynamic', foreign_keys='Message.receiver_id')
 
 
 
-	@property
-	def serialize(self):
-		ans = {}
+	# @property
+	# def serialize(self):
+	# 	ans = {}
 
-		for key in self:
-			ans[key] = self[key]
+	# 	for key in self:
+	# 		ans[key] = self[key]
 
-		return ans
+	# 	return ans
 
 
 	def __init__(self, google_id, name=None, title=None, given_name=None, family_name=None, gender=None, email=None, verified_email=None, picture=None, company=None, address=None, city=None, state=None, postal_code=None, bio=None):
@@ -167,12 +168,11 @@ class Message(db.Model):
 
 
 
-	def __init__(self, user_id, receiver_id, subject, sticker, content, date_created):
+	def __init__(self, user_id, receiver_id, occasion, sticker, content, date_created):
 		
 		self.user_id = user_id
 		self.receiver_id = receiver_id
-		self.subject = subject
-		self.sticker = sticker
+		self.occasion = occasion
 		self.content = content
 		# self.date_created = date_created
 
@@ -185,6 +185,10 @@ class Message(db.Model):
 class G_UserSchema(ma.ModelSchema):
 	class Meta:
 		model = GoogleUser
+
+		@post_load
+		def make_user(self, data):
+			return GoogleUser(**data)
 
 
 
@@ -202,7 +206,7 @@ class MessagesSchema(ma.ModelSchema):
 
 	class Meta:
 		model = Message 
-		fields = ('id', 'user_id', 'receiver_id', 'subject', 'sticker', 'content')
+		fields = ('id', 'user_id', 'receiver_id', 'occasion', 'content')
 
 
 

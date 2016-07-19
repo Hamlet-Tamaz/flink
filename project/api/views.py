@@ -4,7 +4,7 @@ from flask import Flask, redirect, url_for, session, request, jsonify, Blueprint
 from project.users.models import GoogleUser, Message, Friendship, Conversation
 from project.users.models import G_UserSchema, ConversationSchema, MessagesSchema
 
-import requests
+import requests, json
 
 api_blueprint = Blueprint('api', __name__)
 
@@ -44,6 +44,26 @@ def user_detail(id):
 		# print (G_user_schema.jsonify(user))
 		# return G_user_schema.jsonify(user)
 
+
+
+@api_blueprint.route('/users/<id>/edit', methods=['POST'])
+def edit_user(id):
+	if request.headers['Accept'] == 'application/json, text/plain, */*':
+		# decode the JSON from binary
+		user = request.data.decode('utf-8')
+		# parse the JSON into a dictionary
+		parsed_user = json.loads(user)
+		# turn the dictionary into a SQL Alchemy model
+		user = G_user_schema.load(parsed_user)
+		# Save it 
+		db.session.add(user.data)
+		db.session.commit()
+		
+		from IPython import embed; embed()
+		return jsonify(id)
+
+
+
 @api_blueprint.route('/users/<id>/friends')
 def user_friends(id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
@@ -55,7 +75,7 @@ def user_friends(id):
 		}
 
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
-
+		from IPython import embed; embed()
 		return friends
 
 
@@ -72,6 +92,7 @@ def user_friend(id, to_id):
 		friend = requests.get('https://www.googleapis.com/plus/v1/people/{}'.format(to_id), headers=headers).content
 
 		return friend
+
 
 
 @api_blueprint.route('/users/<id>/messages/conversations')
@@ -106,9 +127,6 @@ def conversations(id):
 		# receiver = result.data[1]['receiver_id']
 
 
-
-		# from  IPython import embed; embed()
-
 		return jsonify(resultUsers.data)
 
 
@@ -117,13 +135,15 @@ def thread(id, receiver_id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
 		user = GoogleUser.query.get(id)
 		receiver = GoogleUser.query.get(receiver_id)
+		convArr = [id, receiver_id]
 
-		messages = Message.query.filter_by(user_id = int(id), receiver_id = int(receiver_id))
+
+		# messages = Message.query.filter_by(user_id = int(id), receiver_id = int(receiver_id))
+		messages = Message.query.filter(GoogleUser.id.in_(convArr))
 		result = Messages_schema.dump(messages)
 
 
-		from IPython import embed; embed()
-
+		# from IPython import embed; embed()
 		return jsonify(result.data)
 
 @api_blueprint.route('/users/<id>/messages/new_message/', methods=['POST'])
