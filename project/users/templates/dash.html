@@ -6,7 +6,7 @@
 	<br>
 	<md-content layout='column'>
 	    
-		<md-content class="md-padding" layout-xs="column" layout="row">
+		<md-content class="" layout-xs="column" layout="row">
 		    <div flex-xs flex-gt-xs="100" layout="column">
 		      <md-card  md-theme-watch>
 		      	<div layout='row'>
@@ -21,10 +21,43 @@
 			        </md-card-title>
 		        </div>
 		        <md-card-actions layout="column" layout-align="end center">
-		          <p>You have 2 appointments this week <md-button class='md-warn'>Go to Calendar</md-button></p>
-		          <p>You currently have 2 invites<md-button class='md-warn'>Respond</md-button></p>
-		          <p>You haven't set up any appointments in 2 week<md-button class='md-warn'>Invite Friends</md-button></p>
-		          <p>Check to see if any friends are down to hang out<md-button class='md-warn'>Flinkr</md-button></p>
+		        	<table>
+		        		<tbody>
+		        			<tr>
+		        				<td>
+	        					 	<p>You have 2 appointments this week </p>
+		        				</td>
+		        				<td>
+		        					<md-button class='md-warn'>Go to Calendar</md-button>
+		        				</td>
+		        			</tr>
+		        			<tr>
+		        				<td>
+					          		<p>You currently have 2 invites</p>
+		        				</td>
+		        				<td>
+		        					<md-button class='md-warn'>Respond</md-button>
+		        				</td>
+		        			</tr>
+		        			<tr>
+		        				<td>
+					          		<p>You haven't set up any appointments in 2 week</p>
+		        				</td>
+		        				<td>
+		        					<md-button ng-href='/users/{{user.id}}/friends' class='md-warn'>Invite Friends</md-button>
+		        				</td>
+		        			</tr>
+		        			<tr>
+		        				<td>
+					          		<p>Check to see if any friends are down to hang out</p>
+		        				</td>
+		        				<td>
+		        					<md-button class='md-warn'>Flinkr</md-button>
+		        				</td>
+		        			</tr>
+		        		</tbody>
+		        	</table>
+		         
 		        </md-card-actions>
 		      </md-card>
 			</div>
