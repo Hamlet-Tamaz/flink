@@ -185,8 +185,8 @@ def new_message_W(id, to_id):
     if not friend:
         friend = requests.get('https://www.googleapis.com/plus/v1/people/{}?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(to_id), headers=headers).json()
     
-    from IPython import embed; embed()
-    return render_template('new_message_W.html', user=user, friend=friend)
+    # from IPython import embed; embed()
+    return render_template('new_message.html', user=user, receiver=friend)
 
 
 

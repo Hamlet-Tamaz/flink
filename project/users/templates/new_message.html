@@ -1,7 +1,7 @@
 {%  extends 'user_base.html'  %}
 
 {%  block content  %}
-<div ng-controller='new_msgCtr as nm'>
+<div ng-controller='new_msgCtr as nm'message.>
 
 	<div layout-align='center center' layout='column'>
 		<h1 flex>New Message</h1>
@@ -13,7 +13,7 @@
 			<md-content md-whiteframe='5' id='new_msg_box'>
 				<md-toolbar layout='row' layout-align='space-between center' layout-padding>
 					<h3>From: [[dash.name]]</h3>
-					<h3>To: [[nm.receiver]]</h3>
+					<h3 style='position: relative; right: 10px'>To: [[nm.message.receiver]]</h3>
 				</md-toolbar>
 
 
@@ -23,25 +23,44 @@
 				   <div layout='row' layout-align='space-between center'>
 					
 
-						<md-input-container>
+						<!-- <md-input-container>
 					        <label>
 								To:
 					        </label>
-							<input type="text" ng-model='nm.receiver' required>
-						</md-input-container>
-						
+							<input type="text" ng-model='nm.message.receiver' typehead='friend in nm.friends.items' required>
+						</md-input-container> -->
+
+						<!-- <div ng-repeat ="f in nm.friends.items">
+							<h1>DIS IS F [[f.displayName]]</h1>
+						</div> -->
+
+						<md-autocomplete 
+						ng-model='nm.message.receiver'  
+							md-search-text="nm.searchText" 
+							md-items="friend in nm.getMatches(nm.friends.items)" md-item-text="friend.displayName"
+							md-selected-item-change="nm.selectedItemChange(friend)"
+
+							>
+						  <md-item-template>
+						  	<span md-highlight-text="nm.searchText">[[friend.displayName]]</span>
+						  </md-item-template>
+						  <md-not-found>
+						  	No matches found.
+						  </md-not-found>
+						</md-autocomplete>
+
 						
 
 
 						<div layout='row' layout-align='center center'>
 							<label for="Occasion">Occasion</label>
-							<select name="Occasion" id="occ" ng-model='nm.occ' required>
+							<select name="Occasion" id="occ" ng-model='nm.message.occ' required>
 								<option values='[[stk.name]]'  ng-repeat='stk in nm.stickers'>
 								[[stk.name]]
 								</option>
 							</select>
 								
-							<img id='new_msg_img' ng-show='nm.occ.length > 0' ng-src="/static/js/resources/pics/stickers/[[nm.occ]].png">
+							<img id='new_msg_img' ng-show='nm.message.occ.length > 0' ng-src="/static/js/resources/pics/stickers/[[nm.message.occ]].png">
 							
 						</div>	
 					</div>	
@@ -52,7 +71,7 @@
 							<label>
 								Message:
 					        </label>
-							<textarea ng-model='nm.message'> </textarea> 
+							<textarea ng-model='nm.message.message'> </textarea> 
 						</md-input-container>
 			        </div> 
 
@@ -61,7 +80,7 @@
 							<label>
 								Date:
 					        </label>
-							<input type="date" ng-model='nm.date'>
+							<input type="date" ng-model='nm.message.date'>
 						</md-input-container>
 			        </div> 
 		        					<h4>OR</h4>
@@ -72,7 +91,7 @@
 							<label>
 								From:
 					        </label>
-								<input type="date" ng-model='nm.dateRangeFrom'>
+								<input type="date" ng-model='nm.message.dateRangeFrom'>
 
 						</md-input-container>
 						
@@ -80,7 +99,7 @@
 							<label>
 								Until:
 					        </label>
-								<input type="date" ng-model='nm.dateRangeUntil'>
+								<input type="date" ng-model='nm.message.dateRangeUntil'>
 						</md-input-container>
 
 
@@ -91,31 +110,31 @@
 							<legend>Specity Weed Days</legend>
 								<div id='weekdaysCheckBox' layout='column' layout-wrap >
 									<div flex-xs flex="50">
-										<md-checkbox ng-model="nm.weekdaysMon" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysMon" aria-label="Checkbox 1">
 											Mon
 										</md-checkbox>
 
-										<md-checkbox ng-model="nm.weekdaysTues" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysTues" aria-label="Checkbox 1">
 											Tues
 										</md-checkbox>
 
-										<md-checkbox ng-model="nm.weekdaysWed" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysWed" aria-label="Checkbox 1">
 											Wed
 										</md-checkbox>
 
-										<md-checkbox ng-model="nm.weekdaysThurs" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysThurs" aria-label="Checkbox 1">
 											Thurs
 										</md-checkbox>
 
-										<md-checkbox ng-model="nm.weekdaysFri" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysFri" aria-label="Checkbox 1">
 											Fri
 										</md-checkbox>
 
-										<md-checkbox ng-model="nm.weekdaysSat" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysSat" aria-label="Checkbox 1">
 											Sat
 										</md-checkbox>
 
-										<md-checkbox ng-model="nm.weekdaysSun" aria-label="Checkbox 1">
+										<md-checkbox ng-model="nm.message.weekdaysSun" aria-label="Checkbox 1">
 											Sun
 										</md-checkbox>
 
@@ -134,7 +153,7 @@
 							<label>
 								From:
 					        </label>
-								<input type="time" ng-model='nm.timeDesiredFrom'>
+								<input type="time" ng-model='nm.message.timeDesiredFrom'>
 
 						</md-input-container>
 						
@@ -142,7 +161,7 @@
 							<label>
 								Until:
 					        </label>
-								<input type="time" ng-model='nm.timeDesiredUntil'>
+								<input type="time" ng-model='nm.message.timeDesiredUntil'>
 						</md-input-container>
 
 
@@ -150,7 +169,7 @@
 
 
 			        <div>
-			          <md-button ng-click="nm.sendMsg(nm.occ, nm.receiver, nm.message, nm.date, nm.dateRangeFrom, nm.dateRangeUntil, nm.weekdaysMon, nm.weekdaysTues, nm.weekdaysWed, nm.weekdaysThurs, nm.weekdaysFri, nm.weekdaysSat, nm.weekdaysSun, nm.timeDesiredFrom, nm.timeDesiredUntil)"
+			          <md-button ng-click="nm.sendMsg(nm.message.occ, nm.message.receiver, nm.message.message, nm.message.date, nm.message.dateRangeFrom, nm.message.dateRangeUntil, nm.message.weekdaysMon, nm.message.weekdaysTues, nm.message.weekdaysWed, nm.message.weekdaysThurs, nm.message.weekdaysFri, nm.message.weekdaysSat, nm.message.weekdaysSun, nm.message.timeDesiredFrom, nm.message.timeDesiredUntil)"
 			            class="md-primary">
 			            Send Message
 			          </md-button>

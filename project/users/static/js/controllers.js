@@ -57,10 +57,10 @@
 
         debugger
       
-      }), function error(res) {
+      }, function error(res) {
       vm.error = res
       debugger
-      }
+      })
 
       // vm.user = {
       //   title: 'Developer',
@@ -97,10 +97,10 @@
         console.log('user: ', vm.user)
         debugger
       
-      }), function error(res) {
+      }, function error(res) {
       vm.error = res
       debugger
-      }
+      })
       
       vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
       'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
@@ -136,9 +136,9 @@
           // id = res.data
           location.pathname = `/users/${id}/dash`
 
-        }), function err(res) {
+        }, function err(res) {
 
-        }
+        })
 
        debugger
 
@@ -147,8 +147,7 @@
 
 
     }
-
-
+    
     
 
     function home() {
@@ -230,10 +229,10 @@ debugger
         }
 
       });
-    }), function error(res) {
+    }, function error(res) {
       vm.error = res
       debugger
-    }
+    })
 
 
     // $(document).ready(function() {
@@ -313,13 +312,13 @@ debugger
           return results;
         }
 
-      }), function error(res) {
+      }, function error(res) {
         debugger
-      }
+      })
 
-    }), function error(res) {
+    }, function error(res) {
       debugger
-    }
+    })
 
 
     var originatorEv;
@@ -357,9 +356,9 @@ debugger
     }).then(function success(res) {
       vm.inbox = res.data
       
-    }), function error(res) {
+    }, function error(res) {
       debugger
-    }
+    })
     
     $http({
       method: "GET",
@@ -368,9 +367,9 @@ debugger
     }).then(function success(res) {
       vm.user = res.data
       
-    }), function error(res) {
+    }, function error(res) {
       debugger
-    }
+    })
 
 
     
@@ -397,13 +396,13 @@ debugger
           console.log('receiver: ', vm.receiver)
           console.log('messages: ', vm.messages)
 
-        }), function error(res) {
+        }, function error(res) {
           debugger
-        }
+        })
         
-      }), function error(res) {
+      }, function error(res) {
         debugger
-      }
+      })
     }
 
    
@@ -463,9 +462,9 @@ debugger
       responseType: 'json'
     }).then(function success(res) {
       debugger
-    }), function error(res) {
+    }, function error(res) {
 
-    }
+    })
 
 
 
@@ -474,10 +473,42 @@ debugger
 
   function new_msg($http) {
     var vm = this;
-
+    vm.searchText = ''
     id = +location.pathname.split('/')[2]
-    to_id = +location.pathname.split('/')[4]
+    to_id = +location.pathname.split('/')[5]
       
+    // debugger
+    function createFilterFor(query) {
+       var lowercaseQuery = angular.lowercase(query);
+       return function filterFn(val) {
+         return (val.displayName.search(vm.searchText) >= 0);
+       };
+     }
+
+    vm.getMatches = function(data){
+      debugger
+      return data.filter(createFilterFor(data))
+    }
+
+
+    vm.selectedItemChange = function(val){
+      debugger
+      vm.receiverG = val
+      vm.receiverG_id = val.id
+      
+      $http({
+          method: "GET",
+          url: `http://localhost:3000/api/users/${id}/friends/${vm.receiverG_id}`,
+          responseType: 'json'
+        }).then(function success(res) {
+          vm.receiver = res.data
+          debugger
+        }).catch(function error(res) {
+          // debugger
+        })
+    }
+
+
     vm.occ = ''
 
     vm.stickers = [
@@ -492,22 +523,64 @@ debugger
       url: `http://localhost:3000/api/users/${id}`,
       responseType: 'json'
     }).then(function success(res) {
-      vm.user = res.data
-      // vm.img = '/static/js/resources/pics/stickers/Coffee.png'
-      
-      vm.test = 'hamlet test'
-      debugger
-    }), function error(res) {
+        vm.user = res.data
+        // debugger
+        // vm.img = '/static/js/resources/pics/stickers/Coffee.png'
+        
+        $http({
+          method: "GET",
+          url: `http://localhost:3000/api/users/${id}/friends/${to_id}`,
+          responseType: 'json'
+        }).then(function success(res) {
+          vm.receiver = res.data
+          // debugger
+        }).catch(function error(res) {
+          // debugger
+        })
+      })
 
-    }
     
+    $http({
+      method: "GET",
+      url: `http://localhost:3000/api/users/${id}/friends`,
+      responseType: 'json'
+    }).then(function success(res) {
+      vm.friends = res.data
+      // debugger
+    })
+
+
 
      vm.sendMsg = function (occ, receiver, message, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
+      
+      vm.message = {}
+
+      vm.message.occ = occ
+      vm.message.receiver = receiver
+      vm.message.content = message
+      vm.message.date = date
+      vm.message.dateRangeFrom = dateRangeFrom
+      vm.message.dateRangeUntil = dateRangeUntil
+      vm.message.weekdaysMon = weekdaysMon
+      vm.message.weekdaysTues = weekdaysTues
+      vm.message.weekdaysWed = weekdaysWed
+      vm.message.weekdaysThurs = weekdaysThurs
+      vm.message.weekdaysFri = weekdaysFri
+      vm.message.weekdaysSat = weekdaysSat
+      vm.message.weekdaysSun = weekdaysSun
+      vm.message.timeDesiredFrom = timeDesiredFrom
+      vm.message.timeDesiredUntil = timeDesiredUntil
+
       debugger
       $http({
         method: "POST",
-        url: `http://localhost:3000/api/users/${id}`,
+        url: `http://localhost:3000/api/users/${id}/messages/new`,
+        data: vm.message,
         responseType: 'json'
+      }).then(function success(res) {
+        debugger
+
+        locaiton.pathname = `/users/${id}/dash`
       })
     }
 

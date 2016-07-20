@@ -59,7 +59,7 @@ def edit_user(id):
 		db.session.add(user.data)
 		db.session.commit()
 		
-		from IPython import embed; embed()
+		# from IPython import embed; embed()
 		return jsonify(id)
 
 
@@ -75,7 +75,7 @@ def user_friends(id):
 		}
 
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
-		from IPython import embed; embed()
+		# from IPython import embed; embed()
 		return friends
 
 
@@ -90,7 +90,13 @@ def user_friend(id, to_id):
 		}
 
 		friend = requests.get('https://www.googleapis.com/plus/v1/people/{}'.format(to_id), headers=headers).content
+		
+		friend_dec = friend.decode('utf-8')
+		friend_dec = json.loads(friend_dec)
 
+		if friend_dec['error']['code']:
+			# from IPython import embed; embed()
+			return
 		return friend
 
 
@@ -146,10 +152,22 @@ def thread(id, receiver_id):
 		# from IPython import embed; embed()
 		return jsonify(result.data)
 
-@api_blueprint.route('/users/<id>/messages/new_message/', methods=['POST'])
+@api_blueprint.route('/users/<id>/messages/new', methods=['POST'])
 def send_message(id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
-		pass
+		# decode the JSON from binary
+		message = request.data.decode('utf-8')
+		# parse the JSON into a dictionary
+		parsed_message = json.loads(message)
+		# turn the dictionary into a SQL Alchemy model
+		messageResult = Messages_schema.load(parsed_message)
+		# Save it 
+
+		# from IPython import embed; embed()
+		db.session.add(message.data)
+		db.session.commit()
+
+		return jsonify(id)
 
 
 		# Messages_schema.dump(Message.query.filter_by(receiver_id = 3, **kwargs)

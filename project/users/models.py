@@ -206,7 +206,11 @@ class MessagesSchema(ma.ModelSchema):
 
 	class Meta:
 		model = Message 
-		fields = ('id', 'user_id', 'receiver_id', 'occasion', 'content')
+		fields = ('id', 'user_id', 'receiver_id', 'occasion', 'content', 'date', 'dRangeFrom', 'dRangeUntil', 'weekdays', 'tRangeFrom', 'tRangeUntil', 'date_created')
+
+		@post_load
+		def make_message(self, data):
+			return Message(**data)
 
 
 
