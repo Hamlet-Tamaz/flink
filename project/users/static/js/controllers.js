@@ -56,11 +56,11 @@
       }).then(function success(res) {
         vm.user = res.data
 
-        debugger
+        
       
       }, function error(res) {
       vm.error = res
-      debugger
+      
       })
 
       // vm.user = {
@@ -96,11 +96,11 @@
       }).then(function success(res) {
         vm.user = res.data
         console.log('user: ', vm.user)
-        debugger
+        
       
       }, function error(res) {
       vm.error = res
-      debugger
+      
       })
       
       vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
@@ -127,7 +127,7 @@
         vm.user.postalCode = postalCode
         vm.user.biograph = biography
 
-        debugger
+        
         $http({
           method: 'POST', 
           url: `http://localhost:3000/api/users/${id}/edit`,
@@ -141,7 +141,7 @@
 
         })
 
-       debugger
+       
 
       }
 
@@ -196,7 +196,7 @@
     vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
     
     function signOut() {
-      debugger
+      
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
@@ -212,7 +212,7 @@
 
     id = +location.pathname.split('/')[2]
 
-debugger
+
 
     $http({
       method: "GET",
@@ -221,7 +221,7 @@ debugger
     }).then(function success(res) {
       vm.user = res.data
       vm.email = vm.user['email']
-      debugger
+      
       $('#calendar').fullCalendar({
 
         googleCalendarApiKey: 'AIzaSyC3tsIjfaN2pbc6N82F7QKhccsqCCuZfrs',
@@ -232,12 +232,12 @@ debugger
       });
     }, function error(res) {
       vm.error = res
-      debugger
+      
     })
 
 
     // $(document).ready(function() {
-    // debugger
+    // 
     //   $('#calendar').fullCalendar({
 
     //     googleCalendarApiKey: 'AIzaSyC3tsIjfaN2pbc6N82F7QKhccsqCCuZfrs',
@@ -272,7 +272,7 @@ debugger
         vm.friends_vis = res.data.items
         vm.tiles_vis = buildGridModel({}, vm.friends_vis);
 
-        debugger
+        
 
 
         function buildGridModel(tileTmpl, friends){
@@ -323,7 +323,7 @@ debugger
           vm.friends_con = res.data.items
           vm.tiles_con = buildGridModel({}, vm.friends_con);
 
-          debugger
+          
 
 
           function buildGridModel(tileTmpl, friends){
@@ -366,14 +366,14 @@ debugger
           }
 
         }, function error(res) {
-          debugger
+          
         })
 
       }, function error(res) {
-        debugger
+        
       })
     }, function error(res) {
-        debugger
+        
     })
 
 
@@ -415,7 +415,7 @@ debugger
       vm.inbox = res.data
       
     }, function error(res) {
-      debugger
+      
     })
     
     $http({
@@ -426,7 +426,7 @@ debugger
       vm.user = res.data
       
     }, function error(res) {
-      debugger
+      
     })
 
 
@@ -448,18 +448,18 @@ debugger
           responseType: 'json'
         }).then(function success(res) {
           vm.messages = res.data
-          debugger
+          
           
           console.log('user: ', vm.user)
           console.log('receiver: ', vm.receiver)
           console.log('messages: ', vm.messages)
 
         }, function error(res) {
-          debugger
+          
         })
         
       }, function error(res) {
-        debugger
+        
       })
     }
 
@@ -519,7 +519,7 @@ debugger
       url: `http://localhost:3000/api/users/${id}/friends/${to_id}`,
       responseType: 'json'
     }).then(function success(res) {
-      debugger
+      
     }, function error(res) {
 
     })
@@ -534,8 +534,10 @@ debugger
     // vm.searchText = ''
     id = +location.pathname.split('/')[2]
     to_id = +location.pathname.split('/')[5]
+
+    vm.sendFailed = false;
       
-    // debugger
+    // 
     function createFilterFor(query) {
        var lowercaseQuery = angular.lowercase(query);
        return function filterFn(val) {
@@ -549,7 +551,7 @@ debugger
 
 
     vm.selectedItemChange = function(val){
-      debugger
+      
       vm.receiverG = val
       vm.receiverG_id = val.id
       
@@ -560,9 +562,9 @@ debugger
         }).then(function success(res) {
           vm.receiver = res.data
           vm.message.receiver_id = vm.receiver.id
-          debugger
+          
         }).catch(function error(res) {
-          debugger
+          
         })
     }
 
@@ -580,7 +582,7 @@ debugger
       responseType: 'json'
     }).then(function success(res) {
         vm.user = res.data
-        // debugger
+        // 
         // vm.img = '/static/js/resources/pics/stickers/Coffee.png'
         vm.message = {}
         vm.message.user_id = vm.user.id
@@ -591,9 +593,9 @@ debugger
           responseType: 'json'
         }).then(function success(res) {
           vm.receiver = res.data
-          // debugger
+          // 
         }).catch(function error(res) {
-          // debugger
+          // 
         })
       })
 
@@ -604,41 +606,46 @@ debugger
       responseType: 'json'
     }).then(function success(res) {
       vm.friends = res.data
-      debugger
+      
     })
 
 
 
      vm.sendMsg = function (occasion, content, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
-
-      
-      vm.message.occasion = occasion.trim()
-      vm.message.sticker = occasion.trim()
-      vm.message.content = content
-      vm.message.date = date
-      vm.message.dateRangeFrom = dateRangeFrom
-      vm.message.dateRangeUntil = dateRangeUntil
-      vm.message.weekdaysMon = weekdaysMon
-      vm.message.weekdaysTues = weekdaysTues
-      vm.message.weekdaysWed = weekdaysWed
-      vm.message.weekdaysThurs = weekdaysThurs
-      vm.message.weekdaysFri = weekdaysFri
-      vm.message.weekdaysSat = weekdaysSat
-      vm.message.weekdaysSun = weekdaysSun
-      vm.message.timeDesiredFrom = timeDesiredFrom
-      vm.message.timeDesiredUntil = timeDesiredUntil
-
       debugger
-      $http({
-        method: "POST",
-        url: `http://localhost:3000/api/users/${id}/messages/new`,
-        data: vm.message,
-        responseType: 'json'
-      }).then(function success(res) {
-        debugger
+      if (vm.receiver.id && occasion) {
+        vm.message.occasion = occasion.trim() 
+        vm.message.content = content
+        vm.message.date = date
+        vm.message.dRangeFrom = dateRangeFrom
+        vm.message.dateRangeUntil = dateRangeUntil
+        vm.message.weekdaysMon = weekdaysMon
+        vm.message.weekdaysTues = weekdaysTues
+        vm.message.weekdaysWed = weekdaysWed
+        vm.message.weekdaysThurs = weekdaysThurs
+        vm.message.weekdaysFri = weekdaysFri
+        vm.message.weekdaysSat = weekdaysSat
+        vm.message.weekdaysSun = weekdaysSun
+        vm.message.timeRangeFrom = timeDesiredFrom
+        vm.message.timeRangeUntil = timeDesiredUntil
 
-        locaiton.pathname = `/users/${id}/dash`
-      })
+        
+        $http({
+          method: "POST",
+          url: `http://localhost:3000/api/users/${id}/messages/new`,
+          data: vm.message,
+          responseType: 'json'
+        }).then(function success(res) {
+          
+
+          location.pathname = `/users/${id}/dash`
+        })
+      }
+      else {
+        vm.sendFailed = true
+      }
+
+
     }
 
 

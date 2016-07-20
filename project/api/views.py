@@ -35,12 +35,12 @@ def user_detail(id):
 		user = GoogleUser.query.get(id)
 		print (G_user_schema.jsonify(user))
 		result = G_user_schema.dump(user)
-		# from IPython import embed; embed()
+		# 
 		return jsonify(result.data)
 
 
 		# user = GoogleUser.query.get(id)
-		# from IPython import embed; embed()
+		# 
 		# print (G_user_schema.jsonify(user))
 		# return G_user_schema.jsonify(user)
 
@@ -67,7 +67,7 @@ def edit_user(id):
 		db.session.add(user.data)
 		db.session.commit()
 		
-		# from IPython import embed; embed()
+		# 
 		return jsonify(id)
 
 
@@ -75,7 +75,7 @@ def edit_user(id):
 @api_blueprint.route('/users/<id>/friends/vis')
 def user_friends_vis(id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
-		from IPython import embed; embed()
+		
 		user = GoogleUser.query.get(id)
 		token = session['google_token'][0]
 		headers = {
@@ -83,13 +83,13 @@ def user_friends_vis(id):
 		}
 
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
-		from IPython import embed; embed()
+		
 		return friends
 
 @api_blueprint.route('/users/<id>/friends/con')
 def user_friends_con(id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
-		from IPython import embed; embed()
+		
 		user = GoogleUser.query.get(id)
 		token = session['google_token'][0]
 		headers = {
@@ -97,7 +97,7 @@ def user_friends_con(id):
 		}
 
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/connected?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
-		from IPython import embed; embed()
+		
 		return friends
 
 
@@ -116,11 +116,11 @@ def user_friend(id, to_id):
 		friend_dec = friend.decode('utf-8')
 		friend_dec = json.loads(friend_dec)
 		
-		# from IPython import embed; embed()
+		# 
 		
 		if 'error' in friend_dec.keys():
-			# from IPython import embed; embed()
-			return
+			# 
+			return jsonify({})
 		else:
 			return friend
 
@@ -174,7 +174,7 @@ def thread(id, receiver_id):
 		result = Messages_schema.dump(messages)
 
 
-		# from IPython import embed; embed()
+		# 
 		return jsonify(result.data)
 
 @api_blueprint.route('/users/<id>/messages/new', methods=['POST'])

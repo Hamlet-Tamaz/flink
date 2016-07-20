@@ -43,7 +43,7 @@ class GoogleUser(db.Model):
 	
 	bio = db.Column(db.Text)
 
-	# from IPython import embed; embed()
+	# 
 
 	date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 	date_modified = db.Column(db.DateTime, default=datetime.datetime.utcnow())
@@ -150,15 +150,20 @@ class Message(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 	receiver_id = db.Column(db.Integer, db.ForeignKey('google_users.id'))
 	occasion = db.Column(db.Text)
-	sticker = db.Column(db.Text)
 	content = db.Column(db.Text) 
 	
 	date = db.Column(db.Text)
-	dRangeFrom = db.Column(db.Integer)
-	dRangeUntil = db.Column(db.Integer)
-	weekdays = db.Column(db.Text)
-	tRangeFrom = db.Column(db.Integer)
-	tRangeUntil = db.Column(db.Integer)
+	dateRangeFrom = db.Column(db.Integer)
+	dateRangeUntil = db.Column(db.Integer)
+	weekdaysMon = db.Column(db.Boolean)
+	weekdaysTues = db.Column(db.Boolean)
+	weekdaysWed = db.Column(db.Boolean)
+	weekdaysThurs = db.Column(db.Boolean)
+	weekdaysFri = db.Column(db.Boolean)
+	weekdaysSat = db.Column(db.Boolean)
+	weekdaysSun = db.Column(db.Boolean)
+	timeRangeFrom = db.Column(db.Integer)
+	timeRangeUntil = db.Column(db.Integer)
 
 	date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
@@ -166,14 +171,25 @@ class Message(db.Model):
 	sender = db.relationship('GoogleUser', foreign_keys='Message.user_id')
 	receiver = db.relationship('GoogleUser', foreign_keys='Message.receiver_id')
 
-
-
-	def __init__(self, user_id, receiver_id, occasion, sticker, content, date_created):
+ 
+	def __init__(self, user_id, receiver_id, occasion, content, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeRangeFrom, timeRangeUntil):
 		
 		self.user_id = user_id
 		self.receiver_id = receiver_id
 		self.occasion = occasion
 		self.content = content
+		self.date = date
+		self.dateRangeFrom = dateRangeFrom
+		self.dateRangeUntil = dateRangeUntil
+		self.weekdaysMon = weekdaysMon
+		self.weekdaysTues = weekdaysTues
+		self.weekdaysWed = weekdaysWed
+		self.weekdaysThurs = weekdaysThurs
+		self.weekdaysFri = weekdaysFri
+		self.weekdaysSat = weekdaysSat
+		self.weekdaysSun = weekdaysSun
+		self.timeRangeFrom = timeRangeFrom
+		self.timeRangeUntil = timeRangeUntil
 		# self.date_created = date_created
 
 	# def __repr__(self):
@@ -181,7 +197,7 @@ class Message(db.Model):
 
 
 
-# from IPython import embed; embed()
+# 
 class G_UserSchema(ma.ModelSchema):
 	class Meta:
 		model = GoogleUser
@@ -199,18 +215,44 @@ class ConversationSchema(ma.ModelSchema):
 
 
 
-class MessagesSchema(ma.ModelSchema):
+class MessagesSchema(Schema):
 	
-	sender = fields.Nested('self')
-	receiver = fields.Nested('self')
+	# class Meta:
+	id = fields.Integer()
+	user_id = fields.Integer()
+	receiver_id = fields.Integer()
+	content = fields.String()
 
-	class Meta:
-		model = Message 
-		fields = ('id', 'user_id', 'receiver_id', 'occasion', 'sticker', 'content', 'date', 'dRangeFrom', 'dRangeUntil', 'weekdays', 'tRangeFrom', 'tRangeUntil', 'date_created')
+		# sender = fields.Nested('self')
+		# receiver = fields.Nested('self')
+		# model = Message 
+		# id = fields.Integer()
+		# user_id = fields.Integer()
+		# receiver_id = fields.Integer()
 
-		@post_load
-		def make_message(self, data):
-			return Message(**data)
+		# fields = ('id', 
+		# 		'user_id', 
+		# 		'receiver_id', 
+		# 		'occasion', 
+		# 		'content', 
+		# 		'date', 
+		# 		'date_created',
+		# 		'dateRangeFrom', 
+		# 		'dateRangeUntil', 
+		# 		'timeRangeFrom', 
+		# 		'timeRangeUntil',
+		# 		'weekdaysFri', 
+		# 		'weekdaysMon', 
+		# 		'weekdaysSat', 
+		# 		'weekdaysSun'
+		# 		'weekdaysThurs', 
+		# 		'weekdaysTues', 
+		# 		'weekdaysWed')
+
+	@post_load
+	def make_message(self, data):
+		from IPython import embed; embed()
+		return Message(**data)
 
 
 

@@ -25,7 +25,7 @@ def prevent_login_signup():
 @users_blueprint.route('/',)
 @users_blueprint.route('/home',)
 def home():
-    # from IPython import embed; embed()
+    # 
     return render_template('home.html')
 
 
@@ -40,7 +40,7 @@ def dash(id):
     user = GoogleUser.query.get_or_404(id)
     name = 'hamlet'
     # if request.headers['Accept'] == 'application/json, text/plain, */*':
-    #     from IPython import embed; embed()
+    #     
     #     print (user)
     #     # print ('json: ', jsonify({"user": user}))
     #     return jsonify( user.serialize())
@@ -56,7 +56,7 @@ def signup():
     error = None
     form = SignupForm(request.form)
     if request.method == 'POST':
-        # from IPython import embed; embed()
+        # 
         if form.validate_on_submit():
             user = User(
                 name=request.form['name'],
@@ -81,9 +81,9 @@ def signup():
 def login():
     error = None
     form = LoginForm(request.form)
-    # from IPython import embed; embed()
+    # 
     if request.method == 'POST':
-        # from IPython import embed; embed()  
+        #   
         if form.validate_on_submit():
             user = User.query.filter_by(name=request.form['name']).first()
             if user is not None and bcrypt.check_password_hash(user.password, form.password.data ):
@@ -95,14 +95,14 @@ def login():
                 return render_template('login.html',form=form,error=error)
         else:
             return render_template('login.html',form=form,error=error)
-    # from IPython import embed; embed()
+    # 
     return render_template('login.html',form=form,error=error)
 
 
 @users_blueprint.route('/users/<id>/setup')
 def setup(id):
     user = GoogleUser.query.get(id)
-    # from IPython import embed; embed()
+    # 
 
     return render_template('setup.html', user = user)
 
@@ -111,7 +111,7 @@ def setup(id):
 def edit(id):
     user = GoogleUser.query.get(id)
 
-    # from IPython import embed; embed()
+    # 
     return render_template('edit.html', user = user)
 
 
@@ -119,7 +119,7 @@ def edit(id):
 def update(id):
     user = GoogleUser.query.get(id)
 
-    # from IPython import embed; embed()
+    # 
     
     user.given_name = request.form
 
@@ -137,12 +137,12 @@ def friends(id):
         'Authorization' : 'Bearer {}'.format(token)
     }
 
-    # from IPython import embed; embed()
+    # 
 
     friends = requests.get('https://www.googleapis.com/plus/v1/people/{}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(user.google_id), headers=headers).content
     
 
-    # from IPython import embed; embed()
+    # 
 
     return render_template('friends.html', user = user, friends = friends)
 
@@ -159,7 +159,7 @@ def messages(id):
     inbox = Message.query.filter_by(receiver_id = user.id).all()
     outbox = Message.query.filter_by(user_id = user.id).all()
 
-    # from IPython import embed; embed()
+    # 
 
     return render_template('messages.html', user = user, inbox=inbox, outbox = outbox)
 
@@ -185,7 +185,7 @@ def new_message_W(id, to_id):
     if not friend:
         friend = requests.get('https://www.googleapis.com/plus/v1/people/{}?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(to_id), headers=headers).json()
     
-    # from IPython import embed; embed()
+    # 
     return render_template('new_message.html', user=user, receiver=friend)
 
 

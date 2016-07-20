@@ -6,13 +6,15 @@
 	<div layout-align='center center' layout='column'>
 		<h1 flex>New Message</h1>
 
+		<!-- <img id='new_msg_smiley' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/2000px-Day-template.svg.png"> -->
+
 		<div layout-align='center center' layout='row'>
 
-			<img id='new_msg_smiley' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/2000px-Day-template.svg.png">
 
 			<md-content md-whiteframe='5' id='new_msg_box'>
-				<md-toolbar layout='row' layout-align='space-between center' layout-padding>
+				<md-toolbar layout='row' layout-align='center center' layout-padding>
 					<h3>From: [[dash.name]]</h3>
+					<span flex='25'></span>
 					<h3 style='position: relative; right: 10px'>To: [[nm.message.receiver]]</h3>
 				</md-toolbar>
 
@@ -49,10 +51,9 @@
 						  </md-not-found>
 						</md-autocomplete>
 					
-						[[nm.message.receiver]]
-						[[nm.message.receiver.id]]
+						<span flex></span>
 						
-
+						
 
 						<div layout='row' layout-align='center center'>
 							<label for="Occasion">Occasion</label>
@@ -171,10 +172,14 @@
 
 
 			        <div>
-			          <md-button ng-click="nm.sendMsg(nm.message.occasion, nm.message.message, nm.message.date, nm.message.dateRangeFrom, nm.message.dateRangeUntil, nm.message.weekdaysMon, nm.message.weekdaysTues, nm.message.weekdaysWed, nm.message.weekdaysThurs, nm.message.weekdaysFri, nm.message.weekdaysSat, nm.message.weekdaysSun, nm.message.timeDesiredFrom, nm.message.timeDesiredUntil)"
+			        	[[nm.message]]
+			          <md-button ng-click="nm.sendMsg(nm.message.occasion, nm.message.content, nm.message.date, nm.message.dateRangeFrom, nm.message.dateRangeUntil, nm.message.weekdaysMon, nm.message.weekdaysTues, nm.message.weekdaysWed, nm.message.weekdaysThurs, nm.message.weekdaysFri, nm.message.weekdaysSat, nm.message.weekdaysSun, nm.message.timeDesiredFrom, nm.message.timeDesiredUntil)"
 			            class="md-primary">
 			            Send Message
 			          </md-button>
+			        </div>
+			        <div ng-show='nm.sendFailed'>
+			        	Please select friend and occasion
 			        </div>
 			        <div>
 			          <md-button ng-click="toggleRight()"
@@ -183,7 +188,7 @@
 			            Cancel
 			          </md-button>
 			        </div>
-			      </div>
+			    </div>
 
 
 			    </md-content>
