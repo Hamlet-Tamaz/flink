@@ -14,8 +14,9 @@
     
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
-          .primaryPalette('green')
-          .accentPalette('pink');
+          .primaryPalette('green', {'default': 'A400'})
+          .accentPalette('yellow', {'default': 'A400'})
+          .warnPalette('pink');
     })
     .config(function( $mdIconProvider ){
       $mdIconProvider
@@ -313,7 +314,7 @@ debugger
           return results;
         }
         
-        HERE
+
         $http({
           method: "GET",
           url: `http://localhost:3000/api/users/${id}/friends/con`,
@@ -375,7 +376,7 @@ debugger
         debugger
     })
 
-    
+
 
 
     var originatorEv;
@@ -599,11 +600,11 @@ debugger
     
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}/friends`,
+      url: `http://localhost:3000/api/users/${id}/friends/vis`,
       responseType: 'json'
     }).then(function success(res) {
       vm.friends = res.data
-      // debugger
+      debugger
     })
 
 

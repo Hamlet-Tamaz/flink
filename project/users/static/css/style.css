@@ -1,11 +1,4 @@
 
-.intro_smiley {
-
-width:80px;
-position: relative;
-left: -5px;
-
-}
 
 .friends_images {
   width: 150px;
@@ -31,18 +24,53 @@ left: -5px;
   width: 100px;
 }
 
+#html {
+  height: 1100px;
+}
 
 
+#flink-logo {
+  position: relative;
+  width: 100px;
+  top: 7px
+}
 
 
 #body {
-  background-color: #FFFF8D
+  background-color: #E0F7FA
 }
 
 #intro_box {
 	top: 50px;
 }
 
+#dash_smiley {
+
+/*display: inline-block;*/
+width:80px;
+position: relative;
+left: 10px;
+top: 20px;
+
+}
+
+#new_msg_smiley {
+
+width:80px;
+position: relative;
+left: -5px;
+
+}
+
+#message_smiley {
+
+width:80px;
+position: relative;
+left: 100px;
+bottom: 10px;
+float: left;
+
+}
 
 #loginDiv, #signupDiv {
 	text-align: center

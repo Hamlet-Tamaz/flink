@@ -3,6 +3,7 @@
 {%  block content  %}
 <div ng-controller='messagesCtr as mes' id='messagesDiv'>
 	<h1>Messages</h1>
+	<img id='message_smiley' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/2000px-Day-template.svg.png">
 	
 	<md-button ng-href='/users/{{user.id}}/messages/new' layout='row' layout-align='center center'>
 		<i class="material-icons">send</i>

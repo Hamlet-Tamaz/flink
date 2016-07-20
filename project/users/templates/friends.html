@@ -1,9 +1,10 @@
 {%  extends 'user_base.html'  %}
 
 {%  block content  %}
-	<h1>Friends</h1>
 
 	<div ng-controller="friendsCtr as fr" flex ng-cloak>
+	
+	<h1>All Friends</h1>
 
 		<md-grid-list
 	        md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
@@ -50,6 +51,61 @@
 
 	    	</md-grid-tile>
 	  	</md-grid-list>
+
+
+
+<h1>Connected Friends</h1>
+
+		<md-grid-list
+	        md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+	        md-row-height-gt-md="1:1" md-row-height="4:3"
+	        md-gutter="8px" md-gutter-gt-sm="4px" >
+	    	<md-grid-tile ng-repeat="tile in fr.tiles_con"
+		                  md-rowspan="tile.span.row"
+		                  md-colspan="tile.span.col"
+		                  md-colspan-sm="1"
+		                  md-colspan-xs="1"
+		                  class="[[tile.background]]" >
+
+					<img ng-src="[[tile.img]]" class='friends_images'>
+					
+	      			<!-- <md-icon md-svg-icon="tile.icon"></md-icon> -->
+	      		<md-grid-tile-footer layout='row' layout-align='center space-between'>
+
+	      			<h2>[[tile.title]]</h2>
+
+	      		</md-grid-tile-footer>
+				
+				<md-menu class='friends_dropdown' md-position-mode='target-right target'>
+					<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+						<i class="material-icons md-18">arrow_drop_down_circle</i>
+						
+						<!-- <md-icon md-menu-origin class='md-48'> -->
+						<!-- </md-icon> -->
+						<!-- <md-icon md-menu-origin md-svg-icon="call:business"></md-icon> -->
+					</md-button>
+					<md-menu-content width="6">
+						<md-menu-item>
+							<md-button ng-href='/users/{{user.id}}/messages/new/[[tile.google_id]]'>
+								<div layout='row' flex>
+									<p flex> Send Message</p>
+									<i class="material-icons" style="margin: auto 3px auto 0;">message</i>
+									<!-- <md-icon md-menu-align-target >
+									</md-icon> -->
+								</div>
+								<!-- <md-icon md-menu-align-target md-svg-icon="call:no-sim"></md-icon> -->
+							</md-button>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+
+	    	</md-grid-tile>
+	  	</md-grid-list>
+
+
+
+
+
 	</div>
 
 

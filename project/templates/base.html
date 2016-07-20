@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app='flink'>
+<html lang="en" ng-app='flink' id='html'>
 <head>
 	<meta charset="UTF-8">
 
@@ -21,11 +21,13 @@
 
 
 <div layout="column">
-  <md-toolbar>
+  <md-toolbar layout-align='center center' text-align='center'>
     <div class="md-toolbar-tools">
 
       {%  if user  %}
-        <md-button ng-href='/users/{{user.id}}/dash'>Flink</md-button>
+        <md-button ng-href='/users/{{user.id}}/dash'>
+          <img id='flink-logo' ng-src="/static/js/resources/pics/flink.png">
+        </md-button>
        
         <md-button ng-href='/users/{{user.id}}/friends'>
         	Friends
@@ -38,8 +40,17 @@
   			<md-button ng-href='/users/{{user.id}}/messages'>
         	Messages
         </md-button>
+      
       {%  else  %}
-        <md-button ng-href='/'>Flink</md-button>
+
+        <span flex></span>
+        <span flex></span>
+
+        <div >
+          <md-button ng-href='/'>
+            <img id='flink-logo' ng-src="/static/js/resources/pics/flink.png">
+          </md-button>
+        </div>
       {% endif   %}
 
       <span flex></span>
