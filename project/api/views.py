@@ -72,10 +72,10 @@ def edit_user(id):
 
 
 
-@api_blueprint.route('/users/<id>/friends')
-def user_friends(id):
+@api_blueprint.route('/users/<id>/friends/vis')
+def user_friends_vis(id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
-
+		from IPython import embed; embed()
 		user = GoogleUser.query.get(id)
 		token = session['google_token'][0]
 		headers = {
@@ -83,6 +83,21 @@ def user_friends(id):
 		}
 
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
+		from IPython import embed; embed()
+		return friends
+
+@api_blueprint.route('/users/<id>/friends/con')
+def user_friends_con(id):
+	if request.headers['Accept'] == 'application/json, text/plain, */*':
+		from IPython import embed; embed()
+		user = GoogleUser.query.get(id)
+		token = session['google_token'][0]
+		headers = {
+			'Authorization' : 'Bearer {}'.format(token)
+		}
+
+		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/connected?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
+		from IPython import embed; embed()
 		return friends
 
 

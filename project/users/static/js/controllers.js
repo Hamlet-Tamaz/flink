@@ -265,24 +265,25 @@ debugger
       
       $http({
         method: "GET",
-        url: `http://localhost:3000/api/users/${id}/friends`,
+        url: `http://localhost:3000/api/users/${id}/friends/vis`,
         responseType: 'json'
       }).then(function success(res) {
-        vm.friends = res.data.items
-debugger
-        vm.tiles = buildGridModel({});
+        vm.friends_vis = res.data.items
+        vm.tiles_vis = buildGridModel({}, vm.friends_vis);
+
+        debugger
 
 
-        function buildGridModel(tileTmpl){
+        function buildGridModel(tileTmpl, friends){
           var it, results = [ ];
           for (var j=0; j<res.data.totalItems; j++) {
 
             it = angular.extend({},tileTmpl);
 
-            it.img  = vm.friends[j].image.url;
-            it.title = vm.friends[j].displayName;
+            it.img  = vm.friends_vis[j].image.url;
+            it.title = vm.friends_vis[j].displayName;
             it.span  = { row : 1, col : 1 };
-            it.google_id = vm.friends[j].id
+            it.google_id = vm.friends_vis[j].id
 
             switch(j+1) {
               case 1:
@@ -311,14 +312,70 @@ debugger
 
           return results;
         }
+        
+        HERE
+        $http({
+          method: "GET",
+          url: `http://localhost:3000/api/users/${id}/friends/con`,
+          responseType: 'json'
+        }).then(function success(res) {
+          vm.friends_con = res.data.items
+          vm.tiles_con = buildGridModel({}, vm.friends_con);
+
+          debugger
+
+
+          function buildGridModel(tileTmpl, friends){
+            var it, results = [ ];
+            for (var j=0; j<res.data.totalItems; j++) {
+
+              it = angular.extend({},tileTmpl);
+
+              it.img  = vm.friends_vis[j].image.url;
+              it.title = vm.friends_vis[j].displayName;
+              it.span  = { row : 1, col : 1 };
+              it.google_id = vm.friends_vis[j].id
+
+              switch(j+1) {
+                case 1:
+                  it.background = "red";
+                  it.span.row = it.span.col = 2;
+                  break;
+                case 2: it.background = "green";         break;
+                case 3: it.background = "darkBlue";      break;
+                case 4:
+                  it.background = "blue";
+                  it.span.col = 2;
+                  break;
+                case 5:
+                  it.background = "yellow";
+                  it.span.row = it.span.col = 2;
+                  break;
+                case 6: it.background = "pink";          break;
+                case 7: it.background = "darkBlue";      break;
+                case 8: it.background = "purple";        break;
+                case 9: it.background = "deepBlue";      break;
+                case 10: it.background = "lightPurple";  break;
+                case 11: it.background = "yellow";       break;
+              }
+              results.push(it);
+            }
+
+            return results;
+          }
+
+        }, function error(res) {
+          debugger
+        })
 
       }, function error(res) {
         debugger
       })
-
     }, function error(res) {
-      debugger
+        debugger
     })
+
+    
 
 
     var originatorEv;
