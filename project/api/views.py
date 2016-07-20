@@ -44,6 +44,14 @@ def user_detail(id):
 		# print (G_user_schema.jsonify(user))
 		# return G_user_schema.jsonify(user)
 
+@api_blueprint.route('/users/<id>/google')
+def user_info(id):
+	if request.headers['Accept'] == 'application/json, text/plain, */*':
+		user = GoogleUser.query.filter_by(name = 'Cassandra Brown').first()
+		result = G_user_schema.dump(user)
+
+		return jsonify(result.data)
+
 
 
 @api_blueprint.route('/users/<id>/edit', methods=['POST'])
@@ -75,7 +83,6 @@ def user_friends(id):
 		}
 
 		friends = requests.get('https://www.googleapis.com/plus/v1/people/{me}/people/visible?key=AIzaSyC8x6y_-OeLDHM9Tq232SWXHerihctcgUE'.format(me=user.google_id), headers=headers).content
-		# from IPython import embed; embed()
 		return friends
 
 
@@ -93,11 +100,14 @@ def user_friend(id, to_id):
 		
 		friend_dec = friend.decode('utf-8')
 		friend_dec = json.loads(friend_dec)
-
-		if friend_dec['error']['code']:
+		
+		# from IPython import embed; embed()
+		
+		if 'error' in friend_dec.keys():
 			# from IPython import embed; embed()
 			return
-		return friend
+		else:
+			return friend
 
 
 
@@ -163,7 +173,7 @@ def send_message(id):
 		messageResult = Messages_schema.load(parsed_message)
 		# Save it 
 
-		# from IPython import embed; embed()
+		from IPython import embed; embed()
 		db.session.add(message.data)
 		db.session.commit()
 

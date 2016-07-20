@@ -48,19 +48,21 @@
 						  	No matches found.
 						  </md-not-found>
 						</md-autocomplete>
-
+					
+						[[nm.message.receiver]]
+						[[nm.message.receiver.id]]
 						
 
 
 						<div layout='row' layout-align='center center'>
 							<label for="Occasion">Occasion</label>
-							<select name="Occasion" id="occ" ng-model='nm.message.occ' required>
+							<select name="Occasion" id="occasion" ng-model='nm.message.occasion' required>
 								<option values='[[stk.name]]'  ng-repeat='stk in nm.stickers'>
 								[[stk.name]]
 								</option>
 							</select>
 								
-							<img id='new_msg_img' ng-show='nm.message.occ.length > 0' ng-src="/static/js/resources/pics/stickers/[[nm.message.occ]].png">
+							<img id='new_msg_img' ng-show='nm.message.occasion.length > 0' ng-src="/static/js/resources/pics/stickers/[[nm.message.occasion]].png">
 							
 						</div>	
 					</div>	
@@ -169,7 +171,7 @@
 
 
 			        <div>
-			          <md-button ng-click="nm.sendMsg(nm.message.occ, nm.message.receiver, nm.message.message, nm.message.date, nm.message.dateRangeFrom, nm.message.dateRangeUntil, nm.message.weekdaysMon, nm.message.weekdaysTues, nm.message.weekdaysWed, nm.message.weekdaysThurs, nm.message.weekdaysFri, nm.message.weekdaysSat, nm.message.weekdaysSun, nm.message.timeDesiredFrom, nm.message.timeDesiredUntil)"
+			          <md-button ng-click="nm.sendMsg(nm.message.occasion, nm.message.message, nm.message.date, nm.message.dateRangeFrom, nm.message.dateRangeUntil, nm.message.weekdaysMon, nm.message.weekdaysTues, nm.message.weekdaysWed, nm.message.weekdaysThurs, nm.message.weekdaysFri, nm.message.weekdaysSat, nm.message.weekdaysSun, nm.message.timeDesiredFrom, nm.message.timeDesiredUntil)"
 			            class="md-primary">
 			            Send Message
 			          </md-button>

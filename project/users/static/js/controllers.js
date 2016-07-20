@@ -473,7 +473,7 @@ debugger
 
   function new_msg($http) {
     var vm = this;
-    vm.searchText = ''
+    // vm.searchText = ''
     id = +location.pathname.split('/')[2]
     to_id = +location.pathname.split('/')[5]
       
@@ -486,7 +486,6 @@ debugger
      }
 
     vm.getMatches = function(data){
-      debugger
       return data.filter(createFilterFor(data))
     }
 
@@ -498,18 +497,17 @@ debugger
       
       $http({
           method: "GET",
-          url: `http://localhost:3000/api/users/${id}/friends/${vm.receiverG_id}`,
+          url: `http://localhost:3000/api/users/${vm.receiverG_id}/google`,
           responseType: 'json'
         }).then(function success(res) {
           vm.receiver = res.data
+          vm.message.receiver_id = vm.receiver.id
           debugger
         }).catch(function error(res) {
-          // debugger
+          debugger
         })
     }
 
-
-    vm.occ = ''
 
     vm.stickers = [
        {name: 'Coffee', img_url: '/static/js/resources/pics/stickers/Coffee.png'},
@@ -526,7 +524,9 @@ debugger
         vm.user = res.data
         // debugger
         // vm.img = '/static/js/resources/pics/stickers/Coffee.png'
-        
+        vm.message = {}
+        vm.message.user_id = vm.user.id
+
         $http({
           method: "GET",
           url: `http://localhost:3000/api/users/${id}/friends/${to_id}`,
@@ -551,13 +551,12 @@ debugger
 
 
 
-     vm.sendMsg = function (occ, receiver, message, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
-      
-      vm.message = {}
+     vm.sendMsg = function (occasion, content, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
 
-      vm.message.occ = occ
-      vm.message.receiver = receiver
-      vm.message.content = message
+      
+      vm.message.occasion = occasion.trim()
+      vm.message.sticker = occasion.trim()
+      vm.message.content = content
       vm.message.date = date
       vm.message.dateRangeFrom = dateRangeFrom
       vm.message.dateRangeUntil = dateRangeUntil
