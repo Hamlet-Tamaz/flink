@@ -440,19 +440,23 @@
         url: `http://localhost:3000/api/users/${receiver_id}`,
         responseType: 'json'
       }).then(function success(res) {
-        vm.receiver = res.data
+        vm.receiverG = res.data
         // GETTING MESSAGES
         $http({
           method: "GET", 
           url: `http://localhost:3000/api/users/${id}/messages/thread/${receiver_id}`,
           responseType: 'json'
         }).then(function success(res) {
-          vm.messages = res.data
+          vm.messages = res.data.messages
+          vm.user = res.data.user
+          vm.receiver = res.data.receiver
           
           
           console.log('user: ', vm.user)
           console.log('receiver: ', vm.receiver)
           console.log('messages: ', vm.messages)
+
+          debugger
 
         }, function error(res) {
           

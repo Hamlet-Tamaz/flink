@@ -28,7 +28,7 @@
 	        					 	<p>You have 2 appointments this week </p>
 		        				</td>
 		        				<td>
-		        					<md-button class='md-warn'>Go to Calendar</md-button>
+		        					<md-button ng-href='/users/{{user.id}}/calendar' class='md-warn'>Go to Calendar</md-button>
 		        				</td>
 		        			</tr>
 		        			<tr>
@@ -36,7 +36,7 @@
 					          		<p>You currently have 2 invites</p>
 		        				</td>
 		        				<td>
-		        					<md-button class='md-warn'>Respond</md-button>
+		        					<md-button ng-href='/users/{{user.id}}/messages' class='md-warn'>Respond</md-button>
 		        				</td>
 		        			</tr>
 		        			<tr>

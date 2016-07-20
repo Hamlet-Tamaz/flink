@@ -165,17 +165,26 @@ def conversations(id):
 def thread(id, receiver_id):
 	if request.headers['Accept'] == 'application/json, text/plain, */*':
 		user = GoogleUser.query.get(id)
+		user_ser = G_user_schema.dump(user).data
+
+
 		receiver = GoogleUser.query.get(receiver_id)
-		convArr = [id, receiver_id]
+		receiver_ser = G_user_schema.dump(receiver).data
+		# convArr = [id, receiver_id]
 
 
-		# messages = Message.query.filter_by(user_id = int(id), receiver_id = int(receiver_id))
-		messages = Message.query.filter(GoogleUser.id.in_(convArr))
+		messages = Message.query.filter_by(user_id = int(id)).filter_by(receiver_id = int(receiver_id))
+		# messages = Message.query.filter(GoogleUser.id.in_(convArr), )
 		result = Messages_schema.dump(messages)
 
+		data = {}
+		data['user'] = user_ser
+		data['receiver'] = receiver_ser
+		data['messages'] = result.data
 
+		from IPython import embed; embed()
 		# 
-		return jsonify(result.data)
+		return jsonify(data)
 
 @api_blueprint.route('/users/<id>/messages/new', methods=['POST'])
 def send_message(id):
@@ -185,16 +194,42 @@ def send_message(id):
 		# parse the JSON into a dictionary
 		parsed_message = json.loads(message)
 		# turn the dictionary into a SQL Alchemy model
-		messageResult = Messages_schema.load(parsed_message)
-		# Save it 
-
-		from IPython import embed; embed()
-		db.session.add(message.data)
+		# messageResult = Messages_schema.load(parsed_message)
+		# Save it
+		new_message = Message(
+			parsed_message.get('user_id'),
+			parsed_message.get('receiver_id'),
+			parsed_message.get('occasion'),
+			parsed_message.get('content'),
+			parsed_message.get('date'),
+			parsed_message.get('dateRangeFrom'),
+			parsed_message.get('dateRangeUntil'),
+			parsed_message.get('weekdaysMon'),
+			parsed_message.get('weekdaysTues'),
+			parsed_message.get('weekdaysWed'),
+			parsed_message.get('weekdaysThurs'),
+			parsed_message.get('weekdaysFri'),
+			parsed_message.get('weekdaysSat'),
+			parsed_message.get('weekdaysSun'),
+			parsed_message.get('timeRangeFrom'),
+			parsed_message.get('timeRangeUntil')
+		)
+		db.session.add(new_message)
 		db.session.commit()
 
-		return jsonify(id)
+		conv = Conversation.query.filter_by(receiver_id=parsed_message.get('receiver_id')).first()
+		from IPython import embed; embed()
 
+		if conv:
+			return jsonify(id)
+		else:
+			conv = Conversation(parsed_message.get('user_id'), parsed_message.get('receiver_id'))
 
+			db.session.add(conv)
+			db.session.commit()
+
+			from IPython import embed; embed()
+			return jsonify(id)
 		# Messages_schema.dump(Message.query.filter_by(receiver_id = 3, **kwargs)
 
 		# messages = Message.query.filter_by(user_id = int(id), receiver_id = receiver)

@@ -24,6 +24,11 @@
   width: 100px;
 }
 
+.friend_names {
+  position: relative;
+  top: -25px;
+}
+
 #html {
   height: 1100px;
 }

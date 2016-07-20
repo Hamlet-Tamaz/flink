@@ -131,7 +131,7 @@ class Conversation(db.Model):
 	date_modified = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
 
-	def __init__(self, user_id, receiver_id, date_created, date_modified):
+	def __init__(self, user_id, receiver_id):
 		self.user_id = user_id
 		self.receiver_id = receiver_id
 		# self.date_created = date_created
@@ -215,13 +215,22 @@ class ConversationSchema(ma.ModelSchema):
 
 
 
-class MessagesSchema(Schema):
+class MessagesSchema(ma.ModelSchema):
+
+    class Meta:
+        model = Message
+        @post_load
+        def make_message(self, data):
+            return Message(**data)
+
+
+# class MessagesSchema(Schema):
 	
 	# class Meta:
-	id = fields.Integer()
-	user_id = fields.Integer()
-	receiver_id = fields.Integer()
-	content = fields.String()
+	# id = fields.Integer()
+	# user_id = fields.Integer()
+	# receiver_id = fields.Integer()
+	# content = fields.String()
 
 		# sender = fields.Nested('self')
 		# receiver = fields.Nested('self')
@@ -249,10 +258,10 @@ class MessagesSchema(Schema):
 		# 		'weekdaysTues', 
 		# 		'weekdaysWed')
 
-	@post_load
-	def make_message(self, data):
-		from IPython import embed; embed()
-		return Message(**data)
+	# @post_load
+	# def make_message(self, data):
+	# 	from IPython import embed; embed()
+	# 	return Message(**data)
 
 
 
