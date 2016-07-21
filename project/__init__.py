@@ -20,7 +20,7 @@ oauth = OAuth(app)
 google_id = os.environ.get('GOOGLE_ID')
 google_secret = os.environ.get('GOOGLE_SECRET')
 
-
+from IPython import embed; embed()
 
 app.debug = True
 google = oauth.remote_app(
@@ -46,10 +46,9 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 
-app.secret_key = 'secrets' # Move me to a .env file!
-
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'postgres://localhost/flink'
-app.config['SQLALCHEMY_TRIACK_MODIFICATIONS'] = False
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

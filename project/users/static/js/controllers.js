@@ -456,7 +456,7 @@
           vm.user = res.data.user
           vm.receiver = res.data.receiver
           
-          
+
           console.log('user: ', vm.user)
           console.log('receiver: ', vm.receiver)
           console.log('messages: ', vm.messages)
@@ -653,6 +653,10 @@
         vm.sendFailed = true
       }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> herokuPrep
 
   }
 
