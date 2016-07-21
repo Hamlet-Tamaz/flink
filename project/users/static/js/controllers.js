@@ -11,7 +11,7 @@
       $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
       $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
     })
-    
+
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
           .primaryPalette('green', {'default': 'A400'})
@@ -42,25 +42,25 @@
     .controller('messagesCtr', messages)
     .controller('new_msgCtr', new_msg)
 
-    
+
     setup.$inject = ['$http']
     function setup($http) {
       var vm = this;
-      
+
       id = +location.pathname.split('/')[2]
 
       $http({
         method: "GET",
-        url: `http://localhost:3000/api/users/${id}`,
+        url: `/api/users/${id}`,
         responseType: "json"
       }).then(function success(res) {
         vm.user = res.data
 
-        
-      
+
+
       }, function error(res) {
       vm.error = res
-      
+
       })
 
       // vm.user = {
@@ -86,23 +86,23 @@
     edit.$inject = ['$http']
     function edit($http) {
       var vm = this;
-      
+
       id = +location.pathname.split('/')[2]
 
       $http({
         method: "GET",
-        url: `http://localhost:3000/api/users/${id}`,
+        url: `/api/users/${id}`,
         responseType: "json"
       }).then(function success(res) {
         vm.user = res.data
         console.log('user: ', vm.user)
-        
-      
+
+
       }, function error(res) {
       vm.error = res
-      
+
       })
-      
+
       vm.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
       'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
       'WY').split(' ').map(function(state) {
@@ -127,10 +127,10 @@
         vm.user.postalCode = postalCode
         vm.user.biograph = biography
 
-        
+
         $http({
-          method: 'POST', 
-          url: `http://localhost:3000/api/users/${id}/edit`,
+          method: 'POST',
+          url: `/api/users/${id}/edit`,
           data: vm.user,
           responseType: 'json'
         }).then(function success(res) {
@@ -141,15 +141,15 @@
 
         })
 
-       
+
 
       }
 
 
 
     }
-    
-    
+
+
 
     function home() {
       var vm = this;
@@ -194,9 +194,9 @@
     };
 
     vm.friends = [{name: 'hamlet', age: 23}, {name: 'alain', age: 20}, {name: 'rufa', age: 41}]
-    
+
     function signOut() {
-      
+
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
@@ -208,7 +208,7 @@
   calendar.$inject = ['$http']
   function calendar($http) {
     var vm = this;
-    
+
 
     id = +location.pathname.split('/')[2]
 
@@ -216,12 +216,12 @@
 
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}`,
+      url: `/api/users/${id}`,
       responseType: "json"
     }).then(function success(res) {
       vm.user = res.data
       vm.email = vm.user['email']
-      
+
       $('#calendar').fullCalendar({
 
         googleCalendarApiKey: 'AIzaSyC3tsIjfaN2pbc6N82F7QKhccsqCCuZfrs',
@@ -232,12 +232,12 @@
       });
     }, function error(res) {
       vm.error = res
-      
+
     })
 
 
     // $(document).ready(function() {
-    // 
+    //
     //   $('#calendar').fullCalendar({
 
     //     googleCalendarApiKey: 'AIzaSyC3tsIjfaN2pbc6N82F7QKhccsqCCuZfrs',
@@ -253,26 +253,26 @@
   friends.$inject = ['$http']
   function friends($http) {
     var vm = this;
-    
+
     id = +location.pathname.split('/')[2]
 
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}`,
+      url: `/api/users/${id}`,
       responseType: "json"
     }).then(function success(res) {
       vm.user = res.data
 
-      
+
       $http({
         method: "GET",
-        url: `http://localhost:3000/api/users/${id}/friends/vis`,
+        url: `/api/users/${id}/friends/vis`,
         responseType: 'json'
       }).then(function success(res) {
         vm.friends_vis = res.data.items
         vm.tiles_vis = buildGridModel({}, vm.friends_vis);
 
-        
+
 
 
         function buildGridModel(tileTmpl, friends){
@@ -313,17 +313,17 @@
 
           return results;
         }
-        
+
 
         $http({
           method: "GET",
-          url: `http://localhost:3000/api/users/${id}/friends/con`,
+          url: `/api/users/${id}/friends/con`,
           responseType: 'json'
         }).then(function success(res) {
           vm.friends_con = res.data.items
           vm.tiles_con = buildGridModel({}, vm.friends_con);
 
-          
+
 
 
           function buildGridModel(tileTmpl, friends){
@@ -366,14 +366,14 @@
           }
 
         }, function error(res) {
-          
+
         })
 
       }, function error(res) {
-        
+
       })
     }, function error(res) {
-        
+
     })
 
 
@@ -403,78 +403,78 @@
   messages.$inject = ['$http', '$mdSidenav']
   function messages ($http, $mdSidenav) {
     var vm = this;
-    
+
     id = +location.pathname.split('/')[2]
-    
+
 
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}/messages/conversations`,
+      url: `/api/users/${id}/messages/conversations`,
       responseType: 'json'
     }).then(function success(res) {
       vm.inbox = res.data
-      
+
     }, function error(res) {
-      
+
     })
-    
+
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}`,
+      url: `/api/users/${id}`,
       responseType: 'json'
     }).then(function success(res) {
       vm.user = res.data
-      
+
     }, function error(res) {
-      
+
     })
 
 
-    
+
     vm.getMessages = function (receiver_id) {
       vm.receiver_id = receiver_id
-      
+
       // GETTING RECEIVER
       $http({
-        method: "GET", 
-        url: `http://localhost:3000/api/users/${receiver_id}`,
+        method: "GET",
+        url: `/api/users/${receiver_id}`,
         responseType: 'json'
       }).then(function success(res) {
         vm.receiver = res.data
         // GETTING MESSAGES
         $http({
-          method: "GET", 
-          url: `http://localhost:3000/api/users/${id}/messages/thread/${receiver_id}`,
+          method: "GET",
+          url: `/api/users/${id}/messages/thread/${receiver_id}`,
           responseType: 'json'
         }).then(function success(res) {
           vm.messages = res.data
-          
-          
+
+
           console.log('user: ', vm.user)
           console.log('receiver: ', vm.receiver)
           console.log('messages: ', vm.messages)
 
         }, function error(res) {
-          
+
         })
-        
+
       }, function error(res) {
-        
+
       })
     }
 
-   
+
 
 
     // vm.test = [{title: 'title1', content: 'content1'},{title: 'title2', content: 'content2'}]
 
-    
+
 
     vm.openLeftMenu = function() {
       $mdSidenav('left').toggle();
     }
   }
-  
+
 
 
 
@@ -484,7 +484,7 @@
 
     id = +location.pathname.split('/')[2]
     to_id = +location.pathname.split('/')[4]
-    
+
     vm.weekdays = ['', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
     vm.selected = [0];
     vm.toggle = function (item, list) {
@@ -516,10 +516,10 @@
 
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}/friends/${to_id}`,
+      url: `/api/users/${id}/friends/${to_id}`,
       responseType: 'json'
     }).then(function success(res) {
-      
+
     }, function error(res) {
 
     })
@@ -536,8 +536,8 @@
     to_id = +location.pathname.split('/')[5]
 
     vm.sendFailed = false;
-      
-    // 
+
+    //
     function createFilterFor(query) {
        var lowercaseQuery = angular.lowercase(query);
        return function filterFn(val) {
@@ -551,20 +551,20 @@
 
 
     vm.selectedItemChange = function(val){
-      
+
       vm.receiverG = val
       vm.receiverG_id = val.id
-      
+
       $http({
           method: "GET",
-          url: `http://localhost:3000/api/users/${vm.receiverG_id}/google`,
+          url: `/api/users/${vm.receiverG_id}/google`,
           responseType: 'json'
         }).then(function success(res) {
           vm.receiver = res.data
           vm.message.receiver_id = vm.receiver.id
-          
+
         }).catch(function error(res) {
-          
+
         })
     }
 
@@ -578,35 +578,35 @@
 
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}`,
+      url: `/api/users/${id}`,
       responseType: 'json'
     }).then(function success(res) {
         vm.user = res.data
-        // 
+        //
         // vm.img = '/static/js/resources/pics/stickers/Coffee.png'
         vm.message = {}
         vm.message.user_id = vm.user.id
 
         $http({
           method: "GET",
-          url: `http://localhost:3000/api/users/${id}/friends/${to_id}`,
+          url: `/api/users/${id}/friends/${to_id}`,
           responseType: 'json'
         }).then(function success(res) {
           vm.receiver = res.data
-          // 
+          //
         }).catch(function error(res) {
-          // 
+          //
         })
       })
 
-    
+
     $http({
       method: "GET",
-      url: `http://localhost:3000/api/users/${id}/friends/vis`,
+      url: `/api/users/${id}/friends/vis`,
       responseType: 'json'
     }).then(function success(res) {
       vm.friends = res.data
-      
+
     })
 
 
@@ -614,7 +614,7 @@
      vm.sendMsg = function (occasion, content, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
       debugger
       if (vm.receiver.id && occasion) {
-        vm.message.occasion = occasion.trim() 
+        vm.message.occasion = occasion.trim()
         vm.message.content = content
         vm.message.date = date
         vm.message.dRangeFrom = dateRangeFrom
@@ -629,14 +629,14 @@
         vm.message.timeRangeFrom = timeDesiredFrom
         vm.message.timeRangeUntil = timeDesiredUntil
 
-        
+
         $http({
           method: "POST",
-          url: `http://localhost:3000/api/users/${id}/messages/new`,
+          url: `/api/users/${id}/messages/new`,
           data: vm.message,
           responseType: 'json'
         }).then(function success(res) {
-          
+
 
           location.pathname = `/users/${id}/dash`
         })
@@ -650,7 +650,7 @@
 
 
     // function sendMessage (user_id, receiver_id, occassion, , sticker, content, ) {
-      
+
 
 
 
