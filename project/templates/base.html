@@ -7,9 +7,9 @@
   <meta name="google-site-verification" content="8pZndvqJ8BY-7RwNGBb8V1t--fFHXacjGElkasaVGUs" />
 
 	<title>Flink</title>
-  
 
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -28,19 +28,19 @@
         <md-button ng-href='/users/{{user.id}}/dash'>
           <img id='flink-logo' ng-src="/static/js/resources/pics/flink.png">
         </md-button>
-       
+
         <md-button ng-href='/users/{{user.id}}/friends'>
         	Friends
         </md-button>
 
-  			<md-button ng-href='/users/{{user.id}}/calendar'> 
+  			<md-button ng-href='/users/{{user.id}}/calendar'>
         	Calendars
         </md-button>
 
   			<md-button ng-href='/users/{{user.id}}/messages'>
         	Messages
         </md-button>
-      
+
       {%  else  %}
 
         <span flex></span>
@@ -54,7 +54,7 @@
       {% endif   %}
 
       <span flex></span>
-      
+
 			<span flex></span>
 
 
@@ -84,17 +84,17 @@
               Redial
             </md-button>
           </md-menu-item>
-        
+
           <md-menu-item>
             <md-button disabled="disabled" ng-click="ctrl.checkVoicemail()">
               <md-icon md-svg-icon="call:voicemail"></md-icon>
               Check voicemail
             </md-button>
           </md-menu-item>
-          
+
           <md-menu-divider></md-menu-divider>
-          
-         
+
+
 
         </md-menu-content>
       </md-menu>
@@ -109,10 +109,10 @@
           <md-menu-content>
             <md-menu-item>
               <md-button ng-href='/users/{{user.id}}/edit'>
-                Edit 
-              </md-button> 
+                Edit
+              </md-button>
             </md-menu-item>
-            
+
             <md-menu-item>
               <md-button href='/google/logout'>
                 Logout Google
@@ -152,7 +152,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
 <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"></script>
 
 <!-- Google Signin Api -->
