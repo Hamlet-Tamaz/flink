@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_modus import Modus
 from flask_marshmallow import Marshmallow
-
+import os
 
 from flask_oauthlib.client import OAuth
 
@@ -46,8 +46,9 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/flink'
-app.config['SQLALCHEMY_TRIACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'postgres://localhost/flink'
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
