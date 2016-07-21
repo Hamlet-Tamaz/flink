@@ -22,14 +22,17 @@ def prevent_login_signup():
         return wrapped
     return wrapper
 
-@users_blueprint.route('/',)
+
 @users_blueprint.route('/home',)
 def home():
-    # 
     return render_template('home.html')
 
+@users_blueprint.route('/aboutus',)
+def aboutus():
+    return render_template('aboutus.html')
 
 
+@users_blueprint.route('/',)
 @users_blueprint.route('/users/<id>/dash')
 # users/<id>
 # @login_required

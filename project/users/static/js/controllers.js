@@ -32,6 +32,7 @@
 
     .controller('setupCtr', setup)
     .controller('editCtr', edit)
+    .controller('aboutusCtr', aboutus)
     .controller('homeCtr', home)
     .controller('dashCtr', dash)
 		.controller('appCtr', appCtr)
@@ -111,13 +112,14 @@
 
 
 
-      vm.submitChanges = function(given_name, family_name, title, email, gender, company, dob, address, address2, city, state, postalCode, biography) {
+      vm.submitChanges = function(given_name, family_name, title, email, gender, picture, company, dob, address, address2, city, state, postalCode, biography) {
 
         vm.user.given_name = given_name
         vm.user.family_name = family_name
         vm.user.title = title
         vm.user.email = email
         vm.user.gender = gender
+        vm.user.picture = picture
         vm.user.company = company
         vm.user.dob = dob
         vm.user.address = address
@@ -412,7 +414,7 @@
       url: `http://localhost:3000/api/users/${id}/messages/conversations`,
       responseType: 'json'
     }).then(function success(res) {
-      vm.inbox = res.data
+      vm.convos = res.data
       
     }, function error(res) {
       
@@ -447,7 +449,8 @@
           url: `http://localhost:3000/api/users/${id}/messages/thread/${receiver_id}`,
           responseType: 'json'
         }).then(function success(res) {
-          vm.messages = res.data.messages
+          vm.inbox = res.data.inbox
+          vm.outbox = res.data.outbox
           vm.user = res.data.user
           vm.receiver = res.data.receiver
           
@@ -610,9 +613,7 @@
       responseType: 'json'
     }).then(function success(res) {
       vm.friends = res.data
-      
     })
-
 
 
      vm.sendMsg = function (occasion, content, date, dateRangeFrom, dateRangeUntil, weekdaysMon, weekdaysTues, weekdaysWed, weekdaysThurs, weekdaysFri, weekdaysSat, weekdaysSun, timeDesiredFrom, timeDesiredUntil) {
@@ -648,24 +649,15 @@
       else {
         vm.sendFailed = true
       }
-
-
     }
+  }
 
-
-    // function sendMessage (user_id, receiver_id, occassion, , sticker, content, ) {
-      
-
-
-
-
-    // }
+  
+  function aboutus () {
+    var vm = this
 
 
   }
-
-
-
 
 
 

@@ -37,7 +37,8 @@
 #flink-logo {
   position: relative;
   width: 100px;
-  top: 7px
+  top: 7px;
+  z-index: 4;
 }
 
 
@@ -121,6 +122,13 @@ float: left;
   width: 100%;
 }
 
+#aboutUsLeft {
+  float: left;
+}
+
+#aboutUsRight {
+  float: right;
+}
 
 
 

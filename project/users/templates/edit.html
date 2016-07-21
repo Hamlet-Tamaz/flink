@@ -19,9 +19,10 @@
             <label>Family Name</label>
             <input ng-model="edit.user.family_name">
           </md-input-container>
+          
         </div>
 	    
-	    <div>
+	    <div layout='row' layout-align='space-between'>
 	      <md-input-container>
 	        <label>Title</label>
 	        <input ng-model="edit.user.title">
@@ -81,12 +82,23 @@
             </div>
           </md-input-container>
         </div>
-        <md-input-container class="md-block">
-          <label>Biography</label>
-          <textarea ng-model="edit.user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+        
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Profile Picture</label>
+          <input ng-model="edit.user.picture">
         </md-input-container>
         
-        <md-button class='md-primary' ng-click='edit.submitChanges(edit.user.given_name, edit.user.family_name, edit.user.title, edit.user.email, edit.user.gender, edit.user.company, edit.user.dob, edit.user.address, edit.user.address2, edit.user.city, edit.user.state, edit.user.postalCode, edit.user.biography)'>
+        <div layout='row'>
+          <md-input-container class="md-block" flex='80'>
+            
+            <label>Biography</label>
+            <textarea ng-model="edit.user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+          
+          </md-input-container>
+          <img src="[[edit.user.picture]]" style='height: 150px' flex='20'>
+        </div>
+        
+        <md-button class='md-primary' ng-click='edit.submitChanges(edit.user.given_name, edit.user.family_name, edit.user.title, edit.user.email, edit.user.picture, edit.user.gender, edit.user.company, edit.user.dob, edit.user.address, edit.user.address2, edit.user.city, edit.user.state, edit.user.postalCode, edit.user.biography)'>
           Submit Changes
         </md-button>
 	

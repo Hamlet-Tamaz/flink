@@ -5,25 +5,27 @@
 	<h1>Messages</h1>
 	<!-- <img id='messages_smiley' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Day-template.svg/2000px-Day-template.svg.png"> -->
 	
-	<md-button ng-href='/users/{{user.id}}/messages/new' layout='row' layout-align='center center'>
-		<i class="material-icons">send</i>
-		<label>New Message</label>
-	</md-button>
-	
-	<md-button style='background-color: #81D4FA' hide-gt-sm ng-click="mes.openLeftMenu()">
-		Inbox
-	</md-button>
+	<div layout='row' layout-align='center center'>
+		<md-button ng-href='/users/{{user.id}}/messages/new' >
+			<i class="material-icons">send</i>
+			<label>New Message</label>
+		</md-button>
+		
+		<md-button style='background-color: #81D4FA' hide-gt-sm ng-click="mes.openLeftMenu()">
+			Inbox
+		</md-button>
+	</div>
 
 	 <md-content style='left: -15px'>
 	    <md-tabs md-stretch-tabs='always'  md-border-bottom style='min-height: 1500px'> 
 
-				<md-tab label="I">
+				<md-tab label="Inbox">
 					<div layout='row' >
 					
 						<md-sidenav md-component-id="left" class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-sm')">
-							Left Nav!
+							Conversations
 							<md-list>
-								<md-list-item class="md-2-line" ng-repeat="convo in mes.inbox">
+								<md-list-item class="md-2-line" ng-repeat="convo in mes.convos">
 									<div class="md-list-item-text" ng-click='mes.getMessages(convo.id); mes.openLeftMenu()'>
 									<!-- <h2>function: [[mes.inbox]]</h2> -->
 										<h3>[[convo.id]]</h3>
@@ -35,7 +37,7 @@
 						
 						<md-content id='inboxMsgMdContent'>
 							<md-list>
-								<md-list-item ng-repeat='msg in mes.messages'> 
+								<md-list-item ng-repeat='msg in mes.inbox'> 
 									<div class='inboxMsgDiv' layout='row' layout-align='space-between center' layout-padding>
 										
 										<div>
@@ -63,10 +65,35 @@
 
 				</md-tab>
 
-			<md-tab label="O">
+			<md-tab label="Outbox">
 				<md-content class="md-padding">
-					<h1 class="md-display-2">OutBox</h1>
-					<p>Lorem ipsum </p>
+					<!-- <h1 class="md-display-2">OutBox</h1> -->
+					
+					<md-content id='inboxMsgMdContent'>
+						<md-list>
+							<md-list-item ng-repeat='msg in mes.outbox'> 
+								<div class='inboxMsgDiv' layout='row' layout-align='space-between center' layout-padding>
+									
+									<div>
+										<h3>[[mes.user.given_name]]</h3>
+										<img src="[[mes.user.picture]]">
+									</div>
+									
+									<div>
+										<img id='inboxMsgStkr' ng-src="/static/js/resources/pics/stickers/[[msg.occasion]].png">
+										<h1>[[msg.content]]</h1>
+									</div>
+									
+									<div>
+										<h3>[[mes.receiver.given_name]]</h3>
+										<img src="[[mes.receiver.picture]]" alt="">
+									</div>
+
+								</div>
+							</md-list-item>
+						</md-list>
+					</md-content>
+
 				</md-content>
 			</md-tab>
 		</md-tabs>

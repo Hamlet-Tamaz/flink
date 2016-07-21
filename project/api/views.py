@@ -172,15 +172,18 @@ def thread(id, receiver_id):
 		receiver_ser = G_user_schema.dump(receiver).data
 		# convArr = [id, receiver_id]
 
+		outbox = Message.query.filter_by(user_id = int(id)).filter_by(receiver_id = int(receiver_id))
 
-		messages = Message.query.filter_by(user_id = int(id)).filter_by(receiver_id = int(receiver_id))
+		inbox = Message.query.filter_by(user_id = int(receiver_id)).filter_by(receiver_id = int(id))
 		# messages = Message.query.filter(GoogleUser.id.in_(convArr), )
-		result = Messages_schema.dump(messages)
+		resultI = Messages_schema.dump(inbox)
+		resultO = Messages_schema.dump(outbox)
 
 		data = {}
 		data['user'] = user_ser
 		data['receiver'] = receiver_ser
-		data['messages'] = result.data
+		data['inbox'] = resultI.data
+		data['outbox'] = resultO.data
 
 		from IPython import embed; embed()
 		# 
@@ -233,4 +236,5 @@ def send_message(id):
 		# Messages_schema.dump(Message.query.filter_by(receiver_id = 3, **kwargs)
 
 		# messages = Message.query.filter_by(user_id = int(id), receiver_id = receiver)
+
 

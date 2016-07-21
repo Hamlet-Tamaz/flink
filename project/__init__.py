@@ -8,6 +8,8 @@ from flask_marshmallow import Marshmallow
 
 from flask_oauthlib.client import OAuth
 
+import os
+
 app = Flask(__name__)
 
 modus = Modus(app)
@@ -15,16 +17,16 @@ bcrypt = Bcrypt(app)
 
 
 oauth = OAuth(app)
-app.config['GOOGLE_ID'] = "770134292731-gsjfclovkvfh891kq4nmkgld4pops4au.apps.googleusercontent.com"
-app.config['GOOGLE_SECRET'] = "Mpp4U5QtxeO-k2rl6SWbJyC3"
-#  TODO: move secret out
+google_id = os.environ.get('GOOGLE_ID')
+google_secret = os.environ.get('GOOGLE_SECRET')
+
 
 
 app.debug = True
 google = oauth.remote_app(
     'google',
-    consumer_key=app.config.get('GOOGLE_ID'),
-    consumer_secret=app.config.get('GOOGLE_SECRET'),
+    consumer_key=google_id,
+    consumer_secret=google_secret,
     request_token_params={
         'scope': 'profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/contacts.readonly https://www.googleapis.com/auth/calendar   '
         # profile email calendar contacts.readonly plus.login
