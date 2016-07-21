@@ -8,7 +8,6 @@ import os
 
 from flask_oauthlib.client import OAuth
 
-import os
 
 app = Flask(__name__)
 
@@ -19,8 +18,6 @@ bcrypt = Bcrypt(app)
 oauth = OAuth(app)
 google_id = os.environ.get('GOOGLE_ID')
 google_secret = os.environ.get('GOOGLE_SECRET')
-
-from IPython import embed; embed()
 
 app.debug = True
 google = oauth.remote_app(
